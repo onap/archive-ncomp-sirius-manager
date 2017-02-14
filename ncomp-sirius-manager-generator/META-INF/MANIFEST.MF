@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ncomp-sirius-manager-generator
+Bundle-SymbolicName: ncomp-sirius-manager-generator
+Bundle-Version: 0.1.0.qualifier
+Export-Package: org.openecomp.ncomp.sirius.manager.generator
+Require-Bundle: ncomp-sirius-manager-model;bundle-version="0.1.0"

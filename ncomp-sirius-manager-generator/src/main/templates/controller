@@ -1,0 +1,140 @@
+#!/bin/bash 
+
+# setup env if needed. java 6 required
+## JAVA_HOME=
+  
+############################## DO NOT EDIT BELOW ##########################
+
+SNAME="$m.prefix Controller"
+PNAME=$n-controller
+CLASS=${sPackage}.${sClass}
+
+############################## COMMON BELOW ##########################
+
+check_status ()
+{
+    if [ -f "\${_PIDFILE}" ]; then
+        _PID=`cat "\${_PIDFILE}"`
+        check_status_of_pid \$_PID
+    else
+        _STATUS="\$SNAME (no pidfile) is NOT running"
+        _RUNNING=0
+    fi
+}
+
+
+check_status_of_pid ()
+{
+    if [ -n "\$1" ] && kill -0 \$1 2>/dev/null ; then
+        _STATUS="\$SNAME (pid \$1) is running"
+        _RUNNING=1
+    else
+        _STATUS="\$SNAME (pid \$1) is NOT running"
+        _RUNNING=0
+    fi
+}
+
+
+check_status_of_pid ()
+{
+    if [ -n "\$1" ] && kill -0 \$1 2>/dev/null ; then
+        _STATUS="\$SNAME (pid \$1) is running"
+        _RUNNING=1
+    else
+        _STATUS="\$SNAME (pid \$1) is NOT running"
+        _RUNNING=0
+    fi
+}
+
+remove_pid_file ()
+{
+   if [ -f "\${_PIDFILE}" ]; then
+      rm "\${_PIDFILE}"
+   fi
+}
+
+
+_DIR=`dirname "\$0"`
+_DIR=`dirname "\$_DIR"`
+
+_PIDFILE=\$_DIR/PID
+
+CMD=\$1
+shift
+
+check_status
+
+CP=\$(find \$_DIR/lib/*/* -name \\*.jar 2>/dev/null | xargs -I X printf ":%s" X)
+
+JVMARGS=\$(grep 'server.jvmargs' \$_DIR/config/${nsPrefix}.properties | sed -e 's/.*=//')
+
+case \$CMD in 
+  status)
+    echo \$_STATUS
+    exit 0
+    ;;
+  console)
+    \$GROOVY_HOME/bin/groovysh -cp \$_DIR/config:\$_DIR/lib:\$_DIR/lib/\\*:\$CP 
+    ;;
+  run)
+    \$JAVA_HOME/bin/java -cp \$_DIR/config:\$_DIR/lib:\$_DIR/lib/\\*:\$CP "\$@"
+    ;;
+  groovy)
+    \$GROOVY_HOME/bin/groovy -cp \$_DIR/config:\$_DIR/lib:\$_DIR/lib/\\*:\$CP "\$@"
+    ;;
+   start)
+    if [ "\$_RUNNING" = "1" ]; then
+      echo \$_STATUS
+      exit 0
+    fi
+    mkdir -p \$_DIR/logs
+    if [ -e \$_DIR/logs/\$PNAME.out.1 ]; then mv \$_DIR/logs/\$PNAME.out.1 \$_DIR/logs/\$PNAME.out.2; fi
+    if [ -e \$_DIR/logs/\$PNAME.err.1 ]; then mv \$_DIR/logs/\$PNAME.err.1 \$_DIR/logs/\$PNAME.err.2; fi
+    if [ -e \$_DIR/logs/\$PNAME.out ]; then mv \$_DIR/logs/\$PNAME.out \$_DIR/logs/\$PNAME.out.1; fi
+    if [ -e \$_DIR/logs/\$PNAME.err ]; then mv \$_DIR/logs/\$PNAME.err \$_DIR/logs/\$PNAME.err.1; fi
+<% if (g.enableDrools) { %>
+    nohup \$JAVA_HOME/bin/java \$JVMARGS -Dkie.maven.settings.custom=\$_DIR/config/kie_settings.xml -cp \$_DIR/config:\$_DIR/lib:\$_DIR/lib/\\*:/opt/drools-distribution-6.3.0.Final/binaries/\\*:\$CP "\$@" \$CLASS >> \$_DIR/logs/\$PNAME.out 2>> \$_DIR/logs/\$PNAME.err  &
+<% } else { %>
+    nohup \$JAVA_HOME/bin/java \$JVMARGS -cp \$_DIR/config:\$_DIR/lib:\$_DIR/lib/\\*:\$CP "\$@" \$CLASS >> \$_DIR/logs/\$PNAME.out 2>> \$_DIR/logs/\$PNAME.err  &
+<% } %>
+    _PID=\$!
+    echo \$_PID > \$_PIDFILE
+    sleep 5
+    check_status
+    echo \$_STATUS
+    if [ "\$_RUNNING" = "1" ]; then
+       exit 0
+    else
+       echo "Failed to start - make sure the \$SNAME is fully configured properly"
+       exit 1
+    fi
+    ;;
+  stop)
+    if [ "\$_RUNNING" = "0" ]; then
+       echo \$_STATUS
+       remove_pid_file
+       exit 0
+    fi
+    echo "Stopping \$SNAME..."
+    _PID_TO_KILL=\$_PID;
+    echo "\$SNAME (pid=\${_PID_TO_KILL}) is stopping..."
+    kill -TERM \$_PID_TO_KILL
+    sleep 5
+    check_status_of_pid \$_PID_TO_KILL
+    if [ "\$_RUNNING" = "1" ]; then
+       kill -TERM \$_PID_TO_KILL
+    fi
+    while [ "\$_RUNNING" = "1" ]; do
+       sleep 2
+       check_status_of_pid \$_PID_TO_KILL
+    done
+    remove_pid_file
+    echo "\$SNAME has stopped."
+    exit 0
+    ;;
+  *)
+    echo "\$0 start|stop"
+    ;;
+esac
+
+

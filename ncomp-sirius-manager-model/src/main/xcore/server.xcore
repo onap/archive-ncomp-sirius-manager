@@ -1,0 +1,119 @@
+
+/*-
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ */
+	
+@GenModel(modelDirectory="/ncomp-sirius-manager-model/src/main/xcore-gen")
+
+package org.openecomp.ncomp.sirius.manager.server
+
+import org.openecomp.ncomp.core.JsonObject
+import org.openecomp.ncomp.core.RemoteContext
+import org.openecomp.ncomp.core.function.Function
+import org.openecomp.ncomp.core.function.ValuePair
+import org.openecomp.ncomp.core.logs.LogMessage
+import org.openecomp.ncomp.core.logs.LogMessageRule
+import org.openecomp.ncomp.core.metrics.MetricValueOption
+import org.openecomp.ncomp.core.metrics.Metric
+import org.openecomp.ncomp.sirius.manager.properties.AbstractProperty
+import org.openecomp.ncomp.sirius.manager.properties.ModuleContainer
+import org.openecomp.ncomp.sirius.manager.tableTemplate.AbstractTableTemplate
+import org.openecomp.ncomp.core.alerts.AlertingTemplate
+import org.openecomp.ncomp.core.metrics.DoubleMetric
+import org.openecomp.ncomp.component.Component
+
+annotation "http://www.eclipse.org/emf/2002/GenModel" as GenModel
+annotation 'http://openecomp.org/sirius/doc' as doc  
+
+class SouthBoundApiWithProxy extends  SouthBoundApi {
+	op void uploadInfo(RemoteContext cx, ManagementInfo[] info)
+	
+}
+
+class SouthBoundApi {  
+    @doc(description="This operation allows the clients to report log messages 
+	and overall state of the client")	
+	op void logs(
+		@doc(description = "This parameter is for internal use and is ignored if set by client.")
+		RemoteContext cx, 
+		@doc(description = "List of log message to inform the management system about.")
+		LogMessage[] logs
+	)
+    @doc(description="This operation allows the client VMs to report metrics 
+		and overall state of the VM")	
+	op void metrics(
+		@doc(description = "This parameter is for internal use and is ignored if set by client.")
+		RemoteContext cx, 
+		Metric[] metrics 
+	) 
+	@doc(description = "Used by the BSA Management Agent to report 
+	property key value pairs to the BSA Controller.")
+	op void properties(
+		@doc(description = "This parameter is for internal use and is ignored if set by client.")
+		RemoteContext cx, 
+		AbstractProperty[] l
+	) 
+}
+
+class ManagementInfo {
+	String ip
+	contains Metric[] metrics
+	contains LogMessage[] logs
+	contains AbstractProperty[] props 
+}
+
+class Response {
+	ResponseStatus status
+	String message
+}
+
+
+enum ResponseStatus { OK, WARN, ERROR }
+
+
+
+
+class LoggerInfo {
+	String name
+}
+
+class AbstractManagementServer extends SouthBoundApiWithProxy {
+	op DoubleMetric[] getValues(RemoteContext cx, String path, Long start, Long end, MetricValueOption option, boolean relativeInterval)
+	op DoubleMetric[] getValuesAll(RemoteContext cx, String path, String[] metrics, Long start, Long end, MetricValueOption option, boolean relativeInterval) 
+	op LogMessage[] getMessages(RemoteContext cx, String path, Long start, Long end)
+	op LoggerInfo getRequestLogger(String userName, String action, String resourcePath, JsonObject context)
+	op ValuePair[] evaluate(String path, Function function)
+	op void update(String path, Function function)
+	contains AbstractManagementServerConfiguration configuration
+	contains Component component
+}
+
+class AbstractManagementServerConfiguration extends ModuleContainer {
+	contains LogMessageRule[] rules
+	contains unordered MetricValueOption[] metricOptions
+	contains AbstractTableTemplate[] tableTemplates
+	contains unordered AlertingTemplate[] alertTemplates
+	contains unordered Function[] functions 
+}
+
+
+
+
+
+

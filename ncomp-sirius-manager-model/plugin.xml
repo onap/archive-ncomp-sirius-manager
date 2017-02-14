@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated gui -->
+      <package
+            uri="org.openecomp.ncomp.gwt.siriusportal.model"
+            class="org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage"
+            genModel="src/main/xcore/gui.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated graph -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.graph"
+            class="org.openecomp.ncomp.sirius.manager.graph.GraphPackage"
+            genModel="src/main/xcore/graph.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated property -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.properties"
+            class="org.openecomp.ncomp.sirius.manager.properties.PropertiesPackage"
+            genModel="src/main/xcore/property.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated controllerModel -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.controllermodel"
+            class="org.openecomp.ncomp.sirius.manager.controllermodel.ControllermodelPackage"
+            genModel="src/main/xcore/controllerModel.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated table -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.tableTemplate"
+            class="org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage"
+            genModel="src/main/xcore/table.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated server -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.server"
+            class="org.openecomp.ncomp.sirius.manager.server.ServerPackage"
+            genModel="src/main/xcore/server.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated swagger -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.swagger"
+            class="org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage"
+            genModel="src/main/xcore/swagger.xcore"/>
+   </extension>
+
+</plugin>

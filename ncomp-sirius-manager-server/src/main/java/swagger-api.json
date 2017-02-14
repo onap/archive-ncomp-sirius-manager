@@ -1,0 +1,19 @@
+{
+  "swagger": "2.0",
+  "host": "localhost:9998",
+  "basePath": "",
+  "schemes": ["http"],
+  "info": {
+    "description": "TBD",
+    "version": "0.1.0",
+    "title": "Sirius Server",
+    "termsOfService": "TBD",
+    "contact": {"email": "TBD"},
+    "license": {
+      "name": "TBD",
+      "url": "http://TDB"
+    }
+  },
+  "paths": {
+  }
+}

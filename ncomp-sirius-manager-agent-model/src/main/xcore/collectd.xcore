@@ -1,0 +1,169 @@
+
+/*-
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ */
+	
+@GenModel(modelDirectory="/ncomp-sirius-manager-agent-model/src/main/xcore-gen")
+package org.openecomp.ncomp.sirius.manager.agent.collectd
+
+import org.openecomp.ncomp.core.NamedEntity
+import org.openecomp.ncomp.core.alerts.AlertContainer
+import org.openecomp.ncomp.core.DoubleMetricAttribute
+import org.openecomp.ncomp.core.IncreasingULongMetricAttribute
+
+annotation 'http://openecomp.org/sirius/doc' as doc  
+
+class CollectdServer extends NamedEntity, AlertContainer {
+	transient DoubleMetricAttribute load_shortterm
+	transient DoubleMetricAttribute load_midterm
+	transient DoubleMetricAttribute load_longterm
+	transient DoubleMetricAttribute entropy
+	transient IncreasingULongMetricAttribute contextswitches
+	contains CollectdCpu[] cpus
+	contains CollectdMemory memory
+	contains CollectdSwap swap
+	contains CollectdProcesses processes
+	contains CollectdVmem vmem
+	contains CollectdFileSystem[] filesystems
+	contains CollectdDisk[] disks
+	contains CollectdInterface[] interfaces
+	contains CollectdKvmInstance[] instances 
+}
+
+class CollectdMemory {
+	transient DoubleMetricAttribute buffered
+	transient DoubleMetricAttribute cached
+	transient DoubleMetricAttribute free
+	transient DoubleMetricAttribute used
+}
+
+class CollectdSwap {
+	transient DoubleMetricAttribute cached
+	transient DoubleMetricAttribute free
+	transient DoubleMetricAttribute used
+}
+
+
+class CollectdProcesses {
+	transient IncreasingULongMetricAttribute fork_rate
+	transient DoubleMetricAttribute blocked
+	transient DoubleMetricAttribute paging
+	transient DoubleMetricAttribute running
+	transient DoubleMetricAttribute sleeping
+	transient DoubleMetricAttribute stopped
+	transient DoubleMetricAttribute zombies
+}
+
+class CollectdVmem {
+	transient DoubleMetricAttribute active_anon
+	transient DoubleMetricAttribute active_file
+	transient DoubleMetricAttribute anon_pages
+	transient DoubleMetricAttribute anon_transparent_hugepages
+	transient DoubleMetricAttribute bounce
+	transient DoubleMetricAttribute dirtied
+	transient DoubleMetricAttribute dirty
+	transient DoubleMetricAttribute dirty_background_threshold
+	transient DoubleMetricAttribute dirty_threshold
+	transient DoubleMetricAttribute file_pages
+	transient DoubleMetricAttribute free_pages
+	transient DoubleMetricAttribute inactive_anon
+	transient DoubleMetricAttribute inactive_file
+	transient DoubleMetricAttribute isolated_anon
+	transient DoubleMetricAttribute isolated_file
+	transient DoubleMetricAttribute kernel_stack
+	transient DoubleMetricAttribute mapped
+	transient DoubleMetricAttribute mlock
+	transient DoubleMetricAttribute page_table_pages
+	transient DoubleMetricAttribute shmem
+	transient DoubleMetricAttribute slab_reclaimable
+	transient DoubleMetricAttribute slab_unreclaimable
+	transient DoubleMetricAttribute unevictable
+	transient DoubleMetricAttribute unstable
+	transient DoubleMetricAttribute vmscan_immediate_reclaim
+	transient DoubleMetricAttribute vmscan_write
+	transient DoubleMetricAttribute writeback
+	transient DoubleMetricAttribute writeback_temp
+	transient DoubleMetricAttribute written
+	transient IncreasingULongMetricAttribute memory_in
+	transient IncreasingULongMetricAttribute memory_out
+	transient IncreasingULongMetricAttribute swap_in
+	transient IncreasingULongMetricAttribute swap_out	
+	transient IncreasingULongMetricAttribute faults_minor
+	transient IncreasingULongMetricAttribute faults_major
+	
+}
+
+class CollectdCpu extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute idle
+	transient IncreasingULongMetricAttribute wait
+	transient IncreasingULongMetricAttribute user
+	transient IncreasingULongMetricAttribute system
+}
+
+class CollectdDisk extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute disk_merged_read
+	transient IncreasingULongMetricAttribute disk_merged_write
+	@doc(unit="byte")
+	transient IncreasingULongMetricAttribute disk_octets_read
+	transient IncreasingULongMetricAttribute disk_octets_write
+	transient IncreasingULongMetricAttribute disk_ops_read
+	transient IncreasingULongMetricAttribute disk_ops_write
+	transient IncreasingULongMetricAttribute disk_time_read
+	transient IncreasingULongMetricAttribute disk_time_write	
+}
+
+class CollectdFileSystem extends NamedEntity, AlertContainer {
+	transient DoubleMetricAttribute used
+	transient DoubleMetricAttribute free
+}
+
+class CollectdInterface extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute if_errors_rx
+	transient IncreasingULongMetricAttribute if_errors_tx
+	transient IncreasingULongMetricAttribute if_octets_rx
+	transient IncreasingULongMetricAttribute if_octets_tx
+	transient IncreasingULongMetricAttribute if_packets_rx
+	transient IncreasingULongMetricAttribute if_packets_tx
+}
+
+class CollectdKvmInstance extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute virt_cpu_total
+	contains CollectdKvmDisk[] disks
+	contains CollectdKvmInterface[] interfaces
+	
+}
+
+class CollectdKvmDisk extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute disk_octets_read
+	transient IncreasingULongMetricAttribute disk_octets_write
+	transient IncreasingULongMetricAttribute disk_ops_read
+	transient IncreasingULongMetricAttribute disk_ops_write	
+}
+
+class CollectdKvmInterface extends NamedEntity, AlertContainer {
+	transient IncreasingULongMetricAttribute if_errors_rx
+	transient IncreasingULongMetricAttribute if_errors_tx
+	transient IncreasingULongMetricAttribute if_dropped_rx
+	transient IncreasingULongMetricAttribute if_dropped_tx
+	transient IncreasingULongMetricAttribute if_octets_rx
+	transient IncreasingULongMetricAttribute if_octets_tx
+	transient IncreasingULongMetricAttribute if_packets_rx
+	transient IncreasingULongMetricAttribute if_packets_tx
+}
+

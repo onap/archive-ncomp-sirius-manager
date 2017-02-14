@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated collectd -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.agent.collectd"
+            class="org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage"
+            genModel="src/main/xcore/collectd.xcore"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated server -->
+      <package
+            uri="org.openecomp.ncomp.sirius.manager.agent.monitoring"
+            class="org.openecomp.ncomp.sirius.manager.agent.monitoring.MonitoringPackage"
+            genModel="src/main/xcore/server.xcore"/>
+   </extension>
+
+</plugin>

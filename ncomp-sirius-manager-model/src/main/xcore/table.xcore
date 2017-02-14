@@ -1,0 +1,76 @@
+
+/*-
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ */
+	
+@GenModel(modelDirectory="/ncomp-sirius-manager-model/src/main/xcore-gen")
+
+package org.openecomp.ncomp.sirius.manager.tableTemplate
+
+import org.openecomp.ncomp.core.NamedEntity
+import org.openecomp.ncomp.core.logs.LogSeverity
+import org.openecomp.ncomp.core.function.Iterator
+import org.openecomp.ncomp.core.metrics.MetricValueOption
+import org.openecomp.ncomp.core.logs.LogLevel
+
+
+annotation "http://www.eclipse.org/emf/2002/GenModel" as GenModel
+annotation 'http://openecomp.org/sirius/doc' as doc 
+
+abstract class AbstractTableTemplate extends NamedEntity {
+	String treePath // e.g., /dataDepotServers/*
+	String tablePath // e.g., /reports/${/name}
+}
+
+abstract class HasColumnsTableTemplate {
+	contains TableTemplateColumn[] columns
+}
+
+class LogTableTemplate extends AbstractTableTemplate {
+	LogLevel minLevel
+	LogSeverity minSeverity
+	String prefixResourcePath // e.g., /dataDepotServers/${/name}
+	String duration
+	String aggregationDuration
+}
+
+class TableTemplate extends AbstractTableTemplate, HasColumnsTableTemplate {
+	String rowPath   // e.g., /dataDepotServers/${/name}/databases/*/tables
+}
+
+class IteratorTableTemplate extends AbstractTableTemplate, HasColumnsTableTemplate {
+	contains Iterator iterator
+}
+
+class TimeTableTemplate extends TableTemplate {
+	String duration
+}
+
+abstract class TableTemplateColumn extends NamedEntity {
+}
+
+class TableTemplateAttributeColumn extends TableTemplateColumn {
+	String path // eg. /name, ../../name
+}
+
+class TableTemplateMetricColumn extends TableTemplateColumn {
+	String path // e.g. updatemanager/updateTime
+	refers MetricValueOption option
+}
+

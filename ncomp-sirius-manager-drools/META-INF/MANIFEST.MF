@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %pluginName
+Bundle-SymbolicName: ncomp-sirius-manager-drools
+Bundle-Version: 0.1.0.qualifier
+Export-Package: org.openecomp.ncomp.sirius.manager.drools
+Bundle-Vendor: %providerName
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

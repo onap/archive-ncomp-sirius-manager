@@ -1,0 +1,32 @@
+<% 
+import org.eclipse.emf.ecore.*; 
+%>
+@GenModel(updateClasspath="false") 
+package $pName
+
+import org.openecomp.ncomp.sirius.manager.model.NamedEntity
+
+<% p.EClassifiers.each { EClassifier c -> %>
+class $c.name extends NamedEntity {
+  <% c.getEReferences().each { EReference ref -> %>
+    ${ref.isContainment() ? "contains" : "refers"} ${ref.eType.name}${ref.isMany() ? "[]" : ""} $ref.name  <% } %>
+  <% c.getEAttributes().each { EAttribute attr -> 
+    switch (attr.name) {
+    case "name":
+    case "title":
+    case "description": return
+    }
+    def t = attr.eType.name
+    switch (t) { 
+    case "EBoolean": t = "Boolean"; break
+    case "EString": t = "String"; break
+    case "EDouble": t = "Double"; break
+    case "EDate": t = "long"; break
+    }
+    %>
+	${t}${attr.isMany() ? "[]" : ""} $attr.name  <% } %>
+}
+<% } %>
+
+
+

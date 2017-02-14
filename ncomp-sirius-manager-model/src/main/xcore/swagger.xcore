@@ -1,0 +1,175 @@
+
+/*-
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ */
+	
+@GenModel(modelDirectory="/ncomp-sirius-manager-model/src/main/xcore-gen")
+
+package org.openecomp.ncomp.sirius.manager.swagger
+
+import org.openecomp.ncomp.core.NamedEntity
+
+annotation 'http://openecomp.org/ncomp/swagger' as swagger  
+
+class SwaggerModel {
+	String swagger = "2.0"
+	contains SwaggerInfo info
+	String host
+	String basePath
+	contains SwaggerTag[] tags
+	String[] schemes
+	contains SwaggerPath[] paths
+	contains SwaggerNamedObjectType[] definitions
+	contains SwaggerExternalDocumentation externalDocs
+	contains SwaggerSecurityDefinition[] securityDefinitions
+}
+
+class SwaggerInfo {
+	String description
+	String version
+	String title
+	String termsOfService
+	contains SwaggerContact contact
+	contains SwaggerLicense license
+}
+
+class SwaggerContact {
+	String email
+}
+
+class SwaggerLicense {
+	String name
+	String url
+}
+
+class SwaggerTag {
+	String name
+	String description
+	contains SwaggerExternalDocumentation externalDocs
+}
+
+class SwaggerExternalDocumentation {
+	String description
+	String url
+}
+
+class SwaggerPath extends NamedEntity {
+	contains SwaggerOperation[] methods
+}
+
+class SwaggerOperation extends NamedEntity {
+	String[] tags
+	String summary
+	String description
+	String operationId
+	String[] consumes
+	String[] produces
+	contains SwaggerParameter[] parameters
+	contains SwaggerResponse[] responses
+	contains SwaggerSecurityObject[] security
+	boolean deprecated = "false"
+}
+
+class SwaggerParameter extends NamedEntity {
+	SwaggerParameterType in
+	contains SwaggerObjectType ^type
+}
+
+enum SwaggerParameterType {
+	path, query, header, body, form, formData 
+}
+
+class SwaggerResponse extends NamedEntity {
+	String description
+	contains SwaggerObjectType schema
+	contains SwaggerSimpleObjectType[] headers
+}
+
+class SwaggerSecurityObject {
+	contains SwaggerSecurity[] list
+}
+
+class SwaggerSecurity extends NamedEntity {
+	String[] roles
+}
+
+class SwaggerSecurityDefinition extends NamedEntity {
+	String ^type
+	String authorizationUrl
+	String flow
+	SwaggerParameterType in
+//	contains SwaggerSecurityDefinitionScope[] scopes
+}
+
+class SwaggerSecurityDefinitionScope extends NamedEntity {
+	String description
+}
+
+class SwaggerObjectType {
+	boolean many = "false"
+}
+
+class SwaggerReferenceObjectType extends SwaggerNamedObjectType {
+	@swagger(name="$ref")
+	boolean required
+	refers SwaggerObjectType reference
+}
+
+// object
+class SwaggerNamedObjectType extends NamedEntity, SwaggerObjectType {
+	String ^type
+	String ^default
+	String description
+	contains SwaggerXml xml
+}
+
+// object
+class SwaggerObjectClassDefinition extends SwaggerNamedObjectType {
+	String[] required
+	refers SwaggerObjectType[] allOf
+	contains SwaggerNamedObjectType[] properties
+	contains SwaggerObjectType additionalProperties 
+}
+
+// string, integer, boolean
+class SwaggerSimpleObjectType extends SwaggerNamedObjectType {
+	boolean required
+	String format
+	String minimum
+	String maximum
+	String pattern
+	String example
+	SwaggerCollectionFormat collectionFormat
+}
+
+class SwaggerXml {
+	String name
+	boolean wrapped = "false"
+}
+
+class SwaggerEnumObjectType extends SwaggerSimpleObjectType {
+	String[] ^enum
+}
+
+enum SwaggerCollectionFormat {
+	csv, ssv, tsv, pipes, multi
+}
+
+
+

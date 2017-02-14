@@ -1,0 +1,182 @@
+
+/*-
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *        http://www.apache.org/licenses/LICENSE-2.0 
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ */
+	
+@GenModel(modelDirectory="/ncomp-sirius-manager-model/src/main/xcore-gen")
+
+// package org.openecomp.ncomp.sirius.manager.gui  
+// TODO NEED TO CHANGE PACKAGE NAME BUT GUI DEPEND ON THE OLD NAME.
+package org.openecomp.ncomp.gwt.siriusportal.model
+
+import org.openecomp.ncomp.sirius.manager.graph.GuiGraph
+
+annotation "http://www.eclipse.org/emf/2002/GenModel" as GenModel
+
+type Date wraps java.util.Date
+
+class GuiClientApi { 
+	op GuiTree getTree() 
+	op GuiObject getObject(String path)
+	op GuiTimeSerie getTimeSerie(String path, String start, String end, String duration)
+	op GuiTable getTable(String path, String start, String end)
+	op GuiHtml getHtml(String path, String start, String end)
+	op GuiGraph getGraph(String path, String start, String end)
+}
+
+class GuiTree {
+	contains GuiTreeNode[] sections 
+}
+
+class GuiTreeNode { 
+	String nodeName
+	String title // Pretty label, if null then use name
+	String tooltip
+	String icon
+	GuiView view
+	contains GuiTreeNode[] children
+}
+
+enum GuiView { NONE, OBJECT, TIMESERIES, BIRTREPORT, HTML, TABLE }
+
+class GuiObject {
+	contains GuiObjectValue[] values
+}
+
+class GuiNamedObject extends GuiObject {
+	String objectName
+}
+
+abstract class GuiObjectValue {
+	String valueName
+	String tooltip
+}
+
+class GuiObjectValueInteger extends GuiObjectValue {
+	int i
+}
+
+class GuiObjectValueString extends GuiObjectValue {
+	String v
+}
+
+class GuiObjectValueReference extends GuiObjectValueString {
+	String path
+}
+
+class GuiObjectValueTimeSeries extends GuiObjectValueString {
+	String path
+}
+
+class GuiObjectValueObject extends GuiObjectValue {
+	contains GuiObject v
+}
+
+class GuiObjectUnNamedList extends GuiObjectValue {
+	contains GuiObject[] objects
+}
+
+class GuiObjectNamedList extends GuiObjectValue {
+	contains GuiNamedObject[] objects
+}
+
+class GuiTimeSerie {
+	String name
+	String xAxisLabel
+	String xAxisDateFormat = "MM-dd HH:mm"
+	String yAxisLabel
+	Date start
+	Date end
+	boolean isRate
+	contains GuiTimeSerieData[] data
+}
+
+class GuiTimeSerieData {
+	Date time
+	double value
+	Double max
+	Double min
+	int num
+}
+
+class GuiTable {
+	contains GuiTableColumn[] columns
+	contains GuiTableRow[] rows
+}
+
+class GuiTableColumn {
+	String colName
+	String tooltip
+	String format
+	int width = "0" // pixels
+	boolean hidden = "false"
+	GuiTableColumnType columnType
+}
+
+enum GuiTableColumnType { STRING, DOUBLE, DATE, REF_LIST}
+
+class GuiTableRow {
+	contains GuiTableCell[] cells
+}
+
+abstract class GuiTableCell {
+	String tooltip
+}
+
+class GuiTableCellString extends GuiTableCell {
+	String value
+}
+
+class GuiTableCellDouble extends GuiTableCell {
+	double value
+	String timeseriesPath
+}
+
+class GuiTableCellDate extends GuiTableCell {
+	Date value
+}
+
+class GuiTableCellReferences extends GuiTableCell {
+	contains GuiTableCellReference[] refs
+}
+
+class GuiTableCellReference {
+	String label
+	String path
+}
+
+
+class GuiDiagram {
+	contains GuiDiagramItem[] items
+}
+
+class GuiDiagramItem {
+	String tooltip
+}
+
+class GuiDiagramRectangle extends GuiDiagramItem {
+	int x
+	int y
+	int h
+	int w
+}
+
+class GuiHtml {
+	String html
+}

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: ncomp-sirius-manager-console
+Bundle-SymbolicName: ncomp-sirius-manager-console
+Bundle-Version: 0.1.0.qualifier
+Export-Package: org.openecomp.ncomp.sirius.manager.console,
+ org.openecomp.ncomp.sirius.manager.groovy
+Require-Bundle: org.apache.log4j;bundle-version="1.2.15",
+ org.eclipse.emf.ecore;bundle-version="2.10.2",
+ ncomp-core-model;bundle-version="0.1.0",
+ ncomp-sirius-manager-server;bundle-version="0.1.0",
+ ncomp-utils-java;bundle-version="0.1.0"
