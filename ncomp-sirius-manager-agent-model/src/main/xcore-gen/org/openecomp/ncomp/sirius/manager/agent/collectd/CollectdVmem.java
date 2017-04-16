@@ -23,10 +23,9 @@
  */
 package org.openecomp.ncomp.sirius.manager.agent.collectd;
 
+import org.eclipse.emf.ecore.EObject;
 import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdVmem#getActive_anon <em>Active anon</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdVmem#getActive_file <em>Active file</em>}</li>
@@ -72,7 +72,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdVmem#getFaults_minor <em>Faults minor</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdVmem#getFaults_major <em>Faults major</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdVmem()
  * @model

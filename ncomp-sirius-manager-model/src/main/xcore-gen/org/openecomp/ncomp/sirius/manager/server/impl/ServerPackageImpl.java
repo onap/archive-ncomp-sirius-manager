@@ -32,6 +32,7 @@ import org.openecomp.ncomp.core.metrics.MetricsPackage;
 import org.openecomp.ncomp.sirius.manager.properties.PropertiesPackage;
 import org.openecomp.ncomp.sirius.manager.server.AbstractManagementServer;
 import org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration;
+import org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep;
 import org.openecomp.ncomp.sirius.manager.server.LoggerInfo;
 import org.openecomp.ncomp.sirius.manager.server.ManagementInfo;
 import org.openecomp.ncomp.sirius.manager.server.Response;
@@ -40,6 +41,9 @@ import org.openecomp.ncomp.sirius.manager.server.ServerFactory;
 import org.openecomp.ncomp.sirius.manager.server.ServerPackage;
 import org.openecomp.ncomp.sirius.manager.server.SouthBoundApi;
 import org.openecomp.ncomp.sirius.manager.server.SouthBoundApiWithProxy;
+import org.openecomp.ncomp.sirius.manager.server.VersionConfiguration;
+import org.openecomp.ncomp.sirius.manager.server.VersionTranslation;
+import org.openecomp.ncomp.sirius.manager.server.VersionTranslationStep;
 import org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -111,6 +115,34 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	private EClass versionConfigurationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass versionTranslationEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass versionTranslationStepEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass attributeTranslationStepEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	private EEnum responseStatusEEnum = null;
 
 	/**
@@ -160,10 +192,10 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 		isInited = true;
 
 		// Initialize simple dependencies
-		AlertsPackage.eINSTANCE.eClass();
 		PropertiesPackage.eINSTANCE.eClass();
-		TableTemplatePackage.eINSTANCE.eClass();
 		ComponentPackage.eINSTANCE.eClass();
+		TableTemplatePackage.eINSTANCE.eClass();
+		AlertsPackage.eINSTANCE.eClass();
 
 		// Create package meta-data objects
 		theServerPackage.createPackageContents();
@@ -464,6 +496,114 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EReference getAbstractManagementServerConfiguration_Version() {
+		return (EReference)abstractManagementServerConfigurationEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVersionConfiguration() {
+		return versionConfigurationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionConfiguration_Version() {
+		return (EAttribute)versionConfigurationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getVersionConfiguration_TranslationHandler() {
+		return (EAttribute)versionConfigurationEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVersionConfiguration_SupportedVersions() {
+		return (EReference)versionConfigurationEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVersionTranslation() {
+		return versionTranslationEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getVersionTranslation_Steps() {
+		return (EReference)versionTranslationEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getVersionTranslationStep() {
+		return versionTranslationStepEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getAttributeTranslationStep() {
+		return attributeTranslationStepEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttributeTranslationStep_Attribute() {
+		return (EAttribute)attributeTranslationStepEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttributeTranslationStep_CurrentValue() {
+		return (EAttribute)attributeTranslationStepEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getAttributeTranslationStep_OldValue() {
+		return (EAttribute)attributeTranslationStepEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getResponseStatus() {
 		return responseStatusEEnum;
 	}
@@ -533,6 +673,22 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 		createEReference(abstractManagementServerConfigurationEClass, ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__TABLE_TEMPLATES);
 		createEReference(abstractManagementServerConfigurationEClass, ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__ALERT_TEMPLATES);
 		createEReference(abstractManagementServerConfigurationEClass, ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS);
+		createEReference(abstractManagementServerConfigurationEClass, ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION);
+
+		versionConfigurationEClass = createEClass(VERSION_CONFIGURATION);
+		createEAttribute(versionConfigurationEClass, VERSION_CONFIGURATION__VERSION);
+		createEAttribute(versionConfigurationEClass, VERSION_CONFIGURATION__TRANSLATION_HANDLER);
+		createEReference(versionConfigurationEClass, VERSION_CONFIGURATION__SUPPORTED_VERSIONS);
+
+		versionTranslationEClass = createEClass(VERSION_TRANSLATION);
+		createEReference(versionTranslationEClass, VERSION_TRANSLATION__STEPS);
+
+		versionTranslationStepEClass = createEClass(VERSION_TRANSLATION_STEP);
+
+		attributeTranslationStepEClass = createEClass(ATTRIBUTE_TRANSLATION_STEP);
+		createEAttribute(attributeTranslationStepEClass, ATTRIBUTE_TRANSLATION_STEP__ATTRIBUTE);
+		createEAttribute(attributeTranslationStepEClass, ATTRIBUTE_TRANSLATION_STEP__CURRENT_VALUE);
+		createEAttribute(attributeTranslationStepEClass, ATTRIBUTE_TRANSLATION_STEP__OLD_VALUE);
 
 		// Create enums
 		responseStatusEEnum = createEEnum(RESPONSE_STATUS);
@@ -580,6 +736,9 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 		southBoundApiWithProxyEClass.getESuperTypes().add(this.getSouthBoundApi());
 		abstractManagementServerEClass.getESuperTypes().add(this.getSouthBoundApiWithProxy());
 		abstractManagementServerConfigurationEClass.getESuperTypes().add(thePropertiesPackage.getModuleContainer());
+		versionTranslationEClass.getESuperTypes().add(theCorePackage.getNamedEntity());
+		versionTranslationStepEClass.getESuperTypes().add(theCorePackage.getNamedEntity());
+		attributeTranslationStepEClass.getESuperTypes().add(this.getVersionTranslationStep());
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(southBoundApiWithProxyEClass, SouthBoundApiWithProxy.class, "SouthBoundApiWithProxy", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -615,7 +774,7 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 		initEClass(loggerInfoEClass, LoggerInfo.class, "LoggerInfo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getLoggerInfo_Name(), theEcorePackage.getEString(), "name", null, 0, 1, LoggerInfo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(abstractManagementServerEClass, AbstractManagementServer.class, "AbstractManagementServer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEClass(abstractManagementServerEClass, AbstractManagementServer.class, "AbstractManagementServer", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEReference(getAbstractManagementServer_Configuration(), this.getAbstractManagementServerConfiguration(), null, "configuration", null, 0, 1, AbstractManagementServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractManagementServer_Component(), theComponentPackage.getComponent(), null, "component", null, 0, 1, AbstractManagementServer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -662,6 +821,22 @@ public class ServerPackageImpl extends EPackageImpl implements ServerPackage {
 		initEReference(getAbstractManagementServerConfiguration_TableTemplates(), theTableTemplatePackage.getAbstractTableTemplate(), null, "tableTemplates", null, 0, -1, AbstractManagementServerConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getAbstractManagementServerConfiguration_AlertTemplates(), theAlertsPackage.getAlertingTemplate(), null, "alertTemplates", null, 0, -1, AbstractManagementServerConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
 		initEReference(getAbstractManagementServerConfiguration_Functions(), theFunctionPackage.getFunction(), null, "functions", null, 0, -1, AbstractManagementServerConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, !IS_ORDERED);
+		initEReference(getAbstractManagementServerConfiguration_Version(), this.getVersionConfiguration(), null, "version", null, 0, 1, AbstractManagementServerConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(versionConfigurationEClass, VersionConfiguration.class, "VersionConfiguration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getVersionConfiguration_Version(), theEcorePackage.getEString(), "version", null, 0, 1, VersionConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getVersionConfiguration_TranslationHandler(), theEcorePackage.getEString(), "translationHandler", null, 0, 1, VersionConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getVersionConfiguration_SupportedVersions(), this.getVersionTranslation(), null, "supportedVersions", null, 0, -1, VersionConfiguration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(versionTranslationEClass, VersionTranslation.class, "VersionTranslation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getVersionTranslation_Steps(), this.getVersionTranslationStep(), null, "steps", null, 0, -1, VersionTranslation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(versionTranslationStepEClass, VersionTranslationStep.class, "VersionTranslationStep", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(attributeTranslationStepEClass, AttributeTranslationStep.class, "AttributeTranslationStep", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getAttributeTranslationStep_Attribute(), theEcorePackage.getEString(), "attribute", null, 0, 1, AttributeTranslationStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAttributeTranslationStep_CurrentValue(), theEcorePackage.getEString(), "currentValue", null, 0, 1, AttributeTranslationStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getAttributeTranslationStep_OldValue(), theEcorePackage.getEString(), "oldValue", null, 0, 1, AttributeTranslationStep.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(responseStatusEEnum, ResponseStatus.class, "ResponseStatus");

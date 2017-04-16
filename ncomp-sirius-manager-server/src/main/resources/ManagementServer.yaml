@@ -1,0 +1,63 @@
+
+package-name: org.openecomp.ncomp.sirius.manager.logging
+java-root: src/main/java-gen
+resources-root: src/main/resources-gen
+
+messages:
+  MANAGEMENT-SERVER-WEB-REQUEST-WITHOUT-HANDLER:
+    errorCode: 4011E
+    messageFormat: No Handler {0}
+    resolution: Root cause need to be determined.
+    description: Web request that server did not understand.
+  MANAGEMENT-SERVER-WEB-REQUEST-UNKNOWN-RETURN-CLASS:
+    errorCode: 5011E
+    messageFormat: type={0}
+    resolution: Root cause need to be determined.
+    description: Web request handler cannot return the object created.
+  MANAGEMENT-SERVER-WEB-REQUEST-UNSUPPORTED-CONTENT-TYPE:
+    errorCode: 4012E
+    messageFormat: type={0}
+    resolution: Root cause need to be determined.
+    description: Web request handler cannot support the requested content type.
+  MANAGEMENT-SERVER-WEB-REQUEST-UNKNOWN-EXCEPTION:
+    errorCode: 4012E
+    messageFormat: type={0}
+    resolution: Root cause need to be determined.
+    description: Web request handler got an unknown expection.
+  MANAGEMENT-SERVER-RESOURCE-DOES-NOT-EXIST:
+    errorCode: 4012E
+    messageFormat: No resource with path={0}
+    resolution: Root cause need to be determined.
+    description: No resource with this path exists in server.  
+  MANAGEMENT-SERVER-RESOURCE-EXIST:
+    errorCode: 4012E
+    messageFormat: No resource with path={0}
+    resolution: Root cause need to be determined.
+    description: Resource with this path already exists in server.  
+  MANAGEMENT-SERVER-ACTION-FORBIDDEN:
+    errorCode: 4030E
+    messageFormat: user={0} action={1} path={2}
+    resolution: Root cause need to be determined.
+    description: Action forbidden.
+  MANAGEMENT-SERVER-UNKNOWN-SERVICE-FAILED:
+    errorCode: 4031W
+    messageFormat: exception={0} target={1}
+    resolution: Root cause need to be determined.
+    description: HTTP request to unknown service failed.
+  MANAGEMENT-SERVER-JSON-VERSION-MISMATCH:
+    errorCode: 4032W
+    messageFormat: real version={0} expected version={1}
+    resolution: Root cause need to be determined.
+    description: Expected JSON version is not the same as the actual version.
+            
+operations:
+  MANAGEMENT-SERVER-CREATE-RESOURCE:
+    description: Create object in management server
+  MANAGEMENT-SERVER-UPDATE-RESOURCE:
+    description: Update object in management server
+  MANAGEMENT-SERVER-LIST-RESOURCE:
+    description: List object in management server
+  MANAGEMENT-SERVER-DELETE-RESOURCE:
+    description: Delete object in management server    
+  MANAGEMENT-SERVER-UNKNOWN-SERVICE:
+    description: Connection to unknown service.

@@ -40,11 +40,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphEdgeImpl#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphEdgeImpl#getY <em>Y</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

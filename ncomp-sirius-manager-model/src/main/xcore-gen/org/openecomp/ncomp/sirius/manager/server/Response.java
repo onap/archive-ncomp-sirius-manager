@@ -32,11 +32,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.Response#getStatus <em>Status</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.Response#getMessage <em>Message</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.server.ServerPackage#getResponse()
  * @model

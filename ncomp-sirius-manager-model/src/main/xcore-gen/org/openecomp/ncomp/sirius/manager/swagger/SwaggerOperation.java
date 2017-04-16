@@ -34,6 +34,7 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerOperation#getTags <em>Tags</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerOperation#getSummary <em>Summary</em>}</li>
@@ -46,7 +47,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerOperation#getSecurity <em>Security</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerOperation#isDeprecated <em>Deprecated</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage#getSwaggerOperation()
  * @model

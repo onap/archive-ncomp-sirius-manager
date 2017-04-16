@@ -31,13 +31,13 @@ package org.openecomp.ncomp.sirius.manager.graph;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphNode#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphNode#getY <em>Y</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphNode#getH <em>H</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphNode#getW <em>W</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.graph.GraphPackage#getGuiGraphNode()
  * @model

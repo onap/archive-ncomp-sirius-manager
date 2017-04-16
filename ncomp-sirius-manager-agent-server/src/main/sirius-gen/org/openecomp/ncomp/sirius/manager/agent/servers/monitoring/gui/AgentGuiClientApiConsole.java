@@ -23,9 +23,12 @@
 // Do not edit but extend this class as needed
 package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.gui;
 
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+
 import org.openecomp.ncomp.sirius.manager.console.Console;
+import org.openecomp.ncomp.sirius.manager.AbstractClient;
 import org.openecomp.ncomp.sirius.manager.ManagementServerError;
 
 
@@ -44,6 +47,12 @@ public class AgentGuiClientApiConsole extends Console {
             client = controller.client;
 
     }
+    
+	public AgentGuiClientApiConsole(AbstractClient c) {
+        controller = new AgentGuiClientApiClient(c);
+        client = controller.client;
+    }
+
 
 	public org.openecomp.ncomp.gwt.siriusportal.model.GuiTree getTree() {
 		org.openecomp.ncomp.gwt.siriusportal.model.GuiTree res = null;

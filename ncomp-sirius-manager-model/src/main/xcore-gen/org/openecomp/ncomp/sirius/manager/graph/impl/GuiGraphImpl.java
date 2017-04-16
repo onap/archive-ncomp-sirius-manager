@@ -48,11 +48,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphImpl#getNodes <em>Nodes</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphImpl#getEdges <em>Edges</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

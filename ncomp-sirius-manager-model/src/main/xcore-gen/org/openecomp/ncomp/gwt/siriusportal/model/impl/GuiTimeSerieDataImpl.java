@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieDataImpl#getTime <em>Time</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieDataImpl#getValue <em>Value</em>}</li>
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieDataImpl#getMin <em>Min</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieDataImpl#getNum <em>Num</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

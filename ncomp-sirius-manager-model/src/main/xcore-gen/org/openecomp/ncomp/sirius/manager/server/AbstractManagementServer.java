@@ -39,14 +39,14 @@ import org.json.JSONObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServer#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServer#getComponent <em>Component</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.server.ServerPackage#getAbstractManagementServer()
- * @model
+ * @model abstract="true"
  * @generated
  */
 public interface AbstractManagementServer extends SouthBoundApiWithProxy {

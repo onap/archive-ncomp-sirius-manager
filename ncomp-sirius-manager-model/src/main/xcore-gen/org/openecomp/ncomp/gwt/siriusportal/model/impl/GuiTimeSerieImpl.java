@@ -50,6 +50,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieImpl#getXAxisLabel <em>XAxis Label</em>}</li>
@@ -60,7 +61,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieImpl#isIsRate <em>Is Rate</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTimeSerieImpl#getData <em>Data</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

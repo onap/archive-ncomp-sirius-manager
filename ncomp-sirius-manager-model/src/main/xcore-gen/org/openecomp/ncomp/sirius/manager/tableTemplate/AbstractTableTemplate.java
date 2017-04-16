@@ -32,11 +32,11 @@ import org.openecomp.ncomp.core.NamedEntity;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.AbstractTableTemplate#getTreePath <em>Tree Path</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.AbstractTableTemplate#getTablePath <em>Table Path</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getAbstractTableTemplate()
  * @model abstract="true"

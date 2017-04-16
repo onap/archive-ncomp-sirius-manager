@@ -26,7 +26,6 @@ package org.openecomp.ncomp.sirius.manager.agent.collectd;
 import org.openecomp.ncomp.core.NamedEntity;
 
 import org.openecomp.ncomp.core.alerts.AlertContainer;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
 
 /**
@@ -36,6 +35,7 @@ import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInterface#getIf_errors_rx <em>If errors rx</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInterface#getIf_errors_tx <em>If errors tx</em>}</li>
@@ -46,7 +46,6 @@ import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInterface#getIf_packets_rx <em>If packets rx</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInterface#getIf_packets_tx <em>If packets tx</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdKvmInterface()
  * @model

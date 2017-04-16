@@ -32,11 +32,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerXml#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerXml#isWrapped <em>Wrapped</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage#getSwaggerXml()
  * @model

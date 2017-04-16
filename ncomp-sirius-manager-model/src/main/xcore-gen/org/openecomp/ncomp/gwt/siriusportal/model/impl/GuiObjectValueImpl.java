@@ -39,11 +39,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiObjectValueImpl#getValueName <em>Value Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiObjectValueImpl#getTooltip <em>Tooltip</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -26,17 +26,16 @@ package $packageName;
 import static org.openecomp.ncomp.utils.PropertyUtil.getPropertiesFromClasspath;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EFactory;
-
-import org.openecomp.entity.EcompComponent;
-import org.openecomp.entity.EcompSubComponent;
-import org.openecomp.entity.EcompSubComponentInstance;
+import org.json.JSONObject;
 import org.openecomp.ncomp.sirius.manager.Jetty8Server;
 import org.openecomp.ncomp.sirius.manager.ManagementServer;
+import org.openecomp.ncomp.sirius.manager.IRequestHandler;
 import org.openecomp.ncomp.sirius.manager.ISiriusServer;
 
 import ${p.nsURI}.${name};
@@ -55,7 +54,7 @@ import ${api.packageName()}.${prefix}${api.o.eClass().name}Client;
 <% } %>
 
 
-public class $cName implements ISiriusServer {
+public class $cName implements ISiriusServer, IRequestHandler {
     public static final Logger logger = Logger.getLogger(${cName}.class);
     String serverPath;
     ManagementServer server;
@@ -82,6 +81,7 @@ public class $cName implements ISiriusServer {
 		props = getPropertiesFromClasspath(filename);
         serverPath = (String) props.get("server.dir");
         server = new ManagementServer(f, "${name}", serverPath, filename);
+        ManagementServer.setBuildVersion($version);
         server.addFactory(f);
 <% g.factories.each { factory -> 
   if (g.useNew[factory]) { %>    
@@ -97,6 +97,7 @@ public class $cName implements ISiriusServer {
         controller = (${prefix}${name}) server.find("/").o;
         webServer = new Jetty8Server("${nsPrefix}.properties");
         webServer.add("/resources",server);
+        webServer.add("/api",this);
 <% g.aliases.each { %>   
 		webServer.add("$it",controller);
 <%}%>
@@ -132,4 +133,17 @@ public class $cName implements ISiriusServer {
 	public ManagementServer getServer() {
 		return server;
 	}
+	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context,
+			String clientVersion) {
+		switch ((String) context.get("path")) {
+		case "/api/versions":
+			return server.supportedVersions();
+		}
+		logger.warn("Unknown request action=" + action + " path=" + resourcePath + " context=" + context.toString(2));
+		throw new RuntimeException("Unknown request");
+	}
+	public Object handleBinary(String userName, String action, String resourcePath, InputStream in) {
+		return null;
+	}
+
 }

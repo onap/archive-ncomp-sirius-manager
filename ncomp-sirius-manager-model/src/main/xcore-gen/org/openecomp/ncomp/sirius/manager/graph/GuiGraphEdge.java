@@ -31,11 +31,11 @@ package org.openecomp.ncomp.sirius.manager.graph;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphEdge#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphEdge#getY <em>Y</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.graph.GraphPackage#getGuiGraphEdge()
  * @model

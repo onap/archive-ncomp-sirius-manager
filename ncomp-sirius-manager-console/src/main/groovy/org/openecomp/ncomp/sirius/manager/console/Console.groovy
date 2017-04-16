@@ -38,7 +38,7 @@ import static org.openecomp.ncomp.sirius.manager.console.Utils.*
 import static org.openecomp.ncomp.webservice.utils.DateUtils.dateFromString
 
 class Console {
-	protected AbstractClient client
+	public AbstractClient client
 	private String language
 	private String namespace
 	public Console(String filename, String name) {

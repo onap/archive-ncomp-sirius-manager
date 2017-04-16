@@ -31,6 +31,7 @@ package org.openecomp.ncomp.sirius.manager.swagger;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerSimpleObjectType#isRequired <em>Required</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerSimpleObjectType#getFormat <em>Format</em>}</li>
@@ -40,7 +41,6 @@ package org.openecomp.ncomp.sirius.manager.swagger;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerSimpleObjectType#getExample <em>Example</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerSimpleObjectType#getCollectionFormat <em>Collection Format</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage#getSwaggerSimpleObjectType()
  * @model

@@ -31,10 +31,10 @@ package org.openecomp.ncomp.sirius.manager.tableTemplate;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplate#getRowPath <em>Row Path</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getTableTemplate()
  * @model

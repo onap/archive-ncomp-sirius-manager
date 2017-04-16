@@ -26,7 +26,6 @@ package org.openecomp.ncomp.sirius.manager.agent.collectd;
 import org.openecomp.ncomp.core.NamedEntity;
 
 import org.openecomp.ncomp.core.alerts.AlertContainer;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
 
 /**
@@ -36,6 +35,7 @@ import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk#getDisk_merged_read <em>Disk merged read</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk#getDisk_merged_write <em>Disk merged write</em>}</li>
@@ -46,7 +46,6 @@ import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk#getDisk_time_read <em>Disk time read</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk#getDisk_time_write <em>Disk time write</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdDisk()
  * @model

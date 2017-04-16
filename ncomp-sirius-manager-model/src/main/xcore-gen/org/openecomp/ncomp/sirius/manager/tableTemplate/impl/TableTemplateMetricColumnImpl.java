@@ -41,11 +41,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.TableTemplateMetricColumnImpl#getPath <em>Path</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.TableTemplateMetricColumnImpl#getOption <em>Option</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

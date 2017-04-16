@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerSimpleObjectTypeImpl#isRequired <em>Required</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerSimpleObjectTypeImpl#getFormat <em>Format</em>}</li>
@@ -45,7 +46,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerSimpleObjectTypeImpl#getExample <em>Example</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerSimpleObjectTypeImpl#getCollectionFormat <em>Collection Format</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

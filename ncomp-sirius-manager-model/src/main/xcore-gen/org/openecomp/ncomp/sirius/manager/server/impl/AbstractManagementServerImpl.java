@@ -48,15 +48,15 @@ import org.json.JSONObject;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerImpl#getComponent <em>Component</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
-public class AbstractManagementServerImpl extends SouthBoundApiWithProxyImpl implements AbstractManagementServer {
+public abstract class AbstractManagementServerImpl extends SouthBoundApiWithProxyImpl implements AbstractManagementServer {
 	/**
 	 * The cached value of the '{@link #getConfiguration() <em>Configuration</em>}' containment reference.
 	 * <!-- begin-user-doc -->

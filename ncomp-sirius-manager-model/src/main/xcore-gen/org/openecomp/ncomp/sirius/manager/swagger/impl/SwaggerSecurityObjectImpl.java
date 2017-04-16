@@ -41,10 +41,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerSecurityObjectImpl#getList <em>List</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

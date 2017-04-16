@@ -23,9 +23,6 @@
  */
 package org.openecomp.ncomp.sirius.manager.agent.collectd.impl;
 
-import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
-import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdProcesses;
 
@@ -35,6 +32,8 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
+import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
 
 /**
  * <!-- begin-user-doc -->
@@ -42,6 +41,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdProcessesImpl#getFork_rate <em>Fork rate</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdProcessesImpl#getBlocked <em>Blocked</em>}</li>
@@ -51,7 +51,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdProcessesImpl#getStopped <em>Stopped</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdProcessesImpl#getZombies <em>Zombies</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

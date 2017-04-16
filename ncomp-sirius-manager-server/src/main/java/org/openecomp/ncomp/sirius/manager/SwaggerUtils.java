@@ -99,14 +99,14 @@ public class SwaggerUtils {
 
 	private static void test2() {
 		SwaggerUtils u = new SwaggerUtils();
-		AbstractManagementServer s = ServerFactory.eINSTANCE.createAbstractManagementServer();
-		s.setConfiguration(ServerFactory.eINSTANCE.createAbstractManagementServerConfiguration());
-		s.setComponent(ComponentFactory.eINSTANCE.createComponent());
-		u.addTag("/foo/configuration", "The Config Tag");
-		u.addTag("/foo/component", "The Component Tag");
-		u.addTag("/foo", "The Foo Tag");
-		u.autoAdd("/foo", s.eClass(), 2);
-		System.out.println(u.toJson().toString(2));
+//		AbstractManagementServer s = ServerFactory.eINSTANCE.createAbstractManagementServer();
+//		s.setConfiguration(ServerFactory.eINSTANCE.createAbstractManagementServerConfiguration());
+//		s.setComponent(ComponentFactory.eINSTANCE.createComponent());
+//		u.addTag("/foo/configuration", "The Config Tag");
+//		u.addTag("/foo/component", "The Component Tag");
+//		u.addTag("/foo", "The Foo Tag");
+//		u.autoAdd("/foo", s.eClass(), 2);
+//		System.out.println(u.toJson().toString(2));
 	}
 
 	@SuppressWarnings("unused")

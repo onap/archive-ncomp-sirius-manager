@@ -45,13 +45,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ManagementInfoImpl#getIp <em>Ip</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ManagementInfoImpl#getMetrics <em>Metrics</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ManagementInfoImpl#getLogs <em>Logs</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ManagementInfoImpl#getProps <em>Props</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -42,15 +42,22 @@ import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.server.ssl.SslSelectChannelConnector;
 import org.eclipse.jetty.util.B64Code;
 import org.eclipse.jetty.util.StringUtil;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
-import org.openecomp.logger.EcompLogger;
+import org.openecomp.entity.EcompSubComponentInstance;
+import org.openecomp.logger.EcompException;
+import org.openecomp.logger.EcompMessageEnum;
+import org.openecomp.logger.StatusCodeEnum;
+import com.att.eelf.i18n.EELFResourceManager;
+import org.openecomp.ncomp.sirius.manager.logging.ManagementServerMessageEnum;
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
 import org.openecomp.ncomp.utils.PropertyUtil;
 import org.openecomp.ncomp.webservice.utils.JsonUtils;
 
 public class Jetty8Server {
 	public static final Logger logger = Logger.getLogger(Jetty8Server.class);
-	static final EcompLogger ecomplogger = EcompLogger.getEcompLogger();
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
 	Server server;
 	private SelectChannelConnector conn1;
 	private int actualport;
@@ -87,13 +94,20 @@ public class Jetty8Server {
 				logger.info("Authorization not valid");
 				return;
 			}
+			if (request.getRemoteHost() != null) ecomplogger.setRemoteHost(request.getRemoteHost());
+			if (userName != null) ecomplogger.setPartnerName(userName);
+			ecomplogger.startUnknownAuditEvent(contextPath);
 			String requestId = request.getHeader("X-ECOMP-RequestID");
 			if (requestId == null) {
 				ecomplogger.newRequestId();
+				ecomplogger.missingRequestId(request);
 			}
 			else {
-				ecomplogger.setRequestId(requestId);;
+				ecomplogger.setRequestId(requestId);
 			}
+			String clientVersion = request.getHeader("X-ECOMP-Client-Version");
+			if (clientVersion == null) clientVersion = "UNKNOWN";
+			ecomplogger.setInstanceId(EcompSubComponentInstance.getServerName() + ":" + props.getProperty("server.port") + contextPath);
 			String action = request.getHeader("action");
 			if (action == null) {
 				String method = request.getMethod();
@@ -104,13 +118,14 @@ public class Jetty8Server {
 			String contextPath1 = null;
 			IRequestHandler handler = null;
 			for (String prefix : handlerMap.keySet()) {
-				if (contextPath.startsWith(prefix)) {
+				if (contextPath.equals(prefix) || contextPath.startsWith(prefix + "/")) {
 					contextPath1 = contextPath.substring(prefix.length());
 					handler = handlerMap.get(prefix);
 				}
 			}
 			if (handler == null) {
 				logger.warn("request with no handler: " + contextPath);
+				handleError(jRequest,response,ManagementServerMessageEnum.MANAGEMENT_SERVER_WEB_REQUEST_WITHOUT_HANDLER,contextPath);
 				return;
 			}
 			try {
@@ -120,18 +135,16 @@ public class Jetty8Server {
 //					System.err.println(s); 
 //					JSONObject json = new JSONObject(new String(s.toByteArray()));
 					JSONObject json = JsonUtils.stream2json(request.getInputStream());
-					res = handler.handleJson(userName, action, contextPath1, json, req2context(contextPath, jRequest, userName));
-				} else
-					throw new ManagerException(HttpServletResponse.SC_BAD_REQUEST, "Cannot use content type: "
-							+ jRequest.getContentType());
-			} catch (ManagerException e) {
-				setResponseHeaders(response);
-				response.sendError(e.code, e.getMessage());
-				ManagementServerUtils.printStackTrace(e);
+					res = handler.handleJson(userName, action, contextPath1, json, req2context(contextPath, jRequest, userName), clientVersion);
+				} else {
+					handleError(jRequest,response,ManagementServerMessageEnum.MANAGEMENT_SERVER_WEB_REQUEST_UNSUPPORTED_CONTENT_TYPE,jRequest.getContentType());
+					return;
+				}
+			} catch (EcompException e) {
+				handleError(jRequest, response, e.msgEnum, e.args);
 				return;
 			} catch (Exception e) {
-				ManagementServerUtils.printStackTrace(e);
-				response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+				handleError(jRequest,response,ManagementServerMessageEnum.MANAGEMENT_SERVER_WEB_REQUEST_UNKNOWN_EXCEPTION,e.getMessage());
 				return;
 			}
 			if (res != null) {
@@ -141,15 +154,19 @@ public class Jetty8Server {
 					PrintWriter w = response.getWriter();
 					w.append(json1.toString(2));
 					w.close();
-					response.setStatus(200);
-					jRequest.setHandled(true);
-				} else
-					response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Unable to handle output object: "
-							+ res.getClass().getName());
-				return;
+				} else if (res instanceof JSONArray) {
+					JSONArray json1 = (JSONArray) res;
+					PrintWriter w = response.getWriter();
+					w.append(json1.toString(2));
+					w.close();	
+				} else {
+					handleError(jRequest,response,ManagementServerMessageEnum.MANAGEMENT_SERVER_WEB_REQUEST_UNKNOWN_RETURN_CLASS,res.getClass().getName());
+					return;
+				}
 			}
 			response.setStatus(HttpServletResponse.SC_OK);
-			jRequest.setHandled(true);
+			jRequest.setHandled(true);	
+			ecomplogger.recordAuditEventEnd();
 		}
 
 		private void setResponseHeaders(HttpServletResponse response) {
@@ -160,6 +177,26 @@ public class Jetty8Server {
 					response.setHeader(s.substring(14), props.getProperty(s));
 				}
 			}
+		}
+		
+		private void handleError(Request jRequest, HttpServletResponse response, EcompMessageEnum msg, String... args) throws IOException {
+			try {
+				ecomplogger.warn(msg, args);
+				ecomplogger.recordAuditEventEnd(StatusCodeEnum.ERROR, msg, args);
+				String s = EELFResourceManager.getIdentifier(msg);
+				// Assume s ends in something like 4015W
+				int httpErrorCode = 501;
+				try {
+					String error = s.substring(s.length()-5,s.length()-2);
+					httpErrorCode = Integer.parseInt(error);
+				} catch (Exception e) {
+				}
+				response.sendError(httpErrorCode, EELFResourceManager.format(msg,args));
+			} catch (Exception e) {
+				ManagementServerUtils.printStackTrace(e);
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,e.getMessage());
+			}
+			jRequest.setHandled(true);
 		}
 
 		private JSONObject req2context(String contextPath, Request jRequest, String user) {
@@ -195,10 +232,10 @@ public class Jetty8Server {
 				f.setTrustStore(props.getProperty("server.trustStore"));
 				f.setTrustStorePassword(props.getProperty("server.trustStorePassword"));
 				logger.info("HTTPS excluded protocols: " + Arrays.asList(f.getExcludeProtocols()));
-				f.addExcludeProtocols("SSLv1","SSLv2","SSLv3");
+				f.addExcludeProtocols("SSLv1", "SSLv2", "SSLv3");
 				logger.info("HTTPS excluded protocols after fix: " + Arrays.asList(f.getExcludeProtocols()));
 				SslSelectChannelConnector c = new SslSelectChannelConnector(f);
-				c.setPort(port); 
+				c.setPort(port);
 				c.setMaxIdleTime(30000);
 				server.addConnector(c);
 				conn1 = c;
@@ -221,19 +258,21 @@ public class Jetty8Server {
 				logger.info("Adding HTTP on secondary port: " + port);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			ManagementServerUtils.printStackTrace(e);
 		}
 	}
-	
+
 	/**
-	 *	In unit testing, we want to start on an operating system selected port number, so we configure a port number of 0, and then use this to find out the real port number
+	 * In unit testing, we want to start on an operating system selected port
+	 * number, so we configure a port number of 0, and then use this to find out
+	 * the real port number
 	 */
 	public int getPort() {
-		return(actualport);
+		return (actualport);
 	}
+
 	/**
-	 *	In unit testing, we want to shut down the server
+	 * In unit testing, we want to shut down the server
 	 */
 	public void stop() {
 		try {
@@ -256,7 +295,6 @@ public class Jetty8Server {
 			actualport = conn1.getLocalPort();
 			server.join();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			ManagementServerUtils.printStackTrace(e);
 		}
 	}
@@ -273,7 +311,7 @@ public class Jetty8Server {
 	class DummyRequestHandler implements IRequestHandler {
 		@Override
 		public Object handleJson(String userName, String action, String resourcePath, JSONObject json,
-				JSONObject context) {
+				JSONObject context, String clientVersion) {
 			logger.debug("handleJson: user=" + userName + " action=" + action + " path=" + resourcePath + " json="
 					+ json);
 			return null;
@@ -300,7 +338,6 @@ public class Jetty8Server {
 				actualport = conn1.getLocalPort();
 				server.join();
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				ManagementServerUtils.printStackTrace(e);
 			}
 		}
@@ -334,7 +371,7 @@ public class Jetty8Server {
 		String pw2 = props.getProperty("server.user." + user);
 		boolean valid = pw.equals(JavaHttpClient.decryptPassword(pw2));
 		if (!valid)
-			logger.warn("Authorization: bad PW: " + user +"@" + r.getRemoteAddr() + " " + pw.substring(0, 2));
+			logger.warn("Authorization: bad PW: " + user + "@" + r.getRemoteAddr() + " " + pw.substring(0, 2));
 		return valid ? user : null;
 	}
 

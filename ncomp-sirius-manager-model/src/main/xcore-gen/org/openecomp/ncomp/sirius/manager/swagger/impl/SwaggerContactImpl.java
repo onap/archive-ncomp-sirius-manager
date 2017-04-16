@@ -39,10 +39,10 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerContactImpl#getEmail <em>Email</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -38,13 +38,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiDiagramRectangleImpl#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiDiagramRectangleImpl#getY <em>Y</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiDiagramRectangleImpl#getH <em>H</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiDiagramRectangleImpl#getW <em>W</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

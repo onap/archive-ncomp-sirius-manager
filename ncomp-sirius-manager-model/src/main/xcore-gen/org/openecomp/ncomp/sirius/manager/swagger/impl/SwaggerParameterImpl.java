@@ -40,11 +40,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerParameterImpl#getIn <em>In</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerParameterImpl#getType <em>Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

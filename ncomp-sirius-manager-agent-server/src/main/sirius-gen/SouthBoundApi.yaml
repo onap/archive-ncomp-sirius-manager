@@ -1,0 +1,30 @@
+operations:
+  SouthBoundApi@logs: {}
+  SouthBoundApi@metrics: {}
+  SouthBoundApi@properties: {}
+messages:
+  dummy: {}
+  REQUEST-FAILED-logs:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-metrics:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-properties:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REMOTE-CALL-FAILED-logs:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-metrics:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-properties:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception

@@ -1,0 +1,57 @@
+operations:
+  GuiClientApi@getTree: {}
+  GuiClientApi@getObject: {}
+  GuiClientApi@getTimeSerie: {}
+  GuiClientApi@getTable: {}
+  GuiClientApi@getHtml: {}
+  GuiClientApi@getGraph: {}
+messages:
+  dummy: {}
+  REQUEST-FAILED-getTree:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getObject:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getTimeSerie:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getTable:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getHtml:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getGraph:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REMOTE-CALL-FAILED-getTree:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getObject:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getTimeSerie:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getTable:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getHtml:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getGraph:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception

@@ -41,6 +41,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.LogTableTemplateImpl#getMinLevel <em>Min Level</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.LogTableTemplateImpl#getMinSeverity <em>Min Severity</em>}</li>
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.LogTableTemplateImpl#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.LogTableTemplateImpl#getAggregationDuration <em>Aggregation Duration</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

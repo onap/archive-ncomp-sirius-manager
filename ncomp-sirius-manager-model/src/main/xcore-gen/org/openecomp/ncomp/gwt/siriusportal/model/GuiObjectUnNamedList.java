@@ -32,10 +32,10 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiObjectUnNamedList#getObjects <em>Objects</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiObjectUnNamedList()
  * @model

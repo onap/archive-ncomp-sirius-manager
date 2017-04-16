@@ -40,11 +40,11 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ResponseImpl#getStatus <em>Status</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.ResponseImpl#getMessage <em>Message</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

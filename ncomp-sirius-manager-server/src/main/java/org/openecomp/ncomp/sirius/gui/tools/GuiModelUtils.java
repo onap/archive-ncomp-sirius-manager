@@ -499,7 +499,7 @@ public class GuiModelUtils {
 			// TODO handle parameters.
 			return logsReport(s, "", DateUtils.dateFromString("-24hour"), new Date(),LogLevel.DEBUG,LogSeverity.SEV4);
 		}
-		throw new RuntimeException("Unable to create table: " + path);
+		throw new RuntimeException("Unable to find table: " + path);
 	}
 
 	private static GuiTable tableFromIteratorTableTemplate(ManagementServer s, EObject o, IteratorTableTemplate t) {

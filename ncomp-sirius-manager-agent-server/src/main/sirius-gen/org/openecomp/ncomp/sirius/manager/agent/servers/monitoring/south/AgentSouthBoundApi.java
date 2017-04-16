@@ -23,17 +23,37 @@
 // Do not edit. No need to extend this class.
 package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south;
 
+
+
+
+
 import java.io.InputStream;
+
 import org.openecomp.ncomp.sirius.manager.IRequestHandler;
+import org.openecomp.ncomp.sirius.manager.ISwaggerHandler;
 import org.openecomp.ncomp.sirius.manager.ISiriusPlugin;
 import org.openecomp.ncomp.sirius.manager.ISiriusServer;
+import org.openecomp.ncomp.sirius.manager.ISiriusProvider;
+import org.openecomp.ncomp.sirius.manager.ManagementServer;
+import org.openecomp.ncomp.sirius.manager.SwaggerUtils;
 import org.openecomp.ncomp.sirius.function.FunctionUtils;
 import org.openecomp.ncomp.component.ApiRequestStatus;
 
 import org.apache.log4j.Logger;
+
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.json.JSONObject;
+
 import java.util.Date;
+
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.logging.SouthBoundApiOperationEnum;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.logging.SouthBoundApiMessageEnum;
+
 
 
 
@@ -41,9 +61,10 @@ import org.openecomp.ncomp.sirius.manager.server.impl.SouthBoundApiImpl;
 
 
 
-public class AgentSouthBoundApi extends SouthBoundApiImpl {
+public class AgentSouthBoundApi extends SouthBoundApiImpl implements ISiriusProvider {
 	public static final Logger logger = Logger.getLogger(AgentSouthBoundApi.class);
-	AgentSouthBoundApiProvider controller;
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
+	public AgentSouthBoundApiProvider controller;
 	ISiriusServer server;
 
 	public AgentSouthBoundApi(ISiriusServer server) {
@@ -57,6 +78,8 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 		if (server != null)
 			server.getServer().recordApi(null, this, "logs", ApiRequestStatus.START, duration_,cx,logs);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SouthBoundApiOperationEnum.SouthBoundApi_logs,server,this);
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_logs,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.logs(cx,logs);
 		}
@@ -65,8 +88,12 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 			if (server != null)
 				server.getServer().recordApi(null, this, "logs", ApiRequestStatus.ERROR, duration_,cx,logs);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SouthBoundApiMessageEnum.REQUEST_FAILED_logs, e.toString());
+			EcompException e1 =  EcompException.create(SouthBoundApiMessageEnum.REQUEST_FAILED_logs,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SouthBoundApiMessageEnum.REQUEST_FAILED_logs, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "logs", ApiRequestStatus.OKAY, duration_,cx,logs);
@@ -79,6 +106,8 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 		if (server != null)
 			server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.START, duration_,cx,metrics);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SouthBoundApiOperationEnum.SouthBoundApi_metrics,server,this);
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_metrics,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.metrics(cx,metrics);
 		}
@@ -87,8 +116,12 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 			if (server != null)
 				server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.ERROR, duration_,cx,metrics);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SouthBoundApiMessageEnum.REQUEST_FAILED_metrics, e.toString());
+			EcompException e1 =  EcompException.create(SouthBoundApiMessageEnum.REQUEST_FAILED_metrics,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SouthBoundApiMessageEnum.REQUEST_FAILED_metrics, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.OKAY, duration_,cx,metrics);
@@ -101,6 +134,8 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 		if (server != null)
 			server.getServer().recordApi(null, this, "properties", ApiRequestStatus.START, duration_,cx,l);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SouthBoundApiOperationEnum.SouthBoundApi_properties,server,this);
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_properties,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.properties(cx,l);
 		}
@@ -109,8 +144,12 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 			if (server != null)
 				server.getServer().recordApi(null, this, "properties", ApiRequestStatus.ERROR, duration_,cx,l);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SouthBoundApiMessageEnum.REQUEST_FAILED_properties, e.toString());
+			EcompException e1 =  EcompException.create(SouthBoundApiMessageEnum.REQUEST_FAILED_properties,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SouthBoundApiMessageEnum.REQUEST_FAILED_properties, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "properties", ApiRequestStatus.OKAY, duration_,cx,l);
@@ -122,8 +161,12 @@ public class AgentSouthBoundApi extends SouthBoundApiImpl {
 
 
 
+
+
 	public static void ecoreSetup() {
 		AgentSouthBoundApiProvider.ecoreSetup();
 	}
-	
+	public AgentSouthBoundApiProvider getSiriusProvider() {
+		return controller;
+	}
 }

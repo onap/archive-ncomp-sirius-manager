@@ -40,11 +40,11 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.AbstractTableTemplateImpl#getTreePath <em>Tree Path</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.AbstractTableTemplateImpl#getTablePath <em>Table Path</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -26,7 +26,6 @@ package org.openecomp.ncomp.sirius.manager.agent.collectd;
 import org.openecomp.ncomp.core.NamedEntity;
 
 import org.openecomp.ncomp.core.alerts.AlertContainer;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
 
 /**
@@ -36,13 +35,13 @@ import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmDisk#getDisk_octets_read <em>Disk octets read</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmDisk#getDisk_octets_write <em>Disk octets write</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmDisk#getDisk_ops_read <em>Disk ops read</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmDisk#getDisk_ops_write <em>Disk ops write</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdKvmDisk()
  * @model

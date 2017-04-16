@@ -32,11 +32,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiObjectValue#getValueName <em>Value Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiObjectValue#getTooltip <em>Tooltip</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiObjectValue()
  * @model abstract="true"

@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerInfo#getDescription <em>Description</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerInfo#getVersion <em>Version</em>}</li>
@@ -40,7 +41,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerInfo#getContact <em>Contact</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerInfo#getLicense <em>License</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage#getSwaggerInfo()
  * @model

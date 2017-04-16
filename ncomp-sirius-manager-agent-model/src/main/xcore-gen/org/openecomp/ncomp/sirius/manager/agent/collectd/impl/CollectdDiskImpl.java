@@ -29,9 +29,7 @@ import org.openecomp.ncomp.core.alerts.AlertingTemplate;
 import org.openecomp.ncomp.core.alerts.AlertsPackage;
 
 import org.openecomp.ncomp.core.impl.NamedEntityImpl;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage;
 
@@ -56,6 +54,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdDiskImpl#getAlerts <em>Alerts</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdDiskImpl#getAlertingTemplate <em>Alerting Template</em>}</li>
@@ -68,7 +67,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdDiskImpl#getDisk_time_read <em>Disk time read</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdDiskImpl#getDisk_time_write <em>Disk time write</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

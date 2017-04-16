@@ -31,10 +31,10 @@ package org.openecomp.ncomp.gwt.siriusportal.model;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiObjectValueTimeSeries#getPath <em>Path</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiObjectValueTimeSeries()
  * @model

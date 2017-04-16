@@ -40,6 +40,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTableColumnImpl#getColName <em>Col Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTableColumnImpl#getTooltip <em>Tooltip</em>}</li>
@@ -48,7 +49,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTableColumnImpl#isHidden <em>Hidden</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.impl.GuiTableColumnImpl#getColumnType <em>Column Type</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

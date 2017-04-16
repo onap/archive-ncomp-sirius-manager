@@ -26,7 +26,6 @@ package org.openecomp.ncomp.sirius.manager.agent.collectd;
 import org.openecomp.ncomp.core.NamedEntity;
 
 import org.openecomp.ncomp.core.alerts.AlertContainer;
-
 import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 
 /**
@@ -36,11 +35,11 @@ import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdFileSystem#getUsed <em>Used</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdFileSystem#getFree <em>Free</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdFileSystem()
  * @model

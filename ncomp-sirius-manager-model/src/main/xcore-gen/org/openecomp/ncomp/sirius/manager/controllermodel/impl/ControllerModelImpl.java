@@ -39,6 +39,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.controllermodel.impl.ControllerModelImpl#getTemplateDirectory <em>Template Directory</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.controllermodel.impl.ControllerModelImpl#getPluginName <em>Plugin Name</em>}</li>
@@ -46,7 +47,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.controllermodel.impl.ControllerModelImpl#getTitle <em>Title</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.controllermodel.impl.ControllerModelImpl#getPrefix <em>Prefix</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

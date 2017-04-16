@@ -36,13 +36,13 @@ package $packageName;
 
 
 
-
 import java.io.InputStream;
 
 import org.openecomp.ncomp.sirius.manager.IRequestHandler;
 import org.openecomp.ncomp.sirius.manager.ISwaggerHandler;
 import org.openecomp.ncomp.sirius.manager.ISiriusPlugin;
 import org.openecomp.ncomp.sirius.manager.ISiriusServer;
+import org.openecomp.ncomp.sirius.manager.ISiriusProvider;
 import org.openecomp.ncomp.sirius.manager.ManagementServer;
 import org.openecomp.ncomp.sirius.manager.SwaggerUtils;
 import org.openecomp.ncomp.sirius.function.FunctionUtils;
@@ -50,7 +50,9 @@ import org.openecomp.ncomp.component.ApiRequestStatus;
 
 import org.apache.log4j.Logger;
 
-import org.openecomp.logger.EcompLogger;
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -94,7 +96,7 @@ import $n;
 import ${p.nsURI}.impl.${name}Impl;
 
 <%
-  def l = []
+  def l = ["ISiriusProvider"]
   if (g.enableIRequestHandler) l += "IRequestHandler"
   if (g.enableISwaggerHandler) l += "ISwaggerHandler"
   if (g.enableISiriusPlugin) l += "ISiriusPlugin"
@@ -103,7 +105,7 @@ import ${p.nsURI}.impl.${name}Impl;
 
 public class ${cName} extends ${name}Impl${implements1} {
 	public static final Logger logger = Logger.getLogger(${cName}.class);
-	static final EcompLogger ecomplogger = EcompLogger.getEcompLogger();
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
 	public ${prefix}${name}Provider controller;
 	ISiriusServer server;
 
@@ -134,9 +136,8 @@ public class ${cName} extends ${name}Impl${implements1} {
 		if (server != null)
 			server.getServer().recordApi(null, this, "${op.name}", ApiRequestStatus.START, ${StringUtil.join(vars1,",")});
 		Date now_ = new Date();
-		ecomplogger.recordMetricEventStart();
-		ecomplogger.setOperation(${name}OperationEnum.${op.name});
-		ecomplogger.setInstanceId(ManagementServer.object2ref(this));
+		ecomplogger.recordAuditEventStartIfNeeded(${name}OperationEnum.${name}_${op.name},server,this);
+		ecomplogger.recordMetricEventStart(${name}OperationEnum.${name}_${op.name},"self:" + ManagementServer.object2ref(this));
 		try {
 			$assign controller.${op.name}(${StringUtil.join(vars,",")});
 		}
@@ -145,8 +146,10 @@ public class ${cName} extends ${name}Impl${implements1} {
 			if (server != null)
 				server.getServer().recordApi(null, this, "${op.name}", ApiRequestStatus.ERROR, ${StringUtil.join(vars1,",")});
 			System.err.println("ERROR: " + e);
-			ecomplogger.warn(${name}MessageEnum.${op.name}, e.toString());
-			throw e;
+			ecomplogger.warn(${name}MessageEnum.REQUEST_FAILED_${op.name}, e.toString());
+			EcompException e1 =  EcompException.create(${name}MessageEnum.REQUEST_FAILED_${op.name},e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, ${name}MessageEnum.REQUEST_FAILED_${op.name}, e.getMessage());
+			throw e1;
 		}
 		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
@@ -158,8 +161,8 @@ public class ${cName} extends ${name}Impl${implements1} {
 
 <% if (g.enableIRequestHandler) { %>
 	@Override
-	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context) {
-		return controller.handleJson(userName,action,resourcePath,json,context);
+	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context, String clientVersion) {
+		return controller.handleJson(userName,action,resourcePath,json,context,clientVersion);
 	}
 
 	@Override
@@ -185,7 +188,7 @@ public void updateSwagger(String path, SwaggerUtils swagger) {
 	public static void ecoreSetup() {
 		${prefix}${name}Provider.ecoreSetup();
 	}
-	public ${prefix}${name}Provider getSomfProvider() {
+	public ${prefix}${name}Provider getSiriusProvider() {
 		return controller;
 	}
 }

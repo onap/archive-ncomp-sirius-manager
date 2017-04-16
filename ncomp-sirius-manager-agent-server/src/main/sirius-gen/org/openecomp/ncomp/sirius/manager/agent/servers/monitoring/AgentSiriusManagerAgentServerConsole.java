@@ -23,13 +23,18 @@
 // Do not edit but extend this class as needed
 package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring;
 
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
+
 import org.openecomp.ncomp.sirius.manager.console.Console;
+import org.openecomp.ncomp.sirius.manager.AbstractClient;
 import org.openecomp.ncomp.sirius.manager.ManagementServerError;
 
     
+
 import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.gui.AgentGuiClientApiConsole;       
+
 import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.AgentSouthBoundApiConsole;   
 
 
@@ -50,6 +55,12 @@ public class AgentSiriusManagerAgentServerConsole extends Console {
             gui = new  AgentGuiClientApiConsole(filename,name);       
             south = new  AgentSouthBoundApiConsole(filename,name);   
     }
+    
+	public AgentSiriusManagerAgentServerConsole(AbstractClient c) {
+        controller = new AgentSiriusManagerAgentServerClient(c);
+        client = controller.client;
+    }
+
 
 	public void logs(EList<org.openecomp.ncomp.core.logs.LogMessage> logs) {
 		

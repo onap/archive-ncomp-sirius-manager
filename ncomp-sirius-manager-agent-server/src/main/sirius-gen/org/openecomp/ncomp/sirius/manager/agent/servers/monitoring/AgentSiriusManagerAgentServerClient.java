@@ -25,13 +25,21 @@ package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring;
 
 import org.openecomp.ncomp.sirius.manager.AbstractClient;
 import org.openecomp.ncomp.sirius.manager.HighAvailabilityClient;
-import org.openecomp.ncomp.sirius.manager.Jetty8Client;
+import org.openecomp.ncomp.sirius.manager.GenericHttpClient;
 
 import org.apache.log4j.Logger;
+
+import org.openecomp.logger.EcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+
 import org.openecomp.ncomp.sirius.manager.agent.monitoring.impl.SiriusManagerAgentServerImpl;
 import org.openecomp.ncomp.sirius.manager.agent.monitoring.MonitoringPackage;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.logging.SiriusManagerAgentServerOperationEnum;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.logging.SiriusManagerAgentServerMessageEnum;
 
 
 
@@ -41,79 +49,209 @@ import org.openecomp.ncomp.sirius.manager.agent.monitoring.MonitoringPackage;
 @SuppressWarnings("unchecked")
 public class AgentSiriusManagerAgentServerClient extends SiriusManagerAgentServerImpl {
 	public static final Logger logger = Logger.getLogger(AgentSiriusManagerAgentServerClient.class);
+	static final EcompLogger ecomplogger = EcompLogger.getEcompLogger();
 	public AbstractClient client;
 
 	public AgentSiriusManagerAgentServerClient(String file, String name) {
 		AgentSiriusManagerAgentServer.ecoreSetup(); 
-		client = new Jetty8Client(file,name);
+		client = new GenericHttpClient(file,name);
 		client.add("/resources", this);
+		client.setVersion("ONAP-R2");
 	}
 
 	public AgentSiriusManagerAgentServerClient(String file, String name1, String name2) {
 		HighAvailabilityClient client1 = new HighAvailabilityClient(file,name1,name2);
 		client = client1.all; // requests should be forwarded to all.
 		client.add("/resources", this);
+		client.setVersion("ONAP-R2");
 	}
+	
+	public AgentSiriusManagerAgentServerClient(AbstractClient c) {
+		client = c;
+		client.add("/resources", this);
+		client.setVersion("ONAP-R2");
+	}
+
 
 
 	@Override
 	public void logs(org.json.JSONObject cx, EList<org.openecomp.ncomp.core.logs.LogMessage> logs) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		client.operationPath("/resources", c, "logs", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,logs);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_logs,client.getRemote());
+		
+		try {
+		  client.operationPath("/resources", c, "logs", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,logs);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_logs, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_logs,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_logs,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public void metrics(org.json.JSONObject cx, EList<org.openecomp.ncomp.core.metrics.Metric> metrics) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		client.operationPath("/resources", c, "metrics", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,metrics);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_metrics,client.getRemote());
+		
+		try {
+		  client.operationPath("/resources", c, "metrics", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,metrics);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_metrics, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_metrics,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_metrics,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public void properties(org.json.JSONObject cx, EList<org.openecomp.ncomp.sirius.manager.properties.AbstractProperty> l) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		client.operationPath("/resources", c, "properties", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,l);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_properties,client.getRemote());
+		
+		try {
+		  client.operationPath("/resources", c, "properties", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,l);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_properties, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_properties,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_properties,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public void uploadInfo(org.json.JSONObject cx, EList<org.openecomp.ncomp.sirius.manager.server.ManagementInfo> info) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		client.operationPath("/resources", c, "uploadInfo", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,info);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_uploadInfo,client.getRemote());
+		
+		try {
+		  client.operationPath("/resources", c, "uploadInfo", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,info);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_uploadInfo, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_uploadInfo,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_uploadInfo,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public EList<org.openecomp.ncomp.core.metrics.DoubleMetric> getValues(org.json.JSONObject cx, java.lang.String path, java.lang.Long start, java.lang.Long end, org.openecomp.ncomp.core.metrics.MetricValueOption option, boolean relativeInterval) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		return (EList<org.openecomp.ncomp.core.metrics.DoubleMetric>) client.operationPath("/resources", c, "getValues", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,start,end,option,relativeInterval);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValues,client.getRemote());
+		EList<org.openecomp.ncomp.core.metrics.DoubleMetric> res;
+		try {
+		  res = (EList<org.openecomp.ncomp.core.metrics.DoubleMetric>) client.operationPath("/resources", c, "getValues", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,start,end,option,relativeInterval);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValues, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValues,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValues,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		return res;
 	}
 
 	@Override
 	public EList<org.openecomp.ncomp.core.metrics.DoubleMetric> getValuesAll(org.json.JSONObject cx, java.lang.String path, EList<java.lang.String> metrics, java.lang.Long start, java.lang.Long end, org.openecomp.ncomp.core.metrics.MetricValueOption option, boolean relativeInterval) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		return (EList<org.openecomp.ncomp.core.metrics.DoubleMetric>) client.operationPath("/resources", c, "getValuesAll", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,metrics,start,end,option,relativeInterval);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValuesAll,client.getRemote());
+		EList<org.openecomp.ncomp.core.metrics.DoubleMetric> res;
+		try {
+		  res = (EList<org.openecomp.ncomp.core.metrics.DoubleMetric>) client.operationPath("/resources", c, "getValuesAll", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,metrics,start,end,option,relativeInterval);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValuesAll, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValuesAll,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getValuesAll,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		return res;
 	}
 
 	@Override
 	public EList<org.openecomp.ncomp.core.logs.LogMessage> getMessages(org.json.JSONObject cx, java.lang.String path, java.lang.Long start, java.lang.Long end) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		return (EList<org.openecomp.ncomp.core.logs.LogMessage>) client.operationPath("/resources", c, "getMessages", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,start,end);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getMessages,client.getRemote());
+		EList<org.openecomp.ncomp.core.logs.LogMessage> res;
+		try {
+		  res = (EList<org.openecomp.ncomp.core.logs.LogMessage>) client.operationPath("/resources", c, "getMessages", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,path,start,end);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getMessages, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getMessages,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getMessages,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		return res;
 	}
 
 	@Override
 	public org.openecomp.ncomp.sirius.manager.server.LoggerInfo getRequestLogger(java.lang.String userName, java.lang.String action, java.lang.String resourcePath, org.json.JSONObject context) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		return (org.openecomp.ncomp.sirius.manager.server.LoggerInfo) client.operationPath("/resources", c, "getRequestLogger", null, userName,action,resourcePath,context);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getRequestLogger,client.getRemote());
+		org.openecomp.ncomp.sirius.manager.server.LoggerInfo res;
+		try {
+		  res = (org.openecomp.ncomp.sirius.manager.server.LoggerInfo) client.operationPath("/resources", c, "getRequestLogger", null, userName,action,resourcePath,context);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getRequestLogger, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getRequestLogger,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_getRequestLogger,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		return res;
 	}
 
 	@Override
 	public EList<org.openecomp.ncomp.core.function.ValuePair> evaluate(java.lang.String path, org.openecomp.ncomp.core.function.Function function) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		return (EList<org.openecomp.ncomp.core.function.ValuePair>) client.operationPath("/resources", c, "evaluate", null, path,function);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_evaluate,client.getRemote());
+		EList<org.openecomp.ncomp.core.function.ValuePair> res;
+		try {
+		  res = (EList<org.openecomp.ncomp.core.function.ValuePair>) client.operationPath("/resources", c, "evaluate", null, path,function);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_evaluate, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_evaluate,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_evaluate,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		return res;
 	}
 
 	@Override
 	public void update(java.lang.String path, org.openecomp.ncomp.core.function.Function function) {
-		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer();
-		client.operationPath("/resources", c, "update", null, path,function);
+		EClass c = MonitoringPackage.eINSTANCE.getSiriusManagerAgentServer(); 
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_update,client.getRemote());
+		
+		try {
+		  client.operationPath("/resources", c, "update", null, path,function);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_update, e.toString());
+			EcompException e1 = EcompException.create(SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_update,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SiriusManagerAgentServerMessageEnum.REMOTE_CALL_FAILED_update,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 }

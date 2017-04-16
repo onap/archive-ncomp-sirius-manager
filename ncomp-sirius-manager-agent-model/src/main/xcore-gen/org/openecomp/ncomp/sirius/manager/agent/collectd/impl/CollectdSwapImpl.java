@@ -23,8 +23,6 @@
  */
 package org.openecomp.ncomp.sirius.manager.agent.collectd.impl;
 
-import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdSwap;
 
@@ -34,6 +32,7 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 
 /**
  * <!-- begin-user-doc -->
@@ -41,12 +40,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdSwapImpl#getCached <em>Cached</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdSwapImpl#getFree <em>Free</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdSwapImpl#getUsed <em>Used</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

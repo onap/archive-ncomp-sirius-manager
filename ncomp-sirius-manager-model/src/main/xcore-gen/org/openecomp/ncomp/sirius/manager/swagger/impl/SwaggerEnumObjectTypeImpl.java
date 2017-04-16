@@ -36,10 +36,10 @@ import org.eclipse.emf.ecore.util.EDataTypeEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerEnumObjectTypeImpl#getEnum <em>Enum</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

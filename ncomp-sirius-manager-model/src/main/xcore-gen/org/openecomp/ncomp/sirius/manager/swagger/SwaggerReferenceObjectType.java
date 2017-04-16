@@ -31,11 +31,11 @@ package org.openecomp.ncomp.sirius.manager.swagger;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerReferenceObjectType#isRequired <em>Required</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.SwaggerReferenceObjectType#getReference <em>Reference</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.swagger.SwaggerPackage#getSwaggerReferenceObjectType()
  * @model

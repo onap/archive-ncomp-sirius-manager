@@ -41,6 +41,7 @@ public abstract class AbstractClient {
 	public String language;
 	public String namespace;
 	protected int defaultTimeout = 60000;
+	private String version;
 	private static HashMap<EObject, AbstractClient> map1 = new HashMap<EObject, AbstractClient>();
 	private static HashMap<EObject, String> map2 = new HashMap<EObject, String>();
 
@@ -74,8 +75,22 @@ public abstract class AbstractClient {
 		EOperation op = EUtils.name2operation(o.eClass(), opName);
 		if (op == null)
 			throw new RuntimeException("no such operation: " + opName + " on " + o);
-		JSONObject res = operationPath2(path, opName, timeout, ManagementServer.params2json(op, params));
-		return ManagementServer.json2response(op, res);
+		String clientVersion = getClientVersion();
+		JSONObject res = operationPath2(path, opName, timeout, ManagementServer.params2json(op, params, clientVersion));
+		return ManagementServer.json2response(op, res, clientVersion);
+	}
+
+	private String getClientVersion() {
+		try {
+			HashMap<String, String> headers = new HashMap<String, String>();
+			JSONObject json = new JSONObject();
+			Long timeout = 5000L;			
+			JSONObject res = httpJsonTransaction("/api/versions", "PUT", headers, json, timeout);
+			return res.getJSONArray("$list").getString(0);
+		}
+		catch (Exception e) {
+			return "UNKNOWN";
+		}
 	}
 
 	public JSONObject operation(String resourcePath, String opName, Long timeout, JSONObject json) {
@@ -95,15 +110,16 @@ public abstract class AbstractClient {
 		if (op == null) {
 			throw new RuntimeException("Unknown operation " + opName + " on Eclass " + c.getName());
 		}
+		String clientVersion = getClientVersion();
 		JSONObject res;
-		JSONObject json1 = ManagementServer.params2json(op, params);
+		JSONObject json1 = ManagementServer.params2json(op, params, clientVersion);
 		if (language != null && language.equals("restconf")) { 
 		    res = operationOdl("/restconf/operations/" + namespace + ":" + opName,timeout,json1);
 		}
 		else {
 			res = operationPath2(resourcePath, op.getName(), timeout, json1 );
 		}
-		return ManagementServer.json2response(op, res);
+		return ManagementServer.json2response(op, res, clientVersion);
 	}
 
 	// abstract public void sendToDataRouter(String feedname, String fileId,
@@ -168,6 +184,11 @@ public abstract class AbstractClient {
 	}
 
 	public JSONObject httpJsonTransaction(String path, String method, HashMap<String, String> headers, JSONObject body, Long timeout) {
+		if (version != null) {
+			if (headers == null) 
+				headers = new HashMap<String, String>();
+			headers.put("X-ECOMP-Client-Version", version);
+		}
 		String s = httpStringTransaction(path, method, headers, body, timeout);
 		if (s == null) return null;
 		if (s.startsWith("[")) {
@@ -196,4 +217,12 @@ public abstract class AbstractClient {
 	}
 
 	abstract public String getRemote();
+
+	public void setVersion(String version) {
+		this.version = version;
+	}
+	
+	public String getVersion() {
+		return version;
+	}
 }

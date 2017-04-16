@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerieData#getTime <em>Time</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerieData#getValue <em>Value</em>}</li>
@@ -41,7 +42,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerieData#getMin <em>Min</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerieData#getNum <em>Num</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiTimeSerieData()
  * @model

@@ -33,6 +33,7 @@ import org.openecomp.ncomp.core.logs.LogSeverity;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate#getMinLevel <em>Min Level</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate#getMinSeverity <em>Min Severity</em>}</li>
@@ -40,7 +41,6 @@ import org.openecomp.ncomp.core.logs.LogSeverity;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate#getDuration <em>Duration</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.LogTableTemplate#getAggregationDuration <em>Aggregation Duration</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getLogTableTemplate()
  * @model

@@ -26,9 +26,7 @@ package org.openecomp.ncomp.sirius.manager.agent.collectd;
 import org.openecomp.ncomp.core.NamedEntity;
 
 import org.openecomp.ncomp.core.alerts.AlertContainer;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
 import org.eclipse.emf.common.util.EList;
 
 /**
@@ -38,12 +36,12 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInstance#getVirt_cpu_total <em>Virt cpu total</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInstance#getDisks <em>Disks</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdKvmInstance#getInterfaces <em>Interfaces</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdKvmInstance()
  * @model

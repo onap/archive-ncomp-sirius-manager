@@ -150,7 +150,7 @@ public class ${cName} extends ${provider} {
 	}
 <% } %>
 <% if (g.enableIRequestHandler) { %>
-public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context) {
+public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context, String clientVersion) {
 		// TODO Auto-generated method stub
 		return null;
 	}

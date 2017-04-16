@@ -45,13 +45,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerObjectClassDefinitionImpl#getRequired <em>Required</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerObjectClassDefinitionImpl#getAllOf <em>All Of</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerObjectClassDefinitionImpl#getProperties <em>Properties</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerObjectClassDefinitionImpl#getAdditionalProperties <em>Additional Properties</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

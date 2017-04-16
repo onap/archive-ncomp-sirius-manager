@@ -63,22 +63,24 @@ CMD=$1
 shift
 
 check_status
+
+CP=$(find $_DIR/lib/*/* -name \*.jar 2>/dev/null | xargs -I X printf ":%s" X)
+
+JVMARGS=$(grep 'server.jvmargs' $_DIR/config/monitoring.properties | sed -e 's/.*=//')
+
 case $CMD in 
   status)
     echo $_STATUS
     exit 0
     ;;
   console)
-    CP=$(find $_DIR/lib -name \*.jar | xargs -I X printf ":%s" X)
-    $GROOVY_HOME/bin/groovysh -cp $_DIR/config:$_DIR/lib:$CP 
+    $GROOVY_HOME/bin/groovysh -cp $_DIR/config:$_DIR/lib:$_DIR/lib/\*:$CP 
     ;;
   run)
-    CP=$(find $_DIR/lib -name \*.jar | xargs -I X printf ":%s" X)
-    $JAVA_HOME/bin/java -cp $_DIR/config:$_DIR/lib:$CP "$@"
+    $JAVA_HOME/bin/java -cp $_DIR/config:$_DIR/lib:$_DIR/lib/\*:$CP "$@"
     ;;
   groovy)
-    CP=$(find $_DIR/lib -name \*.jar | xargs -I X printf ":%s" X)
-    $GROOVY_HOME/bin/groovy -cp $_DIR/config:$_DIR/lib:$CP "$@"
+    $GROOVY_HOME/bin/groovy -cp $_DIR/config:$_DIR/lib:$_DIR/lib/\*:$CP "$@"
     ;;
    start)
     if [ "$_RUNNING" = "1" ]; then
@@ -90,9 +92,8 @@ case $CMD in
     if [ -e $_DIR/logs/$PNAME.err.1 ]; then mv $_DIR/logs/$PNAME.err.1 $_DIR/logs/$PNAME.err.2; fi
     if [ -e $_DIR/logs/$PNAME.out ]; then mv $_DIR/logs/$PNAME.out $_DIR/logs/$PNAME.out.1; fi
     if [ -e $_DIR/logs/$PNAME.err ]; then mv $_DIR/logs/$PNAME.err $_DIR/logs/$PNAME.err.1; fi
-    CP=$(find $_DIR/lib -name \*.jar | xargs -I X printf ":%s" X)
 
-    nohup $JAVA_HOME/bin/java -cp $_DIR/config:$_DIR/lib:$CP "$@" $CLASS > $_DIR/logs/$PNAME.out 2> $_DIR/logs/$PNAME.err  &
+    nohup $JAVA_HOME/bin/java $JVMARGS -cp $_DIR/config:$_DIR/lib:$_DIR/lib/\*:$CP "$@" $CLASS >> $_DIR/logs/$PNAME.out 2>> $_DIR/logs/$PNAME.err  &
 
     _PID=$!
     echo $_PID > $_PIDFILE

@@ -29,6 +29,7 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
+import org.openecomp.ncomp.core.NamedEntity;
 
 /**
  * <!-- begin-user-doc -->
@@ -115,8 +116,28 @@ public class ServerAdapterFactory extends AdapterFactoryImpl {
 				return createAbstractManagementServerConfigurationAdapter();
 			}
 			@Override
+			public Adapter caseVersionConfiguration(VersionConfiguration object) {
+				return createVersionConfigurationAdapter();
+			}
+			@Override
+			public Adapter caseVersionTranslation(VersionTranslation object) {
+				return createVersionTranslationAdapter();
+			}
+			@Override
+			public Adapter caseVersionTranslationStep(VersionTranslationStep object) {
+				return createVersionTranslationStepAdapter();
+			}
+			@Override
+			public Adapter caseAttributeTranslationStep(AttributeTranslationStep object) {
+				return createAttributeTranslationStepAdapter();
+			}
+			@Override
 			public Adapter caseModuleContainer(ModuleContainer object) {
 				return createModuleContainerAdapter();
+			}
+			@Override
+			public Adapter caseNamedEntity(NamedEntity object) {
+				return createNamedEntityAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -209,6 +230,20 @@ public class ServerAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
+	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.core.NamedEntity <em>Named Entity</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.openecomp.ncomp.core.NamedEntity
+	 * @generated
+	 */
+	public Adapter createNamedEntityAdapter() {
+		return null;
+	}
+
+	/**
 	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.sirius.manager.server.LoggerInfo <em>Logger Info</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
@@ -247,6 +282,62 @@ public class ServerAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createAbstractManagementServerConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.sirius.manager.server.VersionConfiguration <em>Version Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionConfiguration
+	 * @generated
+	 */
+	public Adapter createVersionConfigurationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.sirius.manager.server.VersionTranslation <em>Version Translation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionTranslation
+	 * @generated
+	 */
+	public Adapter createVersionTranslationAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.sirius.manager.server.VersionTranslationStep <em>Version Translation Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionTranslationStep
+	 * @generated
+	 */
+	public Adapter createVersionTranslationStepAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep <em>Attribute Translation Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep
+	 * @generated
+	 */
+	public Adapter createAttributeTranslationStepAdapter() {
 		return null;
 	}
 

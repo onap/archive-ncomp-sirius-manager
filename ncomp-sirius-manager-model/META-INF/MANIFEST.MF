@@ -7,7 +7,10 @@ Bundle-ClassPath: .
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.openecomp.ncomp.sirius.manager.controllermodel,
+Export-Package: org.openecomp.ncomp.gwt.siriusportal.model,
+ org.openecomp.ncomp.gwt.siriusportal.model.impl,
+ org.openecomp.ncomp.gwt.siriusportal.model.util,
+ org.openecomp.ncomp.sirius.manager.controllermodel,
  org.openecomp.ncomp.sirius.manager.controllermodel.impl,
  org.openecomp.ncomp.sirius.manager.controllermodel.util,
  org.openecomp.ncomp.sirius.manager.graph,
@@ -17,22 +20,17 @@ Export-Package: org.openecomp.ncomp.sirius.manager.controllermodel,
  org.openecomp.ncomp.sirius.manager.server,
  org.openecomp.ncomp.sirius.manager.server.impl,
  org.openecomp.ncomp.sirius.manager.server.util,
- org.openecomp.ncomp.sirius.manager.tableTemplate,
- org.openecomp.ncomp.sirius.manager.tableTemplate.impl,
- org.openecomp.ncomp.sirius.manager.tableTemplate.util,
- org.openecomp.ncomp.gwt.siriusportal.model,
- org.openecomp.ncomp.gwt.siriusportal.model.impl,
- org.openecomp.ncomp.gwt.siriusportal.model.util,
  org.openecomp.ncomp.sirius.manager.swagger,
  org.openecomp.ncomp.sirius.manager.swagger.impl,
- org.openecomp.ncomp.sirius.manager.swagger.util
+ org.openecomp.ncomp.sirius.manager.swagger.util,
+ org.openecomp.ncomp.sirius.manager.tableTemplate,
+ org.openecomp.ncomp.sirius.manager.tableTemplate.impl,
+ org.openecomp.ncomp.sirius.manager.tableTemplate.util
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
- org.eclipse.xtext;bundle-version="2.7.3",
- ncomp-utils-java;bundle-version="0.1.0",
- ncomp-core-types;bundle-version="0.1.0",
- ncomp-core-model;bundle-version="0.1.0";visibility:=reexport,
- ncomp-sirius-manager-model;visibility:=reexport
+ ncomp-core-model;visibility:=reexport,
+ ncomp-sirius-manager-model;visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.7.3"
 Bundle-ActivationPolicy: lazy

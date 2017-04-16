@@ -31,13 +31,13 @@ package org.openecomp.ncomp.gwt.siriusportal.model;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiDiagramRectangle#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiDiagramRectangle#getY <em>Y</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiDiagramRectangle#getH <em>H</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiDiagramRectangle#getW <em>W</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiDiagramRectangle()
  * @model

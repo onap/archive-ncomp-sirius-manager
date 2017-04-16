@@ -31,10 +31,10 @@ package org.openecomp.ncomp.sirius.manager.tableTemplate;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.TimeTableTemplate#getDuration <em>Duration</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getTimeTableTemplate()
  * @model

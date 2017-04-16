@@ -32,6 +32,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTableColumn#getColName <em>Col Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTableColumn#getTooltip <em>Tooltip</em>}</li>
@@ -40,7 +41,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTableColumn#isHidden <em>Hidden</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTableColumn#getColumnType <em>Column Type</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiTableColumn()
  * @model

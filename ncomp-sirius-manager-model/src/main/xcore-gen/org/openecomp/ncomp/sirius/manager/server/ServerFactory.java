@@ -88,15 +88,6 @@ public interface ServerFactory extends EFactory {
 	LoggerInfo createLoggerInfo();
 
 	/**
-	 * Returns a new object of class '<em>Abstract Management Server</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Abstract Management Server</em>'.
-	 * @generated
-	 */
-	AbstractManagementServer createAbstractManagementServer();
-
-	/**
 	 * Returns a new object of class '<em>Abstract Management Server Configuration</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -104,6 +95,33 @@ public interface ServerFactory extends EFactory {
 	 * @generated
 	 */
 	AbstractManagementServerConfiguration createAbstractManagementServerConfiguration();
+
+	/**
+	 * Returns a new object of class '<em>Version Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Version Configuration</em>'.
+	 * @generated
+	 */
+	VersionConfiguration createVersionConfiguration();
+
+	/**
+	 * Returns a new object of class '<em>Version Translation</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Version Translation</em>'.
+	 * @generated
+	 */
+	VersionTranslation createVersionTranslation();
+
+	/**
+	 * Returns a new object of class '<em>Attribute Translation Step</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Attribute Translation Step</em>'.
+	 * @generated
+	 */
+	AttributeTranslationStep createAttributeTranslationStep();
 
 	/**
 	 * Returns the package supported by this factory.

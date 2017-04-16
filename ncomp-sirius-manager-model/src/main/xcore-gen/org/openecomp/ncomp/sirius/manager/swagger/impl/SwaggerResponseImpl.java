@@ -44,12 +44,12 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerResponseImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerResponseImpl#getSchema <em>Schema</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerResponseImpl#getHeaders <em>Headers</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

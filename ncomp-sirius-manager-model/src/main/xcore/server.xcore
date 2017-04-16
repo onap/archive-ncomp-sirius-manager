@@ -37,6 +37,7 @@ import org.openecomp.ncomp.sirius.manager.tableTemplate.AbstractTableTemplate
 import org.openecomp.ncomp.core.alerts.AlertingTemplate
 import org.openecomp.ncomp.core.metrics.DoubleMetric
 import org.openecomp.ncomp.component.Component
+import org.openecomp.ncomp.core.NamedEntity
 
 annotation "http://www.eclipse.org/emf/2002/GenModel" as GenModel
 annotation 'http://openecomp.org/sirius/doc' as doc  
@@ -93,7 +94,7 @@ class LoggerInfo {
 	String name
 }
 
-class AbstractManagementServer extends SouthBoundApiWithProxy {
+abstract class AbstractManagementServer extends SouthBoundApiWithProxy {
 	op DoubleMetric[] getValues(RemoteContext cx, String path, Long start, Long end, MetricValueOption option, boolean relativeInterval)
 	op DoubleMetric[] getValuesAll(RemoteContext cx, String path, String[] metrics, Long start, Long end, MetricValueOption option, boolean relativeInterval) 
 	op LogMessage[] getMessages(RemoteContext cx, String path, Long start, Long end)
@@ -110,9 +111,28 @@ class AbstractManagementServerConfiguration extends ModuleContainer {
 	contains AbstractTableTemplate[] tableTemplates
 	contains unordered AlertingTemplate[] alertTemplates
 	contains unordered Function[] functions 
+	contains VersionConfiguration version
 }
 
+class VersionConfiguration {
+	String version
+	String translationHandler
+	contains VersionTranslation[] supportedVersions
+}
 
+class VersionTranslation extends NamedEntity {
+	contains VersionTranslationStep[] steps
+}
+
+abstract class VersionTranslationStep extends NamedEntity {
+	
+}
+
+class AttributeTranslationStep extends VersionTranslationStep {
+	String attribute
+	String currentValue
+	String oldValue
+}
 
 
 

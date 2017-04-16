@@ -29,10 +29,8 @@ import org.openecomp.ncomp.core.alerts.AlertingTemplate;
 import org.openecomp.ncomp.core.alerts.AlertsPackage;
 
 import org.openecomp.ncomp.core.impl.NamedEntityImpl;
-
 import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdCpu;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdDisk;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdFileSystem;
@@ -66,6 +64,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdServerImpl#getAlerts <em>Alerts</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdServerImpl#getAlertingTemplate <em>Alerting Template</em>}</li>
@@ -84,7 +83,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdServerImpl#getInterfaces <em>Interfaces</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdServerImpl#getInstances <em>Instances</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

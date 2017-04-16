@@ -23,9 +23,8 @@
  */
 package org.openecomp.ncomp.sirius.manager.agent.collectd;
 
-import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
-
 import org.eclipse.emf.ecore.EObject;
+import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 
 /**
  * <!-- begin-user-doc -->
@@ -34,12 +33,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdSwap#getCached <em>Cached</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdSwap#getFree <em>Free</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdSwap#getUsed <em>Used</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdSwap()
  * @model

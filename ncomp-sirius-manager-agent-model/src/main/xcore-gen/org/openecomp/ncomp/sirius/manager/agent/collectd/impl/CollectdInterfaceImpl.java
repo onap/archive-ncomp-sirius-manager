@@ -29,9 +29,7 @@ import org.openecomp.ncomp.core.alerts.AlertingTemplate;
 import org.openecomp.ncomp.core.alerts.AlertsPackage;
 
 import org.openecomp.ncomp.core.impl.NamedEntityImpl;
-
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdInterface;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage;
 
@@ -56,6 +54,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdInterfaceImpl#getAlerts <em>Alerts</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdInterfaceImpl#getAlertingTemplate <em>Alerting Template</em>}</li>
@@ -66,7 +65,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdInterfaceImpl#getIf_packets_rx <em>If packets rx</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdInterfaceImpl#getIf_packets_tx <em>If packets tx</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

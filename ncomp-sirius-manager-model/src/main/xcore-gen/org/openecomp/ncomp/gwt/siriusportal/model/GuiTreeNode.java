@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTreeNode#getNodeName <em>Node Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTreeNode#getTitle <em>Title</em>}</li>
@@ -42,7 +43,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTreeNode#getView <em>View</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTreeNode#getChildren <em>Children</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiTreeNode()
  * @model

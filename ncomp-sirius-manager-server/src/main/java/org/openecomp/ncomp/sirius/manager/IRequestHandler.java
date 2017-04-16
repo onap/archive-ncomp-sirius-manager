@@ -26,6 +26,6 @@ import java.io.InputStream;
 import org.json.JSONObject;
 
 public interface IRequestHandler {
-	Object handleJson(String userName , String action,  String resourcePath, JSONObject json, JSONObject context);
+	Object handleJson(String userName , String action,  String resourcePath, JSONObject json, JSONObject context, String clientVersion);
 	Object handleBinary(String userName , String action,  String resourcePath, InputStream in);
 }

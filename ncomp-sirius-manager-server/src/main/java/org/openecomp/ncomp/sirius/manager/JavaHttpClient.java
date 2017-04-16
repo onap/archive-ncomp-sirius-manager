@@ -29,12 +29,17 @@ import org.apache.log4j.Logger;
 import org.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.ncomp.sirius.manager.logging.ManagementServerMessageEnum;
+import org.openecomp.ncomp.sirius.manager.logging.ManagementServerOperationEnum;
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
 import org.openecomp.ncomp.utils.CryptoUtils;
 import org.openecomp.ncomp.utils.PropertyUtil;
 import org.openecomp.ncomp.webservice.utils.FileUtils;
 
 public class JavaHttpClient extends AbstractClient {
 	public static final Logger logger = Logger.getLogger(JavaHttpClient.class);
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
 	String authorization;
 	String baseAddress;
 	private boolean debug = false;
@@ -90,6 +95,7 @@ public class JavaHttpClient extends AbstractClient {
 		}
 		HttpURLConnection uc = null;
 		InputStream is = null;
+		boolean recordRequest = ecomplogger.isTargetSelf();
 		try {
 			URL u = new URL(url);
 			uc = (HttpURLConnection) u.openConnection();
@@ -99,10 +105,23 @@ public class JavaHttpClient extends AbstractClient {
 				headers = new HashMap<String, String>();
 			headers.put("Content-type", "application/json");
 			headers.put("Authorization", authorization);
+			if (ecomplogger.getRequestId() == null) {
+				if (System.getProperties().contains("ecomp.requestid"))
+					ecomplogger.setRequestId(System.getProperties().getProperty("ecomp.requestid"));
+				else if (System.getenv("ECOMP_REQUESTID") != null)
+					ecomplogger.setRequestId(System.getenv("ECOMP_REQUESTID"));
+				else 
+					ecomplogger.newRequestId();
+			}
+			if (recordRequest) {
+				// request is not currently recorded.
+				ecomplogger.recordMetricEventStart(ManagementServerOperationEnum.MANAGEMENT_SERVER_UNKNOWN_SERVICE, url);
+			}
+			headers.put("X-ECOMP-RequestID", ecomplogger.getRequestId());
 			for (String n : headers.keySet()) {
 				uc.setRequestProperty(n, headers.get(n));
 				if (debug) {
-					System.err.println("HTTP REQUEST header: " + n + " " + headers.get(n));
+					System.err.println("HTTP REQUEST header: " + n + ": " + headers.get(n));
 				}
 			}
 			uc.setRequestMethod(method);
@@ -128,18 +147,33 @@ public class JavaHttpClient extends AbstractClient {
 					System.err.println("HTTP ERROR: " + url + " " + baos);
 				}
 				throw new Jetty8ClientException("HTTP Request Failed: URL: " + url + " code:" + rc + " msg:"
-						+ uc.getResponseMessage() + " " + baos);
+						+ uc.getResponseMessage());
 			}
 			is = uc.getInputStream();
 			FileUtils.copyStream(is, baos);
+			byte[] res;
 			if (baos.size() == 0)
-				return null;
-			return (baos.toByteArray());
+				res = null;
+			else
+				res = (baos.toByteArray());
+			if (recordRequest) 
+				ecomplogger.recordMetricEventEnd();
+			return res;
 		} catch (RuntimeException re) {
 //			ManagementServerUtils.printStackTrace(re);
+			ManagementServerMessageEnum msg = ManagementServerMessageEnum.MANAGEMENT_SERVER_UNKNOWN_SERVICE_FAILED;
+			ecomplogger.warn(msg, re.toString(), url);
+			if (recordRequest) {
+				ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, msg, re.getMessage());
+			}
 			throw re;
 		} catch (Exception e) {
-//			ManagementServerUtils.printStackTrace(e);
+			ManagementServerMessageEnum msg = ManagementServerMessageEnum.MANAGEMENT_SERVER_UNKNOWN_SERVICE_FAILED;
+			ecomplogger.warn(msg, e.toString(), url);
+			if (recordRequest) { 
+				ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, msg, e.getMessage());
+			}
+			ManagementServerUtils.printStackTrace(e);
 			throw new RuntimeException("http error: " + e, e);
 		} finally {
 			if (is != null) {

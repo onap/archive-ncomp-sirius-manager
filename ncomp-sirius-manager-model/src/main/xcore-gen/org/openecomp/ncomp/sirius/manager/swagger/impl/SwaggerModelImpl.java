@@ -55,6 +55,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerModelImpl#getSwagger <em>Swagger</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerModelImpl#getInfo <em>Info</em>}</li>
@@ -67,7 +68,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerModelImpl#getExternalDocs <em>External Docs</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.swagger.impl.SwaggerModelImpl#getSecurityDefinitions <em>Security Definitions</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

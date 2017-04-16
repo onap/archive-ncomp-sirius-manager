@@ -52,6 +52,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.impl.ModulePropertyImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.impl.ModulePropertyImpl#getLastPolled <em>Last Polled</em>}</li>
@@ -60,7 +61,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.impl.ModulePropertyImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.impl.ModulePropertyImpl#getSubModules <em>Sub Modules</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

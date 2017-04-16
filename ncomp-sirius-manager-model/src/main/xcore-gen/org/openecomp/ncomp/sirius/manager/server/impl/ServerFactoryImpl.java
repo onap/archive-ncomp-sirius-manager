@@ -80,8 +80,10 @@ public class ServerFactoryImpl extends EFactoryImpl implements ServerFactory {
 			case ServerPackage.MANAGEMENT_INFO: return createManagementInfo();
 			case ServerPackage.RESPONSE: return createResponse();
 			case ServerPackage.LOGGER_INFO: return createLoggerInfo();
-			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER: return createAbstractManagementServer();
 			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION: return createAbstractManagementServerConfiguration();
+			case ServerPackage.VERSION_CONFIGURATION: return createVersionConfiguration();
+			case ServerPackage.VERSION_TRANSLATION: return createVersionTranslation();
+			case ServerPackage.ATTRIBUTE_TRANSLATION_STEP: return createAttributeTranslationStep();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -172,9 +174,9 @@ public class ServerFactoryImpl extends EFactoryImpl implements ServerFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AbstractManagementServer createAbstractManagementServer() {
-		AbstractManagementServerImpl abstractManagementServer = new AbstractManagementServerImpl();
-		return abstractManagementServer;
+	public AbstractManagementServerConfiguration createAbstractManagementServerConfiguration() {
+		AbstractManagementServerConfigurationImpl abstractManagementServerConfiguration = new AbstractManagementServerConfigurationImpl();
+		return abstractManagementServerConfiguration;
 	}
 
 	/**
@@ -182,9 +184,29 @@ public class ServerFactoryImpl extends EFactoryImpl implements ServerFactory {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public AbstractManagementServerConfiguration createAbstractManagementServerConfiguration() {
-		AbstractManagementServerConfigurationImpl abstractManagementServerConfiguration = new AbstractManagementServerConfigurationImpl();
-		return abstractManagementServerConfiguration;
+	public VersionConfiguration createVersionConfiguration() {
+		VersionConfigurationImpl versionConfiguration = new VersionConfigurationImpl();
+		return versionConfiguration;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public VersionTranslation createVersionTranslation() {
+		VersionTranslationImpl versionTranslation = new VersionTranslationImpl();
+		return versionTranslation;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public AttributeTranslationStep createAttributeTranslationStep() {
+		AttributeTranslationStepImpl attributeTranslationStep = new AttributeTranslationStepImpl();
+		return attributeTranslationStep;
 	}
 
 	/**

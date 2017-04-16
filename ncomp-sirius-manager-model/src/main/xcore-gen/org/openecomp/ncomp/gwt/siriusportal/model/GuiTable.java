@@ -34,11 +34,11 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTable#getColumns <em>Columns</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTable#getRows <em>Rows</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiTable()
  * @model

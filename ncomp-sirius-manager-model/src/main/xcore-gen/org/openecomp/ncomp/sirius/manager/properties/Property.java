@@ -31,11 +31,11 @@ package org.openecomp.ncomp.sirius.manager.properties;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.Property#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.Property#getValue <em>Value</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.properties.PropertiesPackage#getProperty()
  * @model

@@ -48,6 +48,7 @@ class ControllerGenerator {
 	String clientName
 	String prefix
 	String type = "R"
+	String version = null
 	ControllerGenerator root;
 	boolean enableDrools = false;
 	boolean enableIRequestHandler = true;
@@ -178,6 +179,7 @@ class ControllerGenerator {
 			cName :       "${m.prefix}${o.eClass().name}$n",
 			fName :       factoryName(),
 			path :        root == this ? "resources" : subName,
+			version:      version ? "\"$version\"" : "null"
 		  ]
 		  switch (n) {
 			case "Provider": env.cName = "${m.prefix}${o.eClass().name}ProviderTemplate"; break
@@ -215,17 +217,16 @@ class ControllerGenerator {
 		def y = [operations:[:], messages:[dummy:[:]]]
 		EClass c = o.eClass()
 		c.getEAllOperations().each { EOperation op -> 
-			y.operations[op.name] = [:]
-			y.messages[op.name] = [
-				errorCode: "$op.name-FAILED-5001W",
+			y.operations["$c.name@$op.name"] = [:]
+			y.messages["REQUEST-FAILED-$op.name"] = [
+				errorCode: "4001W",
 				messageFormat: "{0}",
 				description: "Operation Failed with Exception"
 			]
 		}
 		c.getEAllOperations().each { EOperation op -> 
-			y.operations["REMOTE_$op.name"] = [decription:"Remote call $op.name"]
-			y.messages["REMOTE_$op.name"] = [
-				errorCode: "REMOTE-$op.name-FAILED-5001W",
+			y.messages["REMOTE-CALL-FAILED-$op.name"] = [
+				errorCode: "4001W",
 				messageFormat: "{0}",
 				description: "Remote Operation Failed with Exception"
 			]
@@ -246,6 +247,7 @@ class ControllerGenerator {
 		g.type = "O"
 		g.enableIRequestHandler = enableIRequestHandler
 		g.enableISiriusPlugin = enableISiriusPlugin
+		g.version = version
 		subApis += g
 	}
 	public void addApi(String name, EObject o, ControllerModel m, boolean enableIRequestHandler = false, boolean enableISiriusPlugin = false) {
@@ -255,6 +257,7 @@ class ControllerGenerator {
 		g.type = "A"
 		g.enableIRequestHandler = enableIRequestHandler
 		g.enableISiriusPlugin = enableISiriusPlugin
+		g.version = version
 		subApis += g
 	}
 	public void addProvider(String name, EObject o, ControllerModel m) {
@@ -264,6 +267,7 @@ class ControllerGenerator {
 		g.type = "P"
 		g.enableIRequestHandler = false
 		g.enableISiriusPlugin = false
+		g.version = version
 		subApis += g
 	}
 	def subClients = []
@@ -274,6 +278,7 @@ class ControllerGenerator {
 		g.type = "C"
 		g.enableIRequestHandler = enableIRequestHandler
 		g.enableISiriusPlugin = enableISiriusPlugin
+		g.version = version
 		subClients += g
 	}
 	List<String> aliases = new ArrayList<String>();

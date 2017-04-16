@@ -35,8 +35,6 @@ import org.json.JSONObject;
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>South Bound Api With Proxy</b></em>'.
  * <!-- end-user-doc -->
- * <p>
- * </p>
  *
  * @generated
  */

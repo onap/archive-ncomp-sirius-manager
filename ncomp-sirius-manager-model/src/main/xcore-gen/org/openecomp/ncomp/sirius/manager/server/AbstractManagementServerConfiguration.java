@@ -38,14 +38,15 @@ import org.eclipse.emf.common.util.EList;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getRules <em>Rules</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getMetricOptions <em>Metric Options</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getTableTemplates <em>Table Templates</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getAlertTemplates <em>Alert Templates</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getFunctions <em>Functions</em>}</li>
+ *   <li>{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getVersion <em>Version</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.server.ServerPackage#getAbstractManagementServerConfiguration()
  * @model
@@ -131,5 +132,31 @@ public interface AbstractManagementServerConfiguration extends ModuleContainer {
 	 * @generated
 	 */
 	EList<Function> getFunctions();
+
+	/**
+	 * Returns the value of the '<em><b>Version</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Version</em>' containment reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Version</em>' containment reference.
+	 * @see #setVersion(VersionConfiguration)
+	 * @see org.openecomp.ncomp.sirius.manager.server.ServerPackage#getAbstractManagementServerConfiguration_Version()
+	 * @model containment="true"
+	 * @generated
+	 */
+	VersionConfiguration getVersion();
+
+	/**
+	 * Sets the value of the '{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getVersion <em>Version</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Version</em>' containment reference.
+	 * @see #getVersion()
+	 * @generated
+	 */
+	void setVersion(VersionConfiguration value);
 
 } // AbstractManagementServerConfiguration

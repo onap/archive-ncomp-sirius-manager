@@ -23,26 +23,52 @@
 // Do not edit. No need to extend this class.
 package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring;
 
+
+
+
+
 import java.io.InputStream;
+
 import org.openecomp.ncomp.sirius.manager.IRequestHandler;
+import org.openecomp.ncomp.sirius.manager.ISwaggerHandler;
 import org.openecomp.ncomp.sirius.manager.ISiriusPlugin;
 import org.openecomp.ncomp.sirius.manager.ISiriusServer;
+import org.openecomp.ncomp.sirius.manager.ISiriusProvider;
+import org.openecomp.ncomp.sirius.manager.ManagementServer;
+import org.openecomp.ncomp.sirius.manager.SwaggerUtils;
 import org.openecomp.ncomp.sirius.function.FunctionUtils;
 import org.openecomp.ncomp.component.ApiRequestStatus;
 
 import org.apache.log4j.Logger;
+
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
+
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.json.JSONObject;
+
+import java.util.Date;
+
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.logging.SiriusManagerAgentServerOperationEnum;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.logging.SiriusManagerAgentServerMessageEnum;
+
+
+
+
+
+
+
 import java.util.Date;
 
 
-
-
-import java.util.Date;
 
 
 
 import org.openecomp.ncomp.sirius.manager.server.LoggerInfo;
+
+
 
 
 
@@ -53,9 +79,10 @@ import org.openecomp.ncomp.sirius.manager.agent.monitoring.impl.SiriusManagerAge
 
 
 
-public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl implements ISiriusPlugin {
+public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl implements ISiriusProvider, ISiriusPlugin {
 	public static final Logger logger = Logger.getLogger(AgentSiriusManagerAgentServer.class);
-	AgentSiriusManagerAgentServerProvider controller;
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
+	public AgentSiriusManagerAgentServerProvider controller;
 	ISiriusServer server;
 
 	public AgentSiriusManagerAgentServer(ISiriusServer server) {
@@ -69,6 +96,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "logs", ApiRequestStatus.START, duration_,cx,logs);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_logs,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_logs,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.logs(cx,logs);
 		}
@@ -77,8 +106,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "logs", ApiRequestStatus.ERROR, duration_,cx,logs);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_logs, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_logs,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_logs, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "logs", ApiRequestStatus.OKAY, duration_,cx,logs);
@@ -91,6 +124,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.START, duration_,cx,metrics);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_metrics,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_metrics,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.metrics(cx,metrics);
 		}
@@ -99,8 +134,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.ERROR, duration_,cx,metrics);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_metrics, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_metrics,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_metrics, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "metrics", ApiRequestStatus.OKAY, duration_,cx,metrics);
@@ -113,6 +152,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "properties", ApiRequestStatus.START, duration_,cx,l);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_properties,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_properties,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.properties(cx,l);
 		}
@@ -121,8 +162,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "properties", ApiRequestStatus.ERROR, duration_,cx,l);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_properties, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_properties,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_properties, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "properties", ApiRequestStatus.OKAY, duration_,cx,l);
@@ -135,6 +180,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "uploadInfo", ApiRequestStatus.START, duration_,cx,info);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_uploadInfo,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_uploadInfo,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.uploadInfo(cx,info);
 		}
@@ -143,8 +190,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "uploadInfo", ApiRequestStatus.ERROR, duration_,cx,info);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_uploadInfo, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_uploadInfo,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_uploadInfo, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "uploadInfo", ApiRequestStatus.OKAY, duration_,cx,info);
@@ -157,6 +208,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "getValues", ApiRequestStatus.START, duration_,cx,path,start,end,option,relativeInterval);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValues,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValues,"self:" + ManagementServer.object2ref(this));
 		try {
 			res =  controller.getValues(cx,path,start,end,option,relativeInterval);
 		}
@@ -165,8 +218,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "getValues", ApiRequestStatus.ERROR, duration_,cx,path,start,end,option,relativeInterval);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValues, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValues,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValues, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "getValues", ApiRequestStatus.OKAY, duration_,cx,path,start,end,option,relativeInterval);
@@ -179,6 +236,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "getValuesAll", ApiRequestStatus.START, duration_,cx,path,metrics,start,end,option,relativeInterval);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValuesAll,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getValuesAll,"self:" + ManagementServer.object2ref(this));
 		try {
 			res =  controller.getValuesAll(cx,path,metrics,start,end,option,relativeInterval);
 		}
@@ -187,8 +246,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "getValuesAll", ApiRequestStatus.ERROR, duration_,cx,path,metrics,start,end,option,relativeInterval);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValuesAll, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValuesAll,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getValuesAll, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "getValuesAll", ApiRequestStatus.OKAY, duration_,cx,path,metrics,start,end,option,relativeInterval);
@@ -201,6 +264,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "getMessages", ApiRequestStatus.START, duration_,cx,path,start,end);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getMessages,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getMessages,"self:" + ManagementServer.object2ref(this));
 		try {
 			res =  controller.getMessages(cx,path,start,end);
 		}
@@ -209,8 +274,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "getMessages", ApiRequestStatus.ERROR, duration_,cx,path,start,end);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getMessages, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getMessages,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getMessages, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "getMessages", ApiRequestStatus.OKAY, duration_,cx,path,start,end);
@@ -223,6 +292,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "getRequestLogger", ApiRequestStatus.START, duration_,userName,action,resourcePath,context);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getRequestLogger,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_getRequestLogger,"self:" + ManagementServer.object2ref(this));
 		try {
 			res =  controller.getRequestLogger(userName,action,resourcePath,context);
 		}
@@ -231,8 +302,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "getRequestLogger", ApiRequestStatus.ERROR, duration_,userName,action,resourcePath,context);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getRequestLogger, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getRequestLogger,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_getRequestLogger, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "getRequestLogger", ApiRequestStatus.OKAY, duration_,userName,action,resourcePath,context);
@@ -245,6 +320,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "evaluate", ApiRequestStatus.START, duration_,path,function);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_evaluate,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_evaluate,"self:" + ManagementServer.object2ref(this));
 		try {
 			res =  controller.evaluate(path,function);
 		}
@@ -253,8 +330,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "evaluate", ApiRequestStatus.ERROR, duration_,path,function);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_evaluate, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_evaluate,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_evaluate, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "evaluate", ApiRequestStatus.OKAY, duration_,path,function);
@@ -267,6 +348,8 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 		if (server != null)
 			server.getServer().recordApi(null, this, "update", ApiRequestStatus.START, duration_,path,function);
 		Date now_ = new Date();
+		ecomplogger.recordAuditEventStartIfNeeded(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_update,server,this);
+		ecomplogger.recordMetricEventStart(SiriusManagerAgentServerOperationEnum.SiriusManagerAgentServer_update,"self:" + ManagementServer.object2ref(this));
 		try {
 			 controller.update(path,function);
 		}
@@ -275,8 +358,12 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 			if (server != null)
 				server.getServer().recordApi(null, this, "update", ApiRequestStatus.ERROR, duration_,path,function);
 			System.err.println("ERROR: " + e);
-			throw e;
+			ecomplogger.warn(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_update, e.toString());
+			EcompException e1 =  EcompException.create(SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_update,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR, SiriusManagerAgentServerMessageEnum.REQUEST_FAILED_update, e.getMessage());
+			throw e1;
 		}
+		ecomplogger.recordMetricEventEnd();
 		duration_ = new Date().getTime()-now_.getTime();
 		if (server != null)
 			server.getServer().recordApi(null, this, "update", ApiRequestStatus.OKAY, duration_,path,function);
@@ -288,14 +375,17 @@ public class AgentSiriusManagerAgentServer extends SiriusManagerAgentServerImpl 
 
 
 
+
+
 	@Override
 	public void start() {
 		controller.start();
 	}
 
-
 	public static void ecoreSetup() {
 		AgentSiriusManagerAgentServerProvider.ecoreSetup();
 	}
-	
+	public AgentSiriusManagerAgentServerProvider getSiriusProvider() {
+		return controller;
+	}
 }

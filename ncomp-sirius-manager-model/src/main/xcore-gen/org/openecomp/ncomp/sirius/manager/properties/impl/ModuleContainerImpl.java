@@ -47,10 +47,10 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.properties.impl.ModuleContainerImpl#getModules <em>Modules</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

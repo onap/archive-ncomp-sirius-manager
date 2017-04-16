@@ -26,14 +26,16 @@ package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring;
 import static org.openecomp.ncomp.utils.PropertyUtil.getPropertiesFromClasspath;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 import java.util.TimeZone;
 
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EFactory;
-
+import org.json.JSONObject;
 import org.openecomp.ncomp.sirius.manager.Jetty8Server;
 import org.openecomp.ncomp.sirius.manager.ManagementServer;
+import org.openecomp.ncomp.sirius.manager.IRequestHandler;
 import org.openecomp.ncomp.sirius.manager.ISiriusServer;
 
 import org.openecomp.ncomp.sirius.manager.agent.monitoring.SiriusManagerAgentServer;
@@ -47,7 +49,7 @@ import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.AgentSe
 
 
 
-public class AgentSiriusManagerAgentServerServer implements ISiriusServer {
+public class AgentSiriusManagerAgentServerServer implements ISiriusServer, IRequestHandler {
     public static final Logger logger = Logger.getLogger(AgentSiriusManagerAgentServerServer.class);
     String serverPath;
     ManagementServer server;
@@ -56,6 +58,7 @@ public class AgentSiriusManagerAgentServerServer implements ISiriusServer {
 //      LocationControllerApi api ;
     Jetty8Server webServer;
     AgentMonitoringFactory f = new AgentMonitoringFactory(this);
+	
     
     String guiPath;
     ManagementServer guiServer;
@@ -70,6 +73,7 @@ public class AgentSiriusManagerAgentServerServer implements ISiriusServer {
 		props = getPropertiesFromClasspath(filename);
         serverPath = (String) props.get("server.dir");
         server = new ManagementServer(f, "SiriusManagerAgentServer", serverPath, filename);
+        ManagementServer.setBuildVersion("ONAP-R2");
         server.addFactory(f);
 
         server.addRuntimeFactories(this);
@@ -79,6 +83,7 @@ public class AgentSiriusManagerAgentServerServer implements ISiriusServer {
         controller = (AgentSiriusManagerAgentServer) server.find("/").o;
         webServer = new Jetty8Server("monitoring.properties");
         webServer.add("/resources",server);
+        webServer.add("/api",this);
 
 
     
@@ -113,4 +118,17 @@ public class AgentSiriusManagerAgentServerServer implements ISiriusServer {
 	public ManagementServer getServer() {
 		return server;
 	}
+	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context,
+			String clientVersion) {
+		switch ((String) context.get("path")) {
+		case "/api/versions":
+			return server.supportedVersions();
+		}
+		logger.warn("Unknown request action=" + action + " path=" + resourcePath + " context=" + context.toString(2));
+		throw new RuntimeException("Unknown request");
+	}
+	public Object handleBinary(String userName, String action, String resourcePath, InputStream in) {
+		return null;
+	}
+
 }

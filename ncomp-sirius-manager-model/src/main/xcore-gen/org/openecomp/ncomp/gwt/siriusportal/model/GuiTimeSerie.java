@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerie#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerie#getXAxisLabel <em>XAxis Label</em>}</li>
@@ -46,7 +47,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerie#isIsRate <em>Is Rate</em>}</li>
  *   <li>{@link org.openecomp.ncomp.gwt.siriusportal.model.GuiTimeSerie#getData <em>Data</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.gwt.siriusportal.model.ModelPackage#getGuiTimeSerie()
  * @model

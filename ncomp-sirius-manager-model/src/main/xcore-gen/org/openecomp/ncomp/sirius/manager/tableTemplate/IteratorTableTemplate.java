@@ -32,10 +32,10 @@ import org.openecomp.ncomp.core.function.Iterator;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.IteratorTableTemplate#getIterator <em>Iterator</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getIteratorTableTemplate()
  * @model

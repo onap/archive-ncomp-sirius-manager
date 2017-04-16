@@ -32,11 +32,11 @@ import org.openecomp.ncomp.core.metrics.MetricValueOption;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn#getPath <em>Path</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplateMetricColumn#getOption <em>Option</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.tableTemplate.TableTemplatePackage#getTableTemplateMetricColumn()
  * @model

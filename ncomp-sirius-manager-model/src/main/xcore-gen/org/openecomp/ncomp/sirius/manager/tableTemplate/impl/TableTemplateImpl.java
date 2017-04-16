@@ -49,11 +49,11 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.TableTemplateImpl#getColumns <em>Columns</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.tableTemplate.impl.TableTemplateImpl#getRowPath <em>Row Path</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

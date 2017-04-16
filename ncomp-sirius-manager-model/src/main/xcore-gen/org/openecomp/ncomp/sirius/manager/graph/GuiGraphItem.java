@@ -32,12 +32,12 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphItem#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphItem#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.GuiGraphItem#getUrl <em>Url</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.graph.GraphPackage#getGuiGraphItem()
  * @model

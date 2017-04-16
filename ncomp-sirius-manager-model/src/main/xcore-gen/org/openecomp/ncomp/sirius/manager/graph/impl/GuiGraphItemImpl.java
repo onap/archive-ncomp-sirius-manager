@@ -39,12 +39,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphItemImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphItemImpl#getTooltip <em>Tooltip</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphItemImpl#getUrl <em>Url</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

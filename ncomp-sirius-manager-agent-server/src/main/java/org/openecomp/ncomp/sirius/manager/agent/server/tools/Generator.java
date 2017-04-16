@@ -24,6 +24,7 @@ package org.openecomp.ncomp.sirius.manager.agent.server.tools;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
+import org.openecomp.utils.YamlToJava;
 import org.openecomp.ncomp.sirius.manager.controllermodel.ControllerModel;
 import org.openecomp.ncomp.sirius.manager.controllermodel.ControllermodelFactory;
 import org.openecomp.ncomp.sirius.manager.generator.ControllerGenerator;
@@ -44,12 +45,13 @@ public class Generator {
 		String dir = p.getNsURI().replace(p.getNsPrefix(),"") + "servers." + p.getNsPrefix();
 		dir= "src/main/sirius-gen/" + dir.replace('.', '/');
 		ControllerModel m = ControllermodelFactory.eINSTANCE.createControllerModel();
-		m.setTemplateDirectory("../../dcae-org.openecomp.ncomp.sirius.manager/ncomp-sirius-manager-generator/src/main/templates");
+		m.setTemplateDirectory("../../ncomp.sirius.manager/ncomp-sirius-manager-generator/src/main/templates");
 		m.setPrefix("Agent");
 		m.setPluginName(p.getNsURI());
 		m.setName("SiriusManagerAgentServer");
 		m.setTitle("SiriusManagerAgentServer");
 		ControllerGenerator g = new ControllerGenerator(o,m); 
+		g.setVersion("ONAP-R2");
 		g.setEnableIRequestHandler(false);
 		g.setEnableISiriusPlugin(true);
 		EObject gui = ModelFactory.eINSTANCE.createGuiClientApi();
@@ -60,6 +62,13 @@ public class Generator {
 		//g.enableDrools();
 		g.generate(dir);
 		g.generateScripts("src/main/server-gen/bin","sirius-manager-agent-server"); 
+		String pName = p.getNsURI().replaceAll(p.getNsPrefix()+'$',"") + "servers." + p.getNsPrefix() +".logging";
+		YamlToJava.convert("src/main/sirius-gen/SiriusManagerAgentServer.yaml", dir + "/logging", pName);
+		String pName1 = p.getNsURI().replaceAll(p.getNsPrefix()+'$',"") + "servers." + p.getNsPrefix() +".south.logging";
+		YamlToJava.convert("src/main/sirius-gen/SouthBoundApi.yaml", dir + "/south/logging", pName1);
+		String pName2 = p.getNsURI().replaceAll(p.getNsPrefix()+'$',"") + "servers." + p.getNsPrefix() +".gui.logging";
+		YamlToJava.convert("src/main/sirius-gen/GuiClientApi.yaml", dir + "/gui/logging", pName2);
+
 	}
 
 

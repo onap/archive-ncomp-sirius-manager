@@ -23,10 +23,9 @@
  */
 package org.openecomp.ncomp.sirius.manager.agent.collectd;
 
+import org.eclipse.emf.ecore.EObject;
 import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
 import org.openecomp.ncomp.core.types.metrics.IncreasingULongMetricAttribute;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -35,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
  *
  * <p>
  * The following features are supported:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdProcesses#getFork_rate <em>Fork rate</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdProcesses#getBlocked <em>Blocked</em>}</li>
@@ -44,7 +44,6 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdProcesses#getStopped <em>Stopped</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdProcesses#getZombies <em>Zombies</em>}</li>
  * </ul>
- * </p>
  *
  * @see org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage#getCollectdProcesses()
  * @model

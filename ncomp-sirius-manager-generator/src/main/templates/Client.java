@@ -32,6 +32,8 @@ import org.openecomp.ncomp.sirius.manager.GenericHttpClient;
 import org.apache.log4j.Logger;
 
 import org.openecomp.logger.EcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -57,17 +59,20 @@ public class ${cName} extends ${name}Impl {
 		${prefix}${g.root.o.eClass().name}.ecoreSetup(); 
 		client = new GenericHttpClient(file,name);
 		client.add("/$path", this);
+		client.setVersion($version);
 	}
 
 	public ${cName}(String file, String name1, String name2) {
 		HighAvailabilityClient client1 = new HighAvailabilityClient(file,name1,name2);
 		client = client1.all; // requests should be forwarded to all.
 		client.add("/$path", this);
+		client.setVersion($version);
 	}
 	
 	public ${cName}(AbstractClient c) {
 		client = c;
 		client.add("/resources", this);
+		client.setVersion($version);
 	}
 
 
@@ -107,16 +112,17 @@ public class ${cName} extends ${name}Impl {
 %>
 	$override
 	public ${rType} ${op.name}(${StringUtil.join(decl, ", ")}) {
-		EClass c = ${g.packageName2()}.eINSTANCE.get${g.o.eClass().name}(); //foo
-		ecomplogger.recordMetricEventStart();
-		ecomplogger.setOperation(${name}OperationEnum.REMOTE_${op.name});
+		EClass c = ${g.packageName2()}.eINSTANCE.get${g.o.eClass().name}(); 
+		ecomplogger.recordMetricEventStart(${name}OperationEnum.${name}_${op.name},client.getRemote());
 		$decl1
 		try {
 		  ${decl2}client.operationPath($path1, c, "${op.name}", $timeout<% if (vars.size()>0) {%>, <%}%>${StringUtil.join(vars,",")});
 		}
 		catch (Exception e) {
-			ecomplogger.warn(${name}MessageEnum.REMOTE_${op.name}, e.toString());
-			throw new RuntimeException("remote call failed: " + client.getRemote() + "@$op.name: " + e);
+			ecomplogger.warn(${name}MessageEnum.REMOTE_CALL_FAILED_${op.name}, e.toString());
+			EcompException e1 = EcompException.create(${name}MessageEnum.REMOTE_CALL_FAILED_${op.name},e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,${name}MessageEnum.REMOTE_CALL_FAILED_${op.name},e.getMessage());
+			throw e1;
 		}
 		ecomplogger.recordMetricEventEnd();
 		${ret}

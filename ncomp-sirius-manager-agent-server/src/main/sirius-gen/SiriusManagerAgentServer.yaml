@@ -1,0 +1,93 @@
+operations:
+  SiriusManagerAgentServer@logs: {}
+  SiriusManagerAgentServer@metrics: {}
+  SiriusManagerAgentServer@properties: {}
+  SiriusManagerAgentServer@uploadInfo: {}
+  SiriusManagerAgentServer@getValues: {}
+  SiriusManagerAgentServer@getValuesAll: {}
+  SiriusManagerAgentServer@getMessages: {}
+  SiriusManagerAgentServer@getRequestLogger: {}
+  SiriusManagerAgentServer@evaluate: {}
+  SiriusManagerAgentServer@update: {}
+messages:
+  dummy: {}
+  REQUEST-FAILED-logs:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-metrics:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-properties:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-uploadInfo:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getValues:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getValuesAll:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getMessages:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-getRequestLogger:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-evaluate:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REQUEST-FAILED-update:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Operation Failed with Exception
+  REMOTE-CALL-FAILED-logs:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-metrics:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-properties:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-uploadInfo:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getValues:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getValuesAll:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getMessages:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-getRequestLogger:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-evaluate:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception
+  REMOTE-CALL-FAILED-update:
+    errorCode: 4001W
+    messageFormat: '{0}'
+    description: Remote Operation Failed with Exception

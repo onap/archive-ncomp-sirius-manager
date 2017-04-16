@@ -29,9 +29,7 @@ import org.openecomp.ncomp.core.alerts.AlertingTemplate;
 import org.openecomp.ncomp.core.alerts.AlertsPackage;
 
 import org.openecomp.ncomp.core.impl.NamedEntityImpl;
-
 import org.openecomp.ncomp.core.types.metrics.DoubleMetricAttribute;
-
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdFileSystem;
 import org.openecomp.ncomp.sirius.manager.agent.collectd.CollectdPackage;
 
@@ -56,13 +54,13 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdFileSystemImpl#getAlerts <em>Alerts</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdFileSystemImpl#getAlertingTemplate <em>Alerting Template</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdFileSystemImpl#getUsed <em>Used</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.collectd.impl.CollectdFileSystemImpl#getFree <em>Free</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

@@ -54,7 +54,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-
 import org.json.JSONObject;
 
 /**
@@ -63,11 +62,11 @@ import org.json.JSONObject;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.monitoring.impl.SiriusManagerAgentServerImpl#getConfiguration <em>Configuration</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.agent.monitoring.impl.SiriusManagerAgentServerImpl#getComponent <em>Component</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

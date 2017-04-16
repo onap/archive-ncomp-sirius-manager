@@ -28,6 +28,7 @@ import org.openecomp.ncomp.sirius.manager.server.*;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.Switch;
+import org.openecomp.ncomp.core.NamedEntity;
 
 /**
  * <!-- begin-user-doc -->
@@ -67,7 +68,7 @@ public class ServerSwitch<T> extends Switch<T> {
 	 * Checks whether this is a switch for the given package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @parameter ePackage the package in question.
+	 * @param ePackage the package in question.
 	 * @return whether this is a switch for the given package.
 	 * @generated
 	 */
@@ -129,6 +130,34 @@ public class ServerSwitch<T> extends Switch<T> {
 				AbstractManagementServerConfiguration abstractManagementServerConfiguration = (AbstractManagementServerConfiguration)theEObject;
 				T result = caseAbstractManagementServerConfiguration(abstractManagementServerConfiguration);
 				if (result == null) result = caseModuleContainer(abstractManagementServerConfiguration);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ServerPackage.VERSION_CONFIGURATION: {
+				VersionConfiguration versionConfiguration = (VersionConfiguration)theEObject;
+				T result = caseVersionConfiguration(versionConfiguration);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ServerPackage.VERSION_TRANSLATION: {
+				VersionTranslation versionTranslation = (VersionTranslation)theEObject;
+				T result = caseVersionTranslation(versionTranslation);
+				if (result == null) result = caseNamedEntity(versionTranslation);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ServerPackage.VERSION_TRANSLATION_STEP: {
+				VersionTranslationStep versionTranslationStep = (VersionTranslationStep)theEObject;
+				T result = caseVersionTranslationStep(versionTranslationStep);
+				if (result == null) result = caseNamedEntity(versionTranslationStep);
+				if (result == null) result = defaultCase(theEObject);
+				return result;
+			}
+			case ServerPackage.ATTRIBUTE_TRANSLATION_STEP: {
+				AttributeTranslationStep attributeTranslationStep = (AttributeTranslationStep)theEObject;
+				T result = caseAttributeTranslationStep(attributeTranslationStep);
+				if (result == null) result = caseVersionTranslationStep(attributeTranslationStep);
+				if (result == null) result = caseNamedEntity(attributeTranslationStep);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -212,6 +241,21 @@ public class ServerSwitch<T> extends Switch<T> {
 	}
 
 	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Named Entity</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Named Entity</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseNamedEntity(NamedEntity object) {
+		return null;
+	}
+
+	/**
 	 * Returns the result of interpreting the object as an instance of '<em>Logger Info</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
@@ -253,6 +297,66 @@ public class ServerSwitch<T> extends Switch<T> {
 	 * @generated
 	 */
 	public T caseAbstractManagementServerConfiguration(AbstractManagementServerConfiguration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Version Configuration</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Version Configuration</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionConfiguration(VersionConfiguration object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Version Translation</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Version Translation</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionTranslation(VersionTranslation object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Version Translation Step</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Version Translation Step</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseVersionTranslationStep(VersionTranslationStep object) {
+		return null;
+	}
+
+	/**
+	 * Returns the result of interpreting the object as an instance of '<em>Attribute Translation Step</em>'.
+	 * <!-- begin-user-doc -->
+	 * This implementation returns null;
+	 * returning a non-null result will terminate the switch.
+	 * <!-- end-user-doc -->
+	 * @param object the target of the switch.
+	 * @return the result of interpreting the object as an instance of '<em>Attribute Translation Step</em>'.
+	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+	 * @generated
+	 */
+	public T caseAttributeTranslationStep(AttributeTranslationStep object) {
 		return null;
 	}
 

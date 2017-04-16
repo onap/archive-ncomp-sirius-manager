@@ -25,13 +25,21 @@ package org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south;
 
 import org.openecomp.ncomp.sirius.manager.AbstractClient;
 import org.openecomp.ncomp.sirius.manager.HighAvailabilityClient;
-import org.openecomp.ncomp.sirius.manager.Jetty8Client;
+import org.openecomp.ncomp.sirius.manager.GenericHttpClient;
 
 import org.apache.log4j.Logger;
+
+import org.openecomp.logger.EcompLogger;
+import org.openecomp.logger.StatusCodeEnum;
+import org.openecomp.logger.EcompException;
+
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+
 import org.openecomp.ncomp.sirius.manager.server.impl.SouthBoundApiImpl;
 import org.openecomp.ncomp.sirius.manager.server.ServerPackage;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.logging.SouthBoundApiOperationEnum;
+import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.south.logging.SouthBoundApiMessageEnum;
 
 
 import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.AgentSiriusManagerAgentServer; 
@@ -42,37 +50,83 @@ import org.openecomp.ncomp.sirius.manager.agent.servers.monitoring.AgentSiriusMa
 @SuppressWarnings("unchecked")
 public class AgentSouthBoundApiClient extends SouthBoundApiImpl {
 	public static final Logger logger = Logger.getLogger(AgentSouthBoundApiClient.class);
+	static final EcompLogger ecomplogger = EcompLogger.getEcompLogger();
 	public AbstractClient client;
 
 	public AgentSouthBoundApiClient(String file, String name) {
 		AgentSiriusManagerAgentServer.ecoreSetup(); 
-		client = new Jetty8Client(file,name);
+		client = new GenericHttpClient(file,name);
 		client.add("/south", this);
+		client.setVersion("ONAP-R2");
 	}
 
 	public AgentSouthBoundApiClient(String file, String name1, String name2) {
 		HighAvailabilityClient client1 = new HighAvailabilityClient(file,name1,name2);
 		client = client1.all; // requests should be forwarded to all.
 		client.add("/south", this);
+		client.setVersion("ONAP-R2");
 	}
+	
+	public AgentSouthBoundApiClient(AbstractClient c) {
+		client = c;
+		client.add("/resources", this);
+		client.setVersion("ONAP-R2");
+	}
+
 
 
 	@Override
 	public void logs(org.json.JSONObject cx, EList<org.openecomp.ncomp.core.logs.LogMessage> logs) {
-		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi();
-		client.operationPath("/south", c, "logs", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,logs);
+		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi(); 
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_logs,client.getRemote());
+		
+		try {
+		  client.operationPath("/south", c, "logs", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,logs);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_logs, e.toString());
+			EcompException e1 = EcompException.create(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_logs,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_logs,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public void metrics(org.json.JSONObject cx, EList<org.openecomp.ncomp.core.metrics.Metric> metrics) {
-		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi();
-		client.operationPath("/south", c, "metrics", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,metrics);
+		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi(); 
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_metrics,client.getRemote());
+		
+		try {
+		  client.operationPath("/south", c, "metrics", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,metrics);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_metrics, e.toString());
+			EcompException e1 = EcompException.create(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_metrics,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_metrics,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 	@Override
 	public void properties(org.json.JSONObject cx, EList<org.openecomp.ncomp.sirius.manager.properties.AbstractProperty> l) {
-		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi();
-		client.operationPath("/south", c, "properties", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,l);
+		EClass c = ServerPackage.eINSTANCE.getSouthBoundApi(); 
+		ecomplogger.recordMetricEventStart(SouthBoundApiOperationEnum.SouthBoundApi_properties,client.getRemote());
+		
+		try {
+		  client.operationPath("/south", c, "properties", cx != null && cx.has("timeout") ? cx.getLong("timeout") : null, cx,l);
+		}
+		catch (Exception e) {
+			ecomplogger.warn(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_properties, e.toString());
+			EcompException e1 = EcompException.create(SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_properties,e,e.getMessage());
+			ecomplogger.recordMetricEventEnd(StatusCodeEnum.ERROR,SouthBoundApiMessageEnum.REMOTE_CALL_FAILED_properties,e.getMessage());
+			throw e1;
+		}
+		ecomplogger.recordMetricEventEnd();
+		
 	}
 
 }

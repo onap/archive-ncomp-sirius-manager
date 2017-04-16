@@ -56,6 +56,10 @@
 			<directory>src/main/server/scripts</directory>
 			<outputDirectory>scripts</outputDirectory>
 		</fileSet>
+		<fileSet>
+			<directory>src/assembly/swm</directory>
+			<outputDirectory>swm</outputDirectory>
+		</fileSet>
 	</fileSets>
 
 </assembly>

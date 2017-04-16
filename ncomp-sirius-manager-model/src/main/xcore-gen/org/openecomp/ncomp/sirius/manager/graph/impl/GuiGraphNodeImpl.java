@@ -38,13 +38,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphNodeImpl#getX <em>X</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphNodeImpl#getY <em>Y</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphNodeImpl#getH <em>H</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.graph.impl.GuiGraphNodeImpl#getW <em>W</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */

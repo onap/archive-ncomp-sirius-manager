@@ -30,12 +30,15 @@ import org.openecomp.ncomp.core.metrics.MetricValueOption;
 import org.openecomp.ncomp.sirius.manager.properties.impl.ModuleContainerImpl;
 import org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration;
 import org.openecomp.ncomp.sirius.manager.server.ServerPackage;
+import org.openecomp.ncomp.sirius.manager.server.VersionConfiguration;
 import org.openecomp.ncomp.sirius.manager.tableTemplate.AbstractTableTemplate;
 import java.util.Collection;
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -45,14 +48,15 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
+ * </p>
  * <ul>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getRules <em>Rules</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getMetricOptions <em>Metric Options</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getTableTemplates <em>Table Templates</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getAlertTemplates <em>Alert Templates</em>}</li>
  *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getFunctions <em>Functions</em>}</li>
+ *   <li>{@link org.openecomp.ncomp.sirius.manager.server.impl.AbstractManagementServerConfigurationImpl#getVersion <em>Version</em>}</li>
  * </ul>
- * </p>
  *
  * @generated
  */
@@ -106,6 +110,16 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 	 * @ordered
 	 */
 	protected EList<Function> functions;
+
+	/**
+	 * The cached value of the '{@link #getVersion() <em>Version</em>}' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getVersion()
+	 * @generated
+	 * @ordered
+	 */
+	protected VersionConfiguration version;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -191,6 +205,49 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public VersionConfiguration getVersion() {
+		return version;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public NotificationChain basicSetVersion(VersionConfiguration newVersion, NotificationChain msgs) {
+		VersionConfiguration oldVersion = version;
+		version = newVersion;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION, oldVersion, newVersion);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public void setVersion(VersionConfiguration newVersion) {
+		if (newVersion != version) {
+			NotificationChain msgs = null;
+			if (version != null)
+				msgs = ((InternalEObject)version).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION, null, msgs);
+			if (newVersion != null)
+				msgs = ((InternalEObject)newVersion).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION, null, msgs);
+			msgs = basicSetVersion(newVersion, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION, newVersion, newVersion));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
@@ -204,6 +261,8 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 				return ((InternalEList<?>)getAlertTemplates()).basicRemove(otherEnd, msgs);
 			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS:
 				return ((InternalEList<?>)getFunctions()).basicRemove(otherEnd, msgs);
+			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION:
+				return basicSetVersion(null, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -226,6 +285,8 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 				return getAlertTemplates();
 			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS:
 				return getFunctions();
+			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION:
+				return getVersion();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -259,6 +320,9 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 				getFunctions().clear();
 				getFunctions().addAll((Collection<? extends Function>)newValue);
 				return;
+			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION:
+				setVersion((VersionConfiguration)newValue);
+				return;
 		}
 		super.eSet(featureID, newValue);
 	}
@@ -286,6 +350,9 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS:
 				getFunctions().clear();
 				return;
+			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION:
+				setVersion((VersionConfiguration)null);
+				return;
 		}
 		super.eUnset(featureID);
 	}
@@ -308,6 +375,8 @@ public class AbstractManagementServerConfigurationImpl extends ModuleContainerIm
 				return alertTemplates != null && !alertTemplates.isEmpty();
 			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS:
 				return functions != null && !functions.isEmpty();
+			case ServerPackage.ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION:
+				return version != null;
 		}
 		return super.eIsSet(featureID);
 	}

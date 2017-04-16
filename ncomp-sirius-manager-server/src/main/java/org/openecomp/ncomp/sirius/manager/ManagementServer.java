@@ -66,10 +66,10 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import org.openecomp.entity.EcompComponent;
 import org.openecomp.entity.EcompSubComponent;
-import org.openecomp.entity.EcompSubComponentInstance;
+import org.openecomp.logger.EcompException;
+import org.openecomp.logger.GenericMessagesMessageEnum;
 import org.openecomp.ncomp.component.Api;
 import org.openecomp.ncomp.component.ApiRequestStatus;
 import org.openecomp.ncomp.component.ComponentClass;
@@ -78,21 +78,25 @@ import org.openecomp.ncomp.component.DroolsObjectChange;
 import org.openecomp.ncomp.core.HasOperationalState;
 import org.openecomp.ncomp.core.NamedEntity;
 import org.openecomp.ncomp.core.OperationalState;
-import org.openecomp.ncomp.core.function.Function;
 import org.openecomp.ncomp.sirius.manager.drools.DroolsRuntime;
+import org.openecomp.ncomp.sirius.manager.logging.ManagementServerMessageEnum;
+import org.openecomp.ncomp.sirius.manager.logging.ManagementServerOperationEnum;
+import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
 import org.openecomp.ncomp.sirius.manager.logs.LogMessageManager;
 import org.openecomp.ncomp.sirius.manager.metrics.MetricManager;
 import org.openecomp.ncomp.sirius.manager.properties.PropertyManager;
 import org.openecomp.ncomp.sirius.manager.server.AbstractManagementServer;
 import org.openecomp.ncomp.sirius.manager.server.LoggerInfo;
+import org.openecomp.ncomp.sirius.manager.server.ServerFactory;
+import org.openecomp.ncomp.sirius.manager.server.VersionConfiguration;
 import org.openecomp.ncomp.utils.PropertyUtil;
 import org.openecomp.ncomp.utils.SortUtil;
-import org.openecomp.ncomp.utils.StringUtil;
 import org.openecomp.ncomp.webservice.utils.FileUtils;
 import org.openecomp.ncomp.webservice.utils.JsonUtils;
 
-public class ManagementServer implements IRequestHandler, ISwaggerHandler {
+public class ManagementServer implements IRequestHandler, ISiriusServer, ISwaggerHandler  {
 	public static final Logger logger = Logger.getLogger(ManagementServer.class);
+	static final NcompLogger ecomplogger = NcompLogger.getNcompLogger();
 	private static final String PERSIST = "http://openecomp.org/sirius/persistence";
 	private Jetty8Client jettyClient;
 	private Properties props;
@@ -108,6 +112,9 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 	public MetricManager metrics;
 	public PropertyManager properties;
 	public boolean isSlave = false;
+	private static String version;
+	private static String buildVersion;
+	private static IVersionConverterHandler versionHandler;
 
 	public ManagementServer(EFactory eFactory, String eClassName, String directory, String propertyFileName) {
 		TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
@@ -130,6 +137,37 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 		// jettyClient = new Jetty8Client();
 	}
 
+	private void setupVersionHandler(String directory) {
+		VersionConfiguration v;
+		if (version != null) return;
+		System.err.println("VVVVVV setupVersionHandler: " + directory);
+		try {
+			v = (VersionConfiguration) loadObjectFromDirectory(ServerFactory.eINSTANCE, "VersionConfiguration", directory, false, null);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+			return;
+		}
+		version = v.getVersion();
+		if (version == null) version = buildVersion;
+		if (v.getTranslationHandler() == null) {
+			versionHandler = new SimpleVersionHandler();
+			versionHandler.setconfiguration(v);
+			System.err.println("VVVVVV setupVersionHandler 1");
+			return;
+		}
+		try {
+			Class<?> c = Class.forName(v.getTranslationHandler());
+			Constructor<?> constructor = c.getConstructor();
+			versionHandler = (IVersionConverterHandler) constructor.newInstance();
+			versionHandler.setconfiguration(v);
+			System.err.println("VVVVVV setupVersionHandler 2: " + v.getTranslationHandler());
+		} catch (Throwable e) {
+			e.printStackTrace();
+			System.err.println("Unable to create instance of class: " + v.getTranslationHandler());
+			System.exit(3);
+		}
+	}
+
 	public ManagementServer() {
 		// TODO Auto-generated constructor stub
 	}
@@ -137,7 +175,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 	static AtomicLong requestId = new AtomicLong();
 
 	@Override
-	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context) {
+	public Object handleJson(String userName, String action, String resourcePath, JSONObject json, JSONObject context, String clientVersion) {
 		logger.debug("handleJson: " + userName + " " + action + " " + resourcePath + " " + context.get("remoteIp"));
 		long start = new Date().getTime();
 		String reqId = Long.toString(start) + ":" + requestId.incrementAndGet();
@@ -154,14 +192,15 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 			r.put("context", context);
 			logger2.info(r.toString());
 		}
-		if (!pe.permit(userName, action, resourcePath)) {
-			handleJsonReportResult(reqId, start, null, "NOT_PERMITTED", logger2);
-			throw new RuntimeException("Action not permitted: " + userName + " " + action + " " + resourcePath);
+		if (!pe.permit(userName, action, resourcePath)) { 
+			handleJsonReportResult(reqId, start, null, "NOT_PERMITTED", logger2, clientVersion);
+			throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_ACTION_FORBIDDEN, userName, action, resourcePath);
 		}
 		Subject subject = find(resourcePath);
 		if (action.equals("UPDATE")) {
+			ecomplogger.recordAuditEventStartIfNeeded(ManagementServerOperationEnum.MANAGEMENT_SERVER_UPDATE_RESOURCE,this,root);
 			if (subject == null || subject.o == null) {
-				throw new RuntimeException("Unable to find to update: " + resourcePath);
+				throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_DOES_NOT_EXIST,resourcePath);
 			}
 			boolean useNulls = false;
 			if (context != null && context.has("parameters")) {
@@ -169,21 +208,23 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 				useNulls = m.has("useNulls");
 			}
 			try {
+				json = translateJsonObject(json, clientVersion, version);
 				Object res = update(userName, subject, json, useNulls);
-				handleJsonReportResult(reqId, start, res, "OK", logger2);
+				handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 				return res;
 			} catch (RuntimeException e) {
-				handleJsonReportResult(reqId, start, null, "ERROR", logger2);
+				handleJsonReportResult(reqId, start, null, "ERROR", logger2, clientVersion);
 				printStackTrace(e);
 				throw e;
 			}
 		}
 		if (action.equals("CREATE")) {
+			ecomplogger.recordAuditEventStartIfNeeded(ManagementServerOperationEnum.MANAGEMENT_SERVER_CREATE_RESOURCE, this, root);
 			String id = null;
 			if (subject != null) {
 				if (subject.ref == null || subject.ref.isMany()) {
-					handleJsonReportResult(reqId, start, null, "CREATE_ON_EXISTING_RESOURCE", logger2);
-					throw new RuntimeException("resource already exists: " + resourcePath);
+					handleJsonReportResult(reqId, start, null, "CREATE_ON_EXISTING_RESOURCE", logger2, clientVersion);
+					throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_EXIST,resourcePath);
 				}
 			} else {
 				int index = resourcePath.lastIndexOf("/");
@@ -197,19 +238,22 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 				else
 					json.put("name", id);
 			}
+			json = translateJsonObject(json, clientVersion, version);
 			Object res = create(subject, json, !json.has("$nosave"));
-			handleJsonReportResult(reqId, start, res, "OK", logger2);
+			handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 			return res;
 		}
 		if (action.equals("DELETE")) {
+			ecomplogger.recordAuditEventStartIfNeeded(ManagementServerOperationEnum.MANAGEMENT_SERVER_DELETE_RESOURCE,this,root);
 			if (subject == null || subject.o == null) {
-				throw new RuntimeException("Unable to find to delete: " + resourcePath);
+				throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_DOES_NOT_EXIST,resourcePath);
 			}
 			Object res = delete(subject);
-			handleJsonReportResult(reqId, start, res, "OK", logger2);
+			handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 			return res;
 		}
 		if (action.equals("LIST")) {
+			ecomplogger.recordAuditEventStartIfNeeded(ManagementServerOperationEnum.MANAGEMENT_SERVER_LIST_RESOURCE,this,root);
 			int levels = 1;
 			if (context != null && context.has("parameters")) {
 				JSONObject m = (JSONObject) context.get("parameters");
@@ -218,33 +262,33 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 				if (m.has("match")) {
 					JSONObject res = new JSONObject();
 					res.put("list", list2jsonArray(findAll(resourcePath)));
-					handleJsonReportResult(reqId, start, res, "OK", logger2);
+					handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 					return res;
 				}
 				if (m.has("references")) {
 					boolean b = m.getBoolean("references");
 					JSONObject res = new JSONObject();
 					if (subject == null || subject.o == null) {
-						throw new RuntimeException("Unable to find object: " + resourcePath);
+						throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_DOES_NOT_EXIST,resourcePath);
 					}
 					res.put("list", subjectList2jsonArray(findReferences(root, subject.o, b)));
-					handleJsonReportResult(reqId, start, res, "OK", logger2);
+					handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 					return res;
 				}
 			}
 			if (subject == null || subject.o == null) {
-				throw new RuntimeException("Unable to find to list: " + resourcePath);
+				throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_DOES_NOT_EXIST,resourcePath);
 			}
 			Object res = list(subject, levels);
-			handleJsonReportResult(reqId, start, res, "OK", logger2);
+			handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 			return res;
 		}
 		if (subject == null || subject.o == null) {
-			throw new RuntimeException("Unable to find object for operation: " + resourcePath);
+			throw EcompException.create(ManagementServerMessageEnum.MANAGEMENT_SERVER_RESOURCE_DOES_NOT_EXIST,resourcePath);
 		}
 		Object res = operation(subject, action, json, context);
 		transformResult(subject,action,res);
-		handleJsonReportResult(reqId, start, res, "OK", logger2);
+		handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 		return res;
 	}
 
@@ -298,7 +342,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 		return ManagementServerUtils.createLogger("requests-" + action, "INFO", "%d %5p %m%n", logdir);
 	}
 
-	private void handleJsonReportResult(String reqId, long start, Object res, String status, Logger logger2) {
+	private void handleJsonReportResult(String reqId, long start, Object res, String status, Logger logger2, String clientVersion) {
 		if (logger2.isInfoEnabled()) {
 			JSONObject r = new JSONObject();
 			long duration = new Date().getTime() - start;
@@ -307,13 +351,37 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 			r.put("status", status);
 			if (res instanceof JSONObject) {
 				JSONObject j = (JSONObject) res;
-				r.put("res", j);
+				r.put("res", translateJsonObject(j,version,clientVersion));
 			}
 			logger2.info(r.toString());
 		}
 	}
 
+	private JSONObject translateJsonObject(JSONObject json, String version1, String version2) {
+		// TODO Auto-generated method stub
+		if (json.has("$version")) {
+			String jsonVersion = json.getString("$version");
+			if (version1 == null) 
+				version1 = jsonVersion;
+			if (version1 != null && ! version1.equals(jsonVersion)) {
+				ecomplogger.warn(ManagementServerMessageEnum.MANAGEMENT_SERVER_JSON_VERSION_MISMATCH, jsonVersion, version1);
+				version1 = jsonVersion;
+			}
+		}
+		if (version1 == null) 
+			version1 = "UNKNOWN";
+		if (versionHandler != null) {
+			return versionHandler.translateJsonObject(json,version1,version2);
+		}
+		return json;
+	}
+
 	public void start() throws IOException {
+		String versionDirection = directory == null ? null : directory + "/configuration/version";
+		if (versionDirection != null) {
+			// need to setup version handler before main load
+			setupVersionHandler(versionDirection);
+		}
 		if (directory != null)
 			root = load(directory);
 		if (root instanceof IPolicyEngine) {
@@ -368,6 +436,8 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 				v = p.getProperty(kk).trim();
 				if (kk.startsWith("factory.")) {
 					try {
+						System.err.println("Loading runtime factory: " + v);
+
 						Class c = Class.forName(v);
 						if (v.endsWith("PackageImpl")) {
 							Method m = c.getMethod("init");
@@ -378,25 +448,10 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 							addFactory((EFactory) constructor.newInstance(server));
 						}
 						logger.info("added runtime factory: " + v);
-					} catch (NoSuchMethodException e) {
-						// TODO Auto-generated catch block
+					} catch (Throwable e) {
+						System.err.println("Unable to load runtime factory: " + v + " " + e);
 						e.printStackTrace();
-					} catch (InstantiationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ClassNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					}					
 				}
 			}
 		} catch (IOException e) {
@@ -419,17 +474,26 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 	private EObject loadObjectFromDirectory(EFactory f, String cName, String directory, boolean isRoot, List<Ref> refs)
 			throws IOException {
 		String jsonFile = directory + (isRoot ? "/ROOT.json" : ".json");
+		String yamlFile = directory + (isRoot ? "/ROOT.yaml" : ".yaml");
 		JSONObject json;
 		try {
 			File file = new File(jsonFile);
 			if (file.exists())
 				json = JsonUtils.file2json(jsonFile);
-			else
-				json = new JSONObject();
+			else {
+				file = new File(yamlFile);
+				if (file.exists()) {
+					json = JsonUtils.yaml2json(file);
+					System.err.println("yaml2json: " + json.toString(2));
+				} 
+				else
+					json = new JSONObject();
+			}
 		} catch (JSONException e) {
 			// printStackTrace(e,);
 			throw new RuntimeException("Invalid JSON: " + jsonFile + " " + e);
 		}
+		json = translateJsonObject(json, null, version);
 		EObject res;
 		try {
 			res = loadObjectFromJson(f, cName, directory, json, refs);
@@ -1785,33 +1849,18 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 				res.put("returns", oo == null ? null : attr2jsonValue(0, oo, op.getEType()));
 			}
 			return res;
+		} catch (EcompException e) {
+			e.printStackTrace();
+			throw e;
 		} catch (Exception e) {
-			JSONObject res = new JSONObject();
+			e.printStackTrace();
 			if (e instanceof InvocationTargetException && e.getCause() instanceof Exception) {
 				e = (Exception) e.getCause();
 			}
-			res.put("exception", e.toString());
-			// res.put("location", e.getStackTrace()[1].toString());
-			res.put("directory", props.get("user.dir"));
-			res.put("user", props.get("user.name"));
-			res.put("hostname", props.get("user.hostname"));
-			res.put("port", props.get("server.port"));
-			res.put("class", eClassName);
-			res.put("action", action);
-			res.put("request", json);
-			res.put("context", context);
-			if (e instanceof ManagementServerError) {
-				ManagementServerError ee = (ManagementServerError) e;
-				res.put("remote", ee.getJson());
-			} else
-				printStackTrace(e);
-			List<String> args = new ArrayList<String>();
-			for (EParameter p : op.getEParameters()) {
-				args.add(p.getEType().getName());
+			if (e instanceof EcompException) {
+				throw (EcompException) e;
 			}
-			logger.error(PropertyUtil.replaceForLogForcingProtection("operation " + action + "(" + StringUtil.join(args, ",") + ") failed requestId: "
-					+ context.getString("requestId") + " " + e));
-			throw new ManagerException(500, "operation failed: " + action + "\n" + res.toString(2));
+			throw EcompException.create(GenericMessagesMessageEnum.ECOMP_GENERAL_EXCEPTION, e, e.toString());
 		}
 	}
 
@@ -1958,6 +2007,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 		// above.
 		// String s = json.toString();
 		// if (s.equals(cache.get(fname))) return;
+		json.put("$version", version);	
 		try {
 			OutputStreamWriter w = FileUtils.filename2writer(fname + ".tmp");
 			w.append(json.toString(2));
@@ -2217,7 +2267,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 		}
 	}
 
-	public static JSONObject params2json(EOperation operation, Object[] params) {
+	public static JSONObject params2json(EOperation operation, Object[] params, String outVersion) {
 		if (params.length != operation.getEParameters().size()) {
 			String n = operation.getEContainingClass().getName() + "@" + operation.getName();
 			throw new RuntimeException("Wrong number of arguments for " + n + " got " + params.length + " expected "
@@ -2233,11 +2283,13 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 					List<Object> l = (List<Object>) params[i];
 					JSONArray a = new JSONArray();
 					for (Object oo : l) {
-						a.put(object2json(oo, 100, eClass, true));
+						JSONObject j = object2json(oo, 100, eClass, true);
+						a.put(versionHandler.translateJsonObject(j,version,outVersion));
 					}
 					json.put(p.getName(), a);
 				} else {
-					json.put(p.getName(), object2json(params[i], 100, eClass, true));
+					JSONObject j = object2json(params[i], 100, eClass, true);
+					json.put(p.getName(), versionHandler.translateJsonObject(j,version,outVersion));
 				}
 
 			} else {
@@ -2270,7 +2322,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 
 	static ManagementServer staticServer = new ManagementServer();
 
-	public static Object json2response(EOperation operation, JSONObject res) {
+	public static Object json2response(EOperation operation, JSONObject res, String inVersion) {
 		if (res == null)
 			return null;
 		if (res.length() == 0)
@@ -2282,11 +2334,15 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 					EList<EObject> l = new BasicEList<EObject>();
 					JSONArray a = res.getJSONArray("returns");
 					for (int i = 0; i < a.length(); i++) {
-						l.add(staticServer.json2ecore(eClass, a.getJSONObject(i)));
+						JSONObject j = a.getJSONObject(i);
+						j = versionHandler.translateJsonObject(j, inVersion, version);
+						l.add(staticServer.json2ecore(eClass, j));
 					}
 					return l;
 				} else {
-					return staticServer.json2ecore(eClass, res.getJSONObject("returns"));
+					JSONObject j = res.getJSONObject("returns");
+					j = versionHandler.translateJsonObject(j, inVersion, version);
+					return staticServer.json2ecore(eClass, j);
 				}
 			} else {
 				EDataType eType = (EDataType) operation.getEType();
@@ -2479,6 +2535,7 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 	}
 
 	public static void decryptPasswords(EObject o) {
+		if (o == null) return;
 		for (EAttribute attr : o.eClass().getEAllAttributes()) {
 			if (! attr.getEType().getName().equals("EString")) continue;
 			if (attr.isMany()) continue;
@@ -2500,6 +2557,12 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 			}
 		}
 	}
+
+	@Override
+	public ManagementServer getServer() {
+		return this;
+	}
+	
 
 	public JSONObject getSwaggerJson() {
 		try { 
@@ -2524,5 +2587,19 @@ public class ManagementServer implements IRequestHandler, ISwaggerHandler {
 	@Override
 	public void updateSwagger(String path, SwaggerUtils swagger) {
 		swagger.addTag(path, "Server Configuration",root);
+	}
+
+	public JSONArray supportedVersions() {
+		JSONArray a = new JSONArray();
+		a.put(version);
+		return a;
+	}
+
+	public static String getBuildVersion() {
+		return buildVersion;
+	}
+
+	public static void setBuildVersion(String buildVersion) {
+		ManagementServer.buildVersion = buildVersion;
 	}
 }

@@ -30,6 +30,7 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.openecomp.ncomp.core.CorePackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -43,6 +44,24 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
+ * <!-- begin-model-doc -->
+ * -
+ * ============LICENSE_START==========================================
+ * OPENECOMP - DCAE
+ * ===================================================================
+ * Copyright (c) 2017 AT&T Intellectual Property. All rights reserved.
+ * ===================================================================
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  *        http://www.apache.org/licenses/LICENSE-2.0
+ *  * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * ============LICENSE_END============================================
+ * <!-- end-model-doc -->
  * @see org.openecomp.ncomp.sirius.manager.server.ServerFactory
  * @model kind="package"
  *        annotation="http://www.eclipse.org/emf/2002/GenModel modelDirectory='/ncomp-sirius-manager-model/src/main/xcore-gen' basePackage='org.openecomp.ncomp.sirius.manager'"
@@ -549,13 +568,22 @@ public interface ServerPackage extends EPackage {
 	int ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS = PropertiesPackage.MODULE_CONTAINER_FEATURE_COUNT + 4;
 
 	/**
+	 * The feature id for the '<em><b>Version</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION = PropertiesPackage.MODULE_CONTAINER_FEATURE_COUNT + 5;
+
+	/**
 	 * The number of structural features of the '<em>Abstract Management Server Configuration</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION_FEATURE_COUNT = PropertiesPackage.MODULE_CONTAINER_FEATURE_COUNT + 5;
+	int ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION_FEATURE_COUNT = PropertiesPackage.MODULE_CONTAINER_FEATURE_COUNT + 6;
 
 	/**
 	 * The number of operations of the '<em>Abstract Management Server Configuration</em>' class.
@@ -567,6 +595,289 @@ public interface ServerPackage extends EPackage {
 	int ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION_OPERATION_COUNT = PropertiesPackage.MODULE_CONTAINER_OPERATION_COUNT + 0;
 
 	/**
+	 * The meta object id for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionConfigurationImpl <em>Version Configuration</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionConfigurationImpl
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionConfiguration()
+	 * @generated
+	 */
+	int VERSION_CONFIGURATION = 7;
+
+	/**
+	 * The feature id for the '<em><b>Version</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_CONFIGURATION__VERSION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Translation Handler</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_CONFIGURATION__TRANSLATION_HANDLER = 1;
+
+	/**
+	 * The feature id for the '<em><b>Supported Versions</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_CONFIGURATION__SUPPORTED_VERSIONS = 2;
+
+	/**
+	 * The number of structural features of the '<em>Version Configuration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_CONFIGURATION_FEATURE_COUNT = 3;
+
+	/**
+	 * The number of operations of the '<em>Version Configuration</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_CONFIGURATION_OPERATION_COUNT = 0;
+
+	/**
+	 * The meta object id for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationImpl <em>Version Translation</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationImpl
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionTranslation()
+	 * @generated
+	 */
+	int VERSION_TRANSLATION = 8;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION__NAME = CorePackage.NAMED_ENTITY__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Last Polled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION__LAST_POLLED = CorePackage.NAMED_ENTITY__LAST_POLLED;
+
+	/**
+	 * The feature id for the '<em><b>Last Changed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION__LAST_CHANGED = CorePackage.NAMED_ENTITY__LAST_CHANGED;
+
+	/**
+	 * The feature id for the '<em><b>Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION__CREATED = CorePackage.NAMED_ENTITY__CREATED;
+
+	/**
+	 * The feature id for the '<em><b>Steps</b></em>' containment reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION__STEPS = CorePackage.NAMED_ENTITY_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of structural features of the '<em>Version Translation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_FEATURE_COUNT = CorePackage.NAMED_ENTITY_FEATURE_COUNT + 1;
+
+	/**
+	 * The number of operations of the '<em>Version Translation</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_OPERATION_COUNT = CorePackage.NAMED_ENTITY_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationStepImpl <em>Version Translation Step</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationStepImpl
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionTranslationStep()
+	 * @generated
+	 */
+	int VERSION_TRANSLATION_STEP = 9;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP__NAME = CorePackage.NAMED_ENTITY__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Last Polled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP__LAST_POLLED = CorePackage.NAMED_ENTITY__LAST_POLLED;
+
+	/**
+	 * The feature id for the '<em><b>Last Changed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP__LAST_CHANGED = CorePackage.NAMED_ENTITY__LAST_CHANGED;
+
+	/**
+	 * The feature id for the '<em><b>Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP__CREATED = CorePackage.NAMED_ENTITY__CREATED;
+
+	/**
+	 * The number of structural features of the '<em>Version Translation Step</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP_FEATURE_COUNT = CorePackage.NAMED_ENTITY_FEATURE_COUNT + 0;
+
+	/**
+	 * The number of operations of the '<em>Version Translation Step</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int VERSION_TRANSLATION_STEP_OPERATION_COUNT = CorePackage.NAMED_ENTITY_OPERATION_COUNT + 0;
+
+	/**
+	 * The meta object id for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.AttributeTranslationStepImpl <em>Attribute Translation Step</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.AttributeTranslationStepImpl
+	 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getAttributeTranslationStep()
+	 * @generated
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP = 10;
+
+	/**
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__NAME = VERSION_TRANSLATION_STEP__NAME;
+
+	/**
+	 * The feature id for the '<em><b>Last Polled</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__LAST_POLLED = VERSION_TRANSLATION_STEP__LAST_POLLED;
+
+	/**
+	 * The feature id for the '<em><b>Last Changed</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__LAST_CHANGED = VERSION_TRANSLATION_STEP__LAST_CHANGED;
+
+	/**
+	 * The feature id for the '<em><b>Created</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__CREATED = VERSION_TRANSLATION_STEP__CREATED;
+
+	/**
+	 * The feature id for the '<em><b>Attribute</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__ATTRIBUTE = VERSION_TRANSLATION_STEP_FEATURE_COUNT + 0;
+
+	/**
+	 * The feature id for the '<em><b>Current Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__CURRENT_VALUE = VERSION_TRANSLATION_STEP_FEATURE_COUNT + 1;
+
+	/**
+	 * The feature id for the '<em><b>Old Value</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP__OLD_VALUE = VERSION_TRANSLATION_STEP_FEATURE_COUNT + 2;
+
+	/**
+	 * The number of structural features of the '<em>Attribute Translation Step</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP_FEATURE_COUNT = VERSION_TRANSLATION_STEP_FEATURE_COUNT + 3;
+
+	/**
+	 * The number of operations of the '<em>Attribute Translation Step</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int ATTRIBUTE_TRANSLATION_STEP_OPERATION_COUNT = VERSION_TRANSLATION_STEP_OPERATION_COUNT + 0;
+
+	/**
 	 * The meta object id for the '{@link org.openecomp.ncomp.sirius.manager.server.ResponseStatus <em>Response Status</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -574,7 +885,7 @@ public interface ServerPackage extends EPackage {
 	 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getResponseStatus()
 	 * @generated
 	 */
-	int RESPONSE_STATUS = 7;
+	int RESPONSE_STATUS = 11;
 
 	/**
 	 * Returns the meta object for class '{@link org.openecomp.ncomp.sirius.manager.server.SouthBoundApiWithProxy <em>South Bound Api With Proxy</em>}'.
@@ -901,6 +1212,134 @@ public interface ServerPackage extends EPackage {
 	EReference getAbstractManagementServerConfiguration_Functions();
 
 	/**
+	 * Returns the meta object for the containment reference '{@link org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Version</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AbstractManagementServerConfiguration#getVersion()
+	 * @see #getAbstractManagementServerConfiguration()
+	 * @generated
+	 */
+	EReference getAbstractManagementServerConfiguration_Version();
+
+	/**
+	 * Returns the meta object for class '{@link org.openecomp.ncomp.sirius.manager.server.VersionConfiguration <em>Version Configuration</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version Configuration</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionConfiguration
+	 * @generated
+	 */
+	EClass getVersionConfiguration();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getVersion <em>Version</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Version</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getVersion()
+	 * @see #getVersionConfiguration()
+	 * @generated
+	 */
+	EAttribute getVersionConfiguration_Version();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getTranslationHandler <em>Translation Handler</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Translation Handler</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getTranslationHandler()
+	 * @see #getVersionConfiguration()
+	 * @generated
+	 */
+	EAttribute getVersionConfiguration_TranslationHandler();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getSupportedVersions <em>Supported Versions</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Supported Versions</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionConfiguration#getSupportedVersions()
+	 * @see #getVersionConfiguration()
+	 * @generated
+	 */
+	EReference getVersionConfiguration_SupportedVersions();
+
+	/**
+	 * Returns the meta object for class '{@link org.openecomp.ncomp.sirius.manager.server.VersionTranslation <em>Version Translation</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version Translation</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionTranslation
+	 * @generated
+	 */
+	EClass getVersionTranslation();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link org.openecomp.ncomp.sirius.manager.server.VersionTranslation#getSteps <em>Steps</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Steps</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionTranslation#getSteps()
+	 * @see #getVersionTranslation()
+	 * @generated
+	 */
+	EReference getVersionTranslation_Steps();
+
+	/**
+	 * Returns the meta object for class '{@link org.openecomp.ncomp.sirius.manager.server.VersionTranslationStep <em>Version Translation Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Version Translation Step</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.VersionTranslationStep
+	 * @generated
+	 */
+	EClass getVersionTranslationStep();
+
+	/**
+	 * Returns the meta object for class '{@link org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep <em>Attribute Translation Step</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Attribute Translation Step</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep
+	 * @generated
+	 */
+	EClass getAttributeTranslationStep();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getAttribute <em>Attribute</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Attribute</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getAttribute()
+	 * @see #getAttributeTranslationStep()
+	 * @generated
+	 */
+	EAttribute getAttributeTranslationStep_Attribute();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getCurrentValue <em>Current Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Current Value</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getCurrentValue()
+	 * @see #getAttributeTranslationStep()
+	 * @generated
+	 */
+	EAttribute getAttributeTranslationStep_CurrentValue();
+
+	/**
+	 * Returns the meta object for the attribute '{@link org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getOldValue <em>Old Value</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Old Value</em>'.
+	 * @see org.openecomp.ncomp.sirius.manager.server.AttributeTranslationStep#getOldValue()
+	 * @see #getAttributeTranslationStep()
+	 * @generated
+	 */
+	EAttribute getAttributeTranslationStep_OldValue();
+
+	/**
 	 * Returns the meta object for enum '{@link org.openecomp.ncomp.sirius.manager.server.ResponseStatus <em>Response Status</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -1194,6 +1633,110 @@ public interface ServerPackage extends EPackage {
 		 * @generated
 		 */
 		EReference ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__FUNCTIONS = eINSTANCE.getAbstractManagementServerConfiguration_Functions();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference ABSTRACT_MANAGEMENT_SERVER_CONFIGURATION__VERSION = eINSTANCE.getAbstractManagementServerConfiguration_Version();
+
+		/**
+		 * The meta object literal for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionConfigurationImpl <em>Version Configuration</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionConfigurationImpl
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionConfiguration()
+		 * @generated
+		 */
+		EClass VERSION_CONFIGURATION = eINSTANCE.getVersionConfiguration();
+
+		/**
+		 * The meta object literal for the '<em><b>Version</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_CONFIGURATION__VERSION = eINSTANCE.getVersionConfiguration_Version();
+
+		/**
+		 * The meta object literal for the '<em><b>Translation Handler</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute VERSION_CONFIGURATION__TRANSLATION_HANDLER = eINSTANCE.getVersionConfiguration_TranslationHandler();
+
+		/**
+		 * The meta object literal for the '<em><b>Supported Versions</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERSION_CONFIGURATION__SUPPORTED_VERSIONS = eINSTANCE.getVersionConfiguration_SupportedVersions();
+
+		/**
+		 * The meta object literal for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationImpl <em>Version Translation</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationImpl
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionTranslation()
+		 * @generated
+		 */
+		EClass VERSION_TRANSLATION = eINSTANCE.getVersionTranslation();
+
+		/**
+		 * The meta object literal for the '<em><b>Steps</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference VERSION_TRANSLATION__STEPS = eINSTANCE.getVersionTranslation_Steps();
+
+		/**
+		 * The meta object literal for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationStepImpl <em>Version Translation Step</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.VersionTranslationStepImpl
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getVersionTranslationStep()
+		 * @generated
+		 */
+		EClass VERSION_TRANSLATION_STEP = eINSTANCE.getVersionTranslationStep();
+
+		/**
+		 * The meta object literal for the '{@link org.openecomp.ncomp.sirius.manager.server.impl.AttributeTranslationStepImpl <em>Attribute Translation Step</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.AttributeTranslationStepImpl
+		 * @see org.openecomp.ncomp.sirius.manager.server.impl.ServerPackageImpl#getAttributeTranslationStep()
+		 * @generated
+		 */
+		EClass ATTRIBUTE_TRANSLATION_STEP = eINSTANCE.getAttributeTranslationStep();
+
+		/**
+		 * The meta object literal for the '<em><b>Attribute</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_TRANSLATION_STEP__ATTRIBUTE = eINSTANCE.getAttributeTranslationStep_Attribute();
+
+		/**
+		 * The meta object literal for the '<em><b>Current Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_TRANSLATION_STEP__CURRENT_VALUE = eINSTANCE.getAttributeTranslationStep_CurrentValue();
+
+		/**
+		 * The meta object literal for the '<em><b>Old Value</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute ATTRIBUTE_TRANSLATION_STEP__OLD_VALUE = eINSTANCE.getAttributeTranslationStep_OldValue();
 
 		/**
 		 * The meta object literal for the '{@link org.openecomp.ncomp.sirius.manager.server.ResponseStatus <em>Response Status</em>}' enum.
