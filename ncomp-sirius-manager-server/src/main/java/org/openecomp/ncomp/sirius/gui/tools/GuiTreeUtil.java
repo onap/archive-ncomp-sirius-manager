@@ -116,9 +116,11 @@ public class GuiTreeUtil {
 			GuiTreeNode n = (GuiTreeNode) o;
 			l = n.getChildren();
 		}
-		for (GuiTreeNode n : l) {
-			if (name.equals(n.getNodeName())) 
-				return find(n,path,i+1,create);
+		if ( l != null) {
+			for (GuiTreeNode n : l) {
+				if (name.equals(n.getNodeName())) 
+					return find(n,path,i+1,create);
+			}
 		}
 		if (create) {
 			GuiTreeNode n1 = f.createGuiTreeNode();

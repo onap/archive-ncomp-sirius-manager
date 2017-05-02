@@ -36,6 +36,9 @@ public class SimpleVersionHandler implements IVersionConverterHandler {
 		if (toCurrent == null) {
 			throw new RuntimeException("Unable to translate between versions: " + version1 + " -> " + version2);
 		}
+		if (v == null) {
+			throw new RuntimeException("Unable to translate between versions no version info: " + version1 + " -> " + version2);
+		}
 		for (VersionTranslationStep step : v.getSteps()) {
 			if (step instanceof AttributeTranslationStep) {
 				AttributeTranslationStep s = (AttributeTranslationStep) step;

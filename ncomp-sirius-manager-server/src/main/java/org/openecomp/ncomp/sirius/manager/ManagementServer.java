@@ -88,6 +88,7 @@ import org.openecomp.ncomp.sirius.manager.properties.PropertyManager;
 import org.openecomp.ncomp.sirius.manager.server.AbstractManagementServer;
 import org.openecomp.ncomp.sirius.manager.server.LoggerInfo;
 import org.openecomp.ncomp.sirius.manager.server.ServerFactory;
+import org.openecomp.ncomp.sirius.manager.server.ServerPackage;
 import org.openecomp.ncomp.sirius.manager.server.VersionConfiguration;
 import org.openecomp.ncomp.utils.PropertyUtil;
 import org.openecomp.ncomp.utils.SortUtil;
@@ -142,6 +143,7 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 		if (version != null) return;
 		System.err.println("VVVVVV setupVersionHandler: " + directory);
 		try {
+			ServerPackage.eINSTANCE.toString();
 			v = (VersionConfiguration) loadObjectFromDirectory(ServerFactory.eINSTANCE, "VersionConfiguration", directory, false, null);
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -2265,6 +2267,11 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 				}
 			}
 		}
+	}
+	
+	public static JSONObject translateJson(JSONObject json, String outVersion) {
+		if (versionHandler == null) return json;
+		return versionHandler.translateJsonObject(json,version,outVersion);
 	}
 
 	public static JSONObject params2json(EOperation operation, Object[] params, String outVersion) {

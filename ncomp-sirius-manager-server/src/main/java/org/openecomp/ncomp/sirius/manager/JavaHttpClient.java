@@ -74,6 +74,25 @@ public class JavaHttpClient extends AbstractClient {
 		return s;
 	}
 
+	public static String decryptEmbeddedPassword(String s) {
+		if (s == null) return s;
+		int i1 = s.indexOf("rsa:::");
+		int i2 = s.indexOf("rsa:::rsa:");
+		int i3 = s.indexOf(":::rsa");
+		int i4 = i1 + 6;
+		if (i2 < i1) {
+			i1 = i2;
+			i4 = i1 + 10;
+		}
+		if (i1 == -1) return s;
+		String pw = CryptoUtils.decryptPrivate(CryptoUtils.getKey("config/server.private"), s.substring(i4,i3));
+		
+		if (s.startsWith("rsa:")) {
+			s = CryptoUtils.decryptPrivate(CryptoUtils.getKey("config/server.private"), s.substring(4));
+		}
+		return decryptEmbeddedPassword(s.substring(0,i1) + pw + s.substring(i3+6));
+	}
+
 
 	public byte[] httpBinaryTransaction(String path, String method, HashMap<String, String> headers, JSONObject body,
 			Long timeout) {
@@ -95,6 +114,7 @@ public class JavaHttpClient extends AbstractClient {
 		}
 		HttpURLConnection uc = null;
 		InputStream is = null;
+		OutputStream os = null;
 		boolean recordRequest = ecomplogger.isTargetSelf();
 		try {
 			URL u = new URL(url);
@@ -131,9 +151,10 @@ public class JavaHttpClient extends AbstractClient {
 				uc.setRequestProperty("Content-Length", Integer.toString(rawbody.length));
 				uc.setFixedLengthStreamingMode(rawbody.length);
 				uc.setDoOutput(true);
-				OutputStream os = uc.getOutputStream();
+				os = uc.getOutputStream();
 				os.write(rawbody);
 				os.close();
+				os = null;
 				if (debug) 
 					System.err.println("HTTP REQUEST boby: " + body);
 			}
@@ -179,6 +200,12 @@ public class JavaHttpClient extends AbstractClient {
 			if (is != null) {
 				try {
 					is.close();
+				} catch (IOException e) {
+				}
+			}
+			if (os != null) {
+				try {
+					os.close();
 				} catch (IOException e) {
 				}
 			}

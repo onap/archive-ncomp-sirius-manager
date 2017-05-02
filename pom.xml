@@ -4,11 +4,6 @@
   <artifactId>ncomp-sirius-manager</artifactId>
   <packaging>pom</packaging>
 
-        <properties>
-                <site.path>content/sites/site/org/openecomp/ncomp/sirius/manager/${project.artifactId}/${project.version}</site.path>
-        </properties>
-
-
   <modules>
   	<module>ncomp-sirius-manager-base</module>
   	<module>ncomp-sirius-manager-drools</module>

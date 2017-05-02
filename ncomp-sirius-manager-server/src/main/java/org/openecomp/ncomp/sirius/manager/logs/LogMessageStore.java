@@ -33,12 +33,16 @@ import org.eclipse.emf.common.util.EList;
 import org.openecomp.ncomp.core.logs.LogMessage;
 import org.openecomp.ncomp.utils.SortUtil;
 import org.openecomp.ncomp.utils.journaling.JournalingDateObject;
+import org.openecomp.ncomp.utils.journaling.JournalingObject;
 import org.openecomp.ncomp.utils.journaling.JournalingList;
 import org.openecomp.ncomp.webservice.utils.DateUtils;
 
 public class LogMessageStore {
 
 	JournalingDateObject<JournalingList<Message>> logs;
+	static {
+		JournalingObject.addClassToWhiteList("org.openecomp.ncomp.sirius.manager.logs.Message");
+	}
 	public LogMessageStore(String dir, String path) {
 		logs = new JournalingDateObject<JournalingList<Message>>(dir, JournalingList.class);
 	}

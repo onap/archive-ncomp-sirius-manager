@@ -132,14 +132,21 @@ public abstract class AbstractClient {
 	// }
 
 	public void create(String resourcePath, String json) {
-		create(resourcePath, new JSONObject(json));
+		String clientVersion = getClientVersion();
+		JSONObject json1 = new JSONObject(json);
+		ManagementServer.translateJson(json1, clientVersion);
+		create(resourcePath, json1);
 	}
 
 	public void create(String resourcePath, JSONObject json) {
+		String clientVersion = getClientVersion();
+		ManagementServer.translateJson(json, clientVersion);
 		httpJsonTransaction(resourcePath, "POST", null, json, null);
 	}
 
 	public void update(String resourcePath, JSONObject json) {
+		String clientVersion = getClientVersion();
+		ManagementServer.translateJson(json, clientVersion);
 		httpJsonTransaction(resourcePath, "PUT", null, json, null);
 	}
 
@@ -148,14 +155,20 @@ public abstract class AbstractClient {
 	}
 
 	public JSONObject method(String resourcePath, String method, JSONObject json) {
+		String clientVersion = getClientVersion();
+		ManagementServer.translateJson(json, clientVersion);
 		return httpJsonTransaction(resourcePath, method, null, json, null);
 	}
 	
 	public byte[] methodAsBinary(String resourcePath, String method, JSONObject json) {
+		String clientVersion = getClientVersion();
+		ManagementServer.translateJson(json, clientVersion);
 		return httpBinaryTransaction(resourcePath, method, null, json, null);
 	}
 
 	public String methodAsString(String resourcePath, String method, JSONObject json) {
+		String clientVersion = getClientVersion();
+		ManagementServer.translateJson(json, clientVersion);
 		return httpStringTransaction(resourcePath, method, null, json, null);
 	}
 

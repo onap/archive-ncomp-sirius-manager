@@ -51,6 +51,7 @@ public class MD5Checksum {
 				if (fis != null)
 					fis.close();
 			}
+			if (complete == null) return random();
 			return bytes2hex(complete.digest());
 		} catch (Exception e) {
 			return random();

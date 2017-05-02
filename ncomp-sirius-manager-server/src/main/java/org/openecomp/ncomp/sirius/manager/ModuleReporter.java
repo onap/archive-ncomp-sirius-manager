@@ -21,6 +21,7 @@
 	
 package org.openecomp.ncomp.sirius.manager;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +109,7 @@ public class ModuleReporter implements Runnable {
 		}
 	}
 	private String version() {
-		InputStream inputStream;
+		InputStream inputStream = null;
 		if (jarName == null && file == null && command == null) {
 			if (parent == null || parent.props == null)
 				return "unable to determine version for " + name + " no parent information";
@@ -132,11 +133,19 @@ public class ModuleReporter implements Runnable {
 		props = new Properties();
 		try {
 			props.load(inputStream);
-			inputStream.close();
 		} catch (Exception e) {
 			logger.warn("No build info for module: " + name);
 			ManagementServerUtils.printStackTrace(e);
 			return "unable to determine version for " + name;
+		}
+		finally {
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		return StringUtil.expandUsingProperties(version, props, "$");
 	}

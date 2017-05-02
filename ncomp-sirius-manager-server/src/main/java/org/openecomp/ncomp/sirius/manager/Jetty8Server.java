@@ -360,6 +360,8 @@ public class Jetty8Server {
 		try {
 			s1 = B64Code.decode(a[1], StringUtil.__ISO_8859_1);
 		} catch (UnsupportedEncodingException e) {
+			logger.warn("Authorization failed: Bad header:" + e);
+			return null;
 		}
 		int i = s1.indexOf(":");
 		if (i == -1) {

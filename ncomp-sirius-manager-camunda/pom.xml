@@ -185,7 +185,7 @@
 				<url>${openecomp.nexus.snapshots}</url>
 			</snapshotRepository>
 			<site>
-				<id>dcae-javadoc</id>
+				<id>ecomp-site</id>
 			<url>${site.url}</url>
 			</site>
 		</distributionManagement>

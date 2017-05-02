@@ -41,12 +41,16 @@ import org.openecomp.ncomp.sirius.manager.*;
 import org.openecomp.ncomp.utils.SortUtil;
 import org.openecomp.ncomp.utils.journaling.JournalingDateObject;
 import org.openecomp.ncomp.utils.journaling.JournalingHashMap;
+import org.openecomp.ncomp.utils.journaling.JournalingObject;
 import org.openecomp.ncomp.webservice.utils.DateUtils;
 
 import static org.openecomp.ncomp.sirius.manager.ManagementServerUtils.printStackTrace;
 
 public class MetricStore implements IMetricStore {
 	public static final Logger logger = Logger.getLogger(MetricStore.class);
+	static {
+		JournalingObject.addClassToWhiteList("org.openecomp.ncomp.core.types.metrics.*");
+	}
 	JournalingDateObject<JournalingHashMap<MetricDailyMeasurement>> metrics;
 	private EObject o;
 	private MetricManager manager;

@@ -30,7 +30,5 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.emf.ecore.xcore.lib,
- ncomp-core-model;visibility:=reexport,
- ncomp-sirius-manager-model;visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.7.3"
 Bundle-ActivationPolicy: lazy
