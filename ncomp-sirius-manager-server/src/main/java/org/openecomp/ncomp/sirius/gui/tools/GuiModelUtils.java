@@ -514,12 +514,12 @@ public class GuiModelUtils {
 			for (EObject row : s.findAll(path)) {
 				if (ii.isRecursive()) {
 					for (EObject r : ManagementServer.object2containedObjects(row)) {
-						if (FunctionUtils.evaluate(r, ii.getFilter()).toLowerCase().equals("true"))
+						if (FunctionUtils.evaluate(r, ii.getFilter()).equalsIgnoreCase("true"))
 							tableAddRow(s,r,table,t);
 					}
 				}
 				else {
-					if (FunctionUtils.evaluate(row, ii.getFilter()).toLowerCase().equals("true"))
+					if (FunctionUtils.evaluate(row, ii.getFilter()).equalsIgnoreCase("true"))
 						tableAddRow(s,row,table,t);
 				}
 			}

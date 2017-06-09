@@ -35,6 +35,7 @@ import org.openecomp.ncomp.sirius.manager.logging.ManagementServerOperationEnum;
 import org.openecomp.ncomp.sirius.manager.logging.NcompLogger;
 import org.openecomp.ncomp.utils.CryptoUtils;
 import org.openecomp.ncomp.utils.PropertyUtil;
+import org.openecomp.ncomp.utils.SecurityUtils;
 import org.openecomp.ncomp.webservice.utils.FileUtils;
 
 public class JavaHttpClient extends AbstractClient {
@@ -49,7 +50,7 @@ public class JavaHttpClient extends AbstractClient {
 			props = PropertyUtil.getPropertiesFromClasspath(fileName);
 			setBaseAddress(props.getProperty(endpoint + ".endpoint"));
 			if (getBaseAddress() == null) {
-				logger.error("unable to determine baseAddress for endpoint: " + endpoint + " in " + fileName);
+				logger.error("unable to determine baseAddress for endpoint: " + p(endpoint) + " in " + p(fileName));
 				throw new RuntimeException("unable to determine baseAddress for endpoint: " + endpoint + " in "
 						+ fileName);
 			}
@@ -66,6 +67,10 @@ public class JavaHttpClient extends AbstractClient {
 		}
 	}
 
+	private String p(String v) {
+		return SecurityUtils.logForcingProtection(v);
+	}
+
 	public static String decryptPassword(String s) {
 		if (s == null) return s;
 		if (s.startsWith("rsa:")) {
@@ -75,16 +80,17 @@ public class JavaHttpClient extends AbstractClient {
 	}
 
 	public static String decryptEmbeddedPassword(String s) {
-		if (s == null) return s;
-		int i1 = s.indexOf("rsa:::");
-		int i2 = s.indexOf("rsa:::rsa:");
-		int i3 = s.indexOf(":::rsa");
-		int i4 = i1 + 6;
-		if (i2 < i1) {
-			i1 = i2;
-			i4 = i1 + 10;
-		}
-		if (i1 == -1) return s;
+        if (s == null) return s;
+        int i1 = s.indexOf("rsa:::");
+        int i2 = s.indexOf("rsa:::rsa:");
+        int i4 = i1 + 6;
+        if (i2 != -1 && i2 == i1) {
+                i1 = i2;
+                i4 = i1 + 10;
+        }
+        if (i1 == -1) return s;
+        int i3 = s.indexOf(":::rsa",i4);
+
 		String pw = CryptoUtils.decryptPrivate(CryptoUtils.getKey("config/server.private"), s.substring(i4,i3));
 		
 		if (s.startsWith("rsa:")) {
