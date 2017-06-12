@@ -91,6 +91,7 @@ import org.openecomp.ncomp.sirius.manager.server.ServerFactory;
 import org.openecomp.ncomp.sirius.manager.server.ServerPackage;
 import org.openecomp.ncomp.sirius.manager.server.VersionConfiguration;
 import org.openecomp.ncomp.utils.PropertyUtil;
+import org.openecomp.ncomp.utils.SecurityUtils;
 import org.openecomp.ncomp.utils.SortUtil;
 import org.openecomp.ncomp.webservice.utils.FileUtils;
 import org.openecomp.ncomp.webservice.utils.JsonUtils;
@@ -192,7 +193,7 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 			r.put("path", resourcePath);
 			r.put("req", json);
 			r.put("context", context);
-			logger2.info(r.toString());
+			logger2.info(p(r.toString()));
 		}
 		if (!pe.permit(userName, action, resourcePath)) { 
 			handleJsonReportResult(reqId, start, null, "NOT_PERMITTED", logger2, clientVersion);
@@ -292,6 +293,10 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 		transformResult(subject,action,res);
 		handleJsonReportResult(reqId, start, res, "OK", logger2, clientVersion);
 		return res;
+	}
+
+	private String p(Object s) {
+		return SecurityUtils.logForcingProtection(s);
 	}
 
 	private void transformResult(Subject subject, String action, Object res) {
@@ -543,8 +548,8 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 		}
 		EClass c = (EClass) f.getEPackage().getEClassifier(cName);
 		if (c == null) {
-			logger.error("unable to create class: " + cName + " using factory " + f.getEPackage().getName() + " "
-					+ json.toString(2));
+			logger.error("unable to create class: " + p(cName) + " using factory " + f.getEPackage().getName() + " "
+					+ p(json.toString(2)));
 			throw new RuntimeException("Unable to create class " + cName + " using factory "
 					+ f.getEPackage().getName());
 		}
@@ -713,7 +718,7 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 			}
 			if (k.equals("$nosave"))
 				continue;
-			logger.warn("JSON value not used: " + k + " " + f.getEPackage().getName() + "." + cName + " " + json.get(k));
+			logger.warn("JSON value not used: " + p(k) + " " + f.getEPackage().getName() + "." + p(cName) + " " + p(json.get(k)));
 		}
 		return o;
 	}
@@ -1778,7 +1783,7 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 					continue;
 				}
 				if (!json.has(p.getName())) {
-					logger.warn("Operation " + PropertyUtil.replaceForLogForcingProtection(action) + " has missing parameter:" + p.getName());
+					logger.warn("Operation " + p(action) + " has missing parameter:" + p.getName());
 				}
 				Object oo = null;
 				if (p.isMany()) {
@@ -2246,7 +2251,7 @@ public class ManagementServer implements IRequestHandler, ISiriusServer, ISwagge
 			}
 			Subject s = find(root1, path);
 			if (s == null || s.ref != null) {
-				logger.warn("Unable to determine reference for:" + PropertyUtil.replaceForLogForcingProtection(path));
+				logger.warn("Unable to determine reference for:" + p(path));
 				continue;
 			}
 			if (x.ref.isMany()) {
