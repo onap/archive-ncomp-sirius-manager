@@ -3,6 +3,7 @@
   <groupId>org.openecomp.ncomp.sirius.manager</groupId>
   <artifactId>ncomp-sirius-manager</artifactId>
   <packaging>pom</packaging>
+  <name>ncomp-sirius-manager</name>
 
   <modules>
   	<module>ncomp-sirius-manager-base</module>
